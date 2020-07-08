@@ -2,7 +2,7 @@
 
 namespace Zijinghua\Zbasement\Http\Models\Contracts;
 
-interface MessageModelInterface
+interface CodeMessageModelInterface
 {
     public function getMessageBody($code);
 }

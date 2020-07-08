@@ -35,8 +35,11 @@ class BaseRepository implements BaseRepositoryInterface
 
     }
 
-    public function model($slug){
-        return Zsystem::model($slug);
+    public function model($slug=null){
+        if(isset($slug)){
+            return Zsystem::model($slug);
+        }
+        return Zsystem::model($this->slug);
     }
 
 

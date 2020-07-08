@@ -40,7 +40,7 @@ class Has implements Rule
     {
         $response=$this->service->search($attribute, $value);
         if (!$response->code->status) {
-            $this->message = '字段'.$attribute.',值'. $value.'.'.config('zbasement.validation.message.field.has.value');
+            $this->message = '字段'.$attribute.'的值'. $value.'无法找到';
             return false;
         }
         return true;

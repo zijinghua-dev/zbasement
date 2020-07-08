@@ -3,9 +3,9 @@
 namespace Zijinghua\Zbasement\Http\Models;
 
 use Illuminate\Support\Facades\Cache;
-use Zijinghua\Zbasement\Http\Models\Contracts\MessageModelInterface;
+use Zijinghua\Zbasement\Http\Models\Contracts\CodeMessageModelInterface;
 
-class MessageConfig implements MessageModelInterface
+class CodeMessageConfig implements CodeMessageModelInterface
 {
     public $code;
     public $httpCode;

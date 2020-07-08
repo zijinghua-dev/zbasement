@@ -10,7 +10,7 @@ class BaseService
 use Slug;
     public function messageResponse($code, $data = null, $resourceClass = 'Zijinghua\Zbasement\Http\Resources\FoundationListResource') {
         $response=app('messageResponse');
-        $messageRepository=Zsystem::repository('message');
+        $messageRepository=Zsystem::repository('codeMessage');
         $message=$messageRepository->first('code',$code);
         $response->set($message,$data,$resourceClass);
         return $response;
@@ -37,10 +37,13 @@ use Slug;
         return $messageResponse;
     }
 
-    public function repository($slug){
+    public function repository($slug=null){
         //查询$slug对应的repository是否存在
         //否则返回baseRepository
-        return Zsystem::repository($slug);
+        if(isset($slug)){
+            return Zsystem::repository($slug);
+        }
+        return Zsystem::repository($this->slug);
     }
 
     public function store($parameters){

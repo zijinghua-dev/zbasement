@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Controllers\Requests\ShowRequest;
+use Zijinghua\Zbasement\Http\Requests\StoreRequest;
 
 class BaseController extends Controller
 {
     private $slug;
-    public function store(Request $request){
+    public function store(StoreRequest $request){
         $slug=$this->getSlug($request);
         $data=$request->all();
         $message= $this->service($slug)->store($data);

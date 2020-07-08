@@ -4,7 +4,7 @@
 namespace Zijinghua\Zbasement\Http\Repositories\Contracts;
 
 
-interface MessageRepositoryInterface
+interface CodeMessageRepositoryInterface
 {
 
 }

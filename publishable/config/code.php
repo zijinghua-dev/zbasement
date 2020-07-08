@@ -121,7 +121,27 @@ return [
                     'status' => true,
                     'message' => '已经接收到USER数据插入提交申请!'
                 ]
-            ]
+            ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_STORE_LOAD_RULES',
+                    'status' => true,
+                    'message' => 'USER数据插入操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_STORE_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => 'USER数据插入操作所需验证规则的提示信息加载成功!'
+                ],
+            ],
+            'validation' => [
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_USER_STORE_VALIDATION',
+                'status' => false,
+                'message' => '新建用户帐户时输入参数验证失败!'
+            ],
         ]
     ]
 ];

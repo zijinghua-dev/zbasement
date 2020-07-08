@@ -4,9 +4,12 @@
 namespace Zijinghua\Zbasement;
 
 use Zijinghua\Basement\Http\Models\Contracts\MessageModelInterface;
-use Zijinghua\Zbasement\Http\Models\MessageConfig;
-use Zijinghua\Zbasement\Http\Repositories\Contracts\MessageRepositoryInterface;
-use Zijinghua\Zbasement\Http\Repositories\MessageRepository;
+use Zijinghua\Zbasement\Http\Models\Contracts\ValidationModelInterface;
+use Zijinghua\Zbasement\Http\Models\CodeMessageConfig;
+use Zijinghua\Zbasement\Http\Models\ValidationConfig;
+use Zijinghua\Zbasement\Http\Repositories\Contracts\CodeMessageRepositoryInterface;
+use Zijinghua\Zbasement\Http\Repositories\CodeMessageRepository;
+use Zijinghua\Zbasement\Http\Repositories\ValidationRepository;
 use Zijinghua\Zbasement\Http\Responses\MessageResponse;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -14,9 +17,14 @@ use Zijinghua\Zbasement\Http\Responses\Contracts\MessageResponseInterface;
 use Zijinghua\Zbasement\Http\Models\Contracts\UserModelInterface;
 use Zijinghua\Zbasement\Http\Models\User;
 use Zijinghua\Zbasement\Http\Services\BaseService;
+use Zijinghua\Zbasement\Http\Services\CodeMessageService;
 use Zijinghua\Zbasement\Http\Services\Contracts\BaseServiceInterface;
 use Zijinghua\Zbasement\Http\Repositories\BaseRepository;
 use Zijinghua\Zbasement\Facades\Zsystem as ZsystemFacade;
+use Zijinghua\Zbasement\Http\Services\Contracts\CodeMessageServiceInterface;
+use Zijinghua\Zbasement\Http\Services\Contracts\ValidationServiceInterface;
+use Zijinghua\Zbasement\Http\Services\ValidationService;
+
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -44,36 +52,55 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton('zsystem', function () {
             return new Zsystem();
         });
-
-        $loader->alias('baseRepository', BaseRepositoryInterface::class);
-        $this->app->singleton('baseRepository', function () {
-            return new BaseRepository();
+        $loader->alias('messageResponse', MessageResponseInterface::class);
+        $this->app->bind('messageResponse', function () {
+            return new MessageResponse();
         });
 
-        $loader->alias('messageRepository', MessageRepositoryInterface::class);
-        $this->app->singleton('messageRepository', function () {
-            return new MessageRepository();
-        });
-
-
-        $loader->alias('baseService', BaseServiceInterface::class);
-        $this->app->singleton('baseService', function () {
-            return new BaseService();
-        });
 
         $loader->alias('userModel', UserModelInterface::class);
         $this->app->singleton('userModel', function () {
             return new User();
         });
 
-        $loader->alias('messageModel', MessageModelInterface::class);
-        $this->app->singleton('messageModel', function () {
-            return new MessageConfig();
+        $loader->alias('codeMessageModel', CodeMessageModelInterface::class);
+        $this->app->singleton('codeMessageModel', function () {
+            return new CodeMessageConfig();
         });
 
-        $loader->alias('messageResponse', MessageResponseInterface::class);
-        $this->app->bind('messageResponse', function () {
-            return new MessageResponse();
+        $loader->alias('validationModel', ValidationModelInterface::class);
+        $this->app->singleton('validationModel', function () {
+            return new ValidationConfig();
+        });
+
+
+        $loader->alias('baseRepository', BaseRepositoryInterface::class);
+        $this->app->singleton('baseRepository', function () {
+            return new BaseRepository();
+        });
+
+        $loader->alias('codeMessageRepository', CodeMessageRepositoryInterface::class);
+        $this->app->singleton('codeMessageRepository', function () {
+            return new CodeMessageRepository();
+        });
+        $loader->alias('validationRepository', ValidationRepositoryInterface::class);
+        $this->app->singleton('validationRepository', function () {
+            return new ValidationRepository();
+        });
+
+        $loader->alias('baseService', BaseServiceInterface::class);
+        $this->app->singleton('baseService', function () {
+            return new BaseService();
+        });
+
+        $loader->alias('validationService', ValidationServiceInterface::class);
+        $this->app->bind('validationService', function () {
+            return new ValidationService();
+        });
+
+        $loader->alias('codeMessageService', CodeMessageServiceInterface::class);
+        $this->app->bind('codeMessageService', function () {
+            return new CodeMessageService();
         });
     }
 

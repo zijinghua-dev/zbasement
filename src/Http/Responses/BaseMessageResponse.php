@@ -3,7 +3,7 @@
 
 namespace Zijinghua\Zbasement\Http\Responses;
 
-use Zijinghua\Zbasement\Http\Repositories\Contracts\MessageRepositoryInterface;
+use Zijinghua\Zbasement\Http\Repositories\Contracts\CodeMessageRepositoryInterface;
 
 
 /**
@@ -23,8 +23,8 @@ class BaseMessageResponse
     public $resourceClass=null;
 //    public $httpCode=null;
     public $code=null;
-    public $status=null;
-    public $httpCode=null;
+//    public $status=null;
+//    public $httpCode=null;
     public $message=null;
 
     protected function getStatus()
@@ -52,7 +52,7 @@ class BaseMessageResponse
 //        if (isEmptyOrNullString($this->messageBody['code'])) {
 //            return;
 //        }
-//        $messageBody = app()->make(MessageRepositoryInterface::class)
+//        $messageBody = app()->make(CodeMessageRepositoryInterface::class)
 //            ->getMessageBodyFromCode($this->messageBody['code']);
 //        $this->assignArray(objectToArray($messageBody), $this->messageBody);
         if (!isEmptyOrNullString($this->exceptionMessage)) {
@@ -82,6 +82,8 @@ class BaseMessageResponse
 
     protected function resource()
     {
+//        if(isset())
+//        $codeMessage=;
         $res=new $this->resourceClass($this->data, objectToArray($this->code));
 //        $res=new $this->resourceClass($this->data);
         $res=$res->response()->getData(true);

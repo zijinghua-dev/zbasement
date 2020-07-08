@@ -7,36 +7,56 @@ use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
+use Zijinghua\Zbasement\Facades\Zsystem;
+use Zijinghua\Zbasement\Http\Responses\BaseMessageResponse;
+use Zijinghua\Zbasement\Http\Responses\ExceptionResponse;
+use Zijinghua\Zbasement\Http\Responses\ValidationExceptionResponse;
 
-abstract class FormRequestWithCode extends FormRequest implements ValidatesWhenResolved
+class FormRequestWithCode extends FormRequest implements ValidatesWhenResolved
 {
+    protected $slug;
     public $errorCode;
     public $errorMessages=[];
     public $validateRules=[];
-    abstract protected function loadRules();
-    abstract protected function loadMessages();
-
-    public function __construct(
-        array $query = [],
-        array $request = [],
-        array $attributes = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
-    ) {
-        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-        $this->validateRules=$this->loadRules();
-        $this->errorMessages=$this->loadMessages();
+    protected $bread_action;
+    protected function loadRules(){
+        //加载slug对应的repository
+        $service=Zsystem::service('validation');
+        //slug转完整字段
+//        $this->validateRules=$service->rules($this->slug, $this->bread_action);
+        $this->validateRules=$service->rules($this->slug, $this->bread_action)->data;
     }
+    protected function loadMessages(){
+//        $this->errorMessages=app('validationRepository')->messages($this->slug);
+        $service=Zsystem::service('validation');
+        //slug转完整字段
+        $this->errorMessages=$service->messages($this->slug, $this->bread_action)->data;
+    }
+
+//    public function __construct(
+//        array $query = [],
+//        array $request = [],
+//        array $attributes = [],
+//        array $cookies = [],
+//        array $files = [],
+//        array $server = [],
+//        $content = null
+//    ) {
+//        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+//
+//    }
 
     public function rules()
     {
+        $this->slug=$this->getSlug();
+        $this->loadRules();
+
         return $this->validateRules;
     }
 
     public function messages()
     {
+        $this->loadMessages();
         $messages=[];
         foreach ($this->errorMessages as $field => $values) {
             foreach ($values as $key => $value) {
@@ -48,7 +68,13 @@ abstract class FormRequestWithCode extends FormRequest implements ValidatesWhenR
 
     protected function failedValidation(Validator $validator)
     {
-        throw (new ValidationException($validator, null, null, $this->errorCode))->errorBag($this->errorBag)
+        $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->slug).'_'.strtoupper($this->bread_action).'_VALIDATION';
+
+        $codeMessageService=Zsystem::service('codeMessage');
+        $codeMessage=$codeMessageService->show($this->errorCode);
+        $codeMessage=$codeMessageService->show($this->errorCode)->data;
+//        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\FoundationListResource');
+        throw (new ValidationException($validator, ValidationExceptionResponse::class, null, $this->errorCode))->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
     }
     /**
@@ -80,5 +106,22 @@ abstract class FormRequestWithCode extends FormRequest implements ValidatesWhenR
             }
         }
         return $newMessage;
+    }
+
+    public function getSlug()
+    {
+//        if (isset($this->slug)) {
+//            $slug = $this->slug;
+//        } else {
+            $path=$this->path();
+            $slug = explode('/', $path)[1];
+//            $slug = explode('.', $request->route()->getName())[0];
+//        }
+
+        return $slug;
+    }
+
+    public function getAction(){
+        
     }
 }
