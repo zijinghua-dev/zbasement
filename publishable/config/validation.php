@@ -104,7 +104,7 @@ return [
                     ],
                     [
                         'rule'=>[
-                            'required_with:username,email,mobile'
+                            'required_with:username,email,mobile,account'
                         ],
                         'action'=>[
                             'login'
@@ -112,10 +112,18 @@ return [
                     ],
                     [
                         'rule'=>[
+                            'required_with:username,email,mobile'
+                        ],
+                        'action'=>[
+                            'store'
+                        ],
+                    ],
+                    [
+                        'rule'=>[
                             'required'
                         ],
                         'action'=>[
-                            'updatePassword','store'
+                            'updatePassword',
                         ],
                     ],
                 ],

@@ -2,6 +2,7 @@
 
 namespace Zijinghua\Zbasement\Http\Requests;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Zijinghua\Zbasement\Exceptions\ValidationException;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Foundation\Http\FormRequest;
@@ -71,10 +72,12 @@ class FormRequestWithCode extends FormRequest implements ValidatesWhenResolved
         $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->slug).'_'.strtoupper($this->bread_action).'_VALIDATION';
 
         $codeMessageService=Zsystem::service('codeMessage');
-        $codeMessage=$codeMessageService->show($this->errorCode);
-        $codeMessage=$codeMessageService->show($this->errorCode)->data;
+//        $codeMessage=$codeMessageService->show($this->errorCode);
+        $response=$codeMessageService->show($this->errorCode);
+        $response->appendMessages($validator->errors()->all());
+        $response=$response->response();
 //        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\FoundationListResource');
-        throw (new ValidationException($validator, ValidationExceptionResponse::class, null, $this->errorCode))->errorBag($this->errorBag)
+        throw (new ValidationException($validator, $response, null, $this->errorCode))->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
     }
     /**
@@ -114,7 +117,7 @@ class FormRequestWithCode extends FormRequest implements ValidatesWhenResolved
 //            $slug = $this->slug;
 //        } else {
             $path=$this->path();
-            $slug = explode('/', $path)[1];
+            $slug = explode('/', $path)[2];
 //            $slug = explode('.', $request->route()->getName())[0];
 //        }
 

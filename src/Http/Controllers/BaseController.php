@@ -36,7 +36,7 @@ class BaseController extends Controller
             $slug = $this->slug;
         } else {
             $path=$request->path();
-            $slug = explode('/', $path)[1];
+            $slug = explode('/', $path)[2];
 //            $slug = explode('.', $request->route()->getName())[0];
         }
 

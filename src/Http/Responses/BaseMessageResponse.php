@@ -128,4 +128,15 @@ class BaseMessageResponse
         }
 //        return $destinationArray;
     }
+
+    public function appendMessages($messages){
+        if(is_array($messages)){
+            $messages=implode(" ",$messages);
+        }
+        if(!isset($this->code)){
+            $this->code=(object)['message'=>$messages];
+        }elseif(isset($this->code->message)){
+            $this->code->message=$this->code->message.' '.$messages;
+        }
+    }
 }
