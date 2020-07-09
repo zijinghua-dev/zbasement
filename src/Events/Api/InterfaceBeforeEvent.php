@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zijinghua\Basement\Events\Api;
+namespace Zijinghua\Zbasement\Events\Api;
 
 class InterfaceBeforeEvent extends AppEvent
 {

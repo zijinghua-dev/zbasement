@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zijinghua\Basement\Events\Api;
+namespace Zijinghua\ZBasement\Events\Api;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

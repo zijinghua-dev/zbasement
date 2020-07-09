@@ -19,12 +19,12 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function first($field, $value){
         $model=$this->model($this->slug);
-        return $$model::where($field, $value)->first();
+        return $model::where($field, $value)->first();
     }
 
     public function all($field, $value){
         $model=$this->model($this->slug);
-        return $$model::where($field, $value)->paginate(15);
+        return $model::where($field, $value)->paginate(15);
     }
 
     public function search($parameters){
@@ -32,7 +32,18 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     public function store($parameters){
+        //这里要进行参数过滤
+        $model=$this->model();
+        foreach ($parameters as $key => $value){
+            $model->$key=$value;
+        }
+        $model->save();
+    }
 
+    public function show($uuid){
+        $model=$this->model();
+
+        return $model->where('uuid', $uuid)->first();
     }
 
     public function model($slug=null){

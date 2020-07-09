@@ -5,11 +5,12 @@ namespace Zijinghua\Zbasement\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Zijinghua\Zbasement\Http\Resources\Contracts\BaseResourceInterface;
 
 /**
  * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
-class FoundationListResource extends ResourceCollection
+class BaseResource extends ResourceCollection implements BaseResourceInterface
 {
     protected $hiddenFields=[];
 

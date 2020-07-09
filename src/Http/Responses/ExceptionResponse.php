@@ -13,7 +13,7 @@ class ExceptionResponse extends JsonResponse
     protected $request;
     protected $exception;
 
-    public $resourceClass='Zijinghua\Zbasement\Http\Resources\FoundationListResource';
+    public $resourceClass= 'Zijinghua\Zbasement\Http\Resources\BaseResource';
     public function __construct($data = null, int $status = 200, array $headers = [], bool $json = false)
     {
         parent::__construct($data, $status, $headers, $json);

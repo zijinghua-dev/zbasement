@@ -76,7 +76,7 @@ class FormRequestWithCode extends FormRequest implements ValidatesWhenResolved
         $response=$codeMessageService->show($this->errorCode);
         $response->appendMessages($validator->errors()->all());
         $response=$response->response();
-//        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\FoundationListResource');
+//        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\BaseResource');
         throw (new ValidationException($validator, $response, null, $this->errorCode))->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
     }

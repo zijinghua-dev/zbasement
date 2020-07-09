@@ -60,6 +60,20 @@ return [
                 'status' => false,
                 'message' => '用户信息输入参数验证失败!'
             ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_SHOW_LOAD_RULES',
+                    'status' => true,
+                    'message' => 'USER数据详情展示操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_SHOW_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => 'USER数据详情展示操作所需验证规则的提示信息加载成功!'
+                ],
+            ],
         ],
         'register' => [
             'success' => [

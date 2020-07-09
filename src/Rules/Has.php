@@ -5,6 +5,11 @@ namespace Zijinghua\Zbasement\Rules;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * Class Has
+ * @package Zijinghua\Zbasement\Rules
+ * 单个值是否存在
+ */
 class Has implements Rule
 {
     protected $field;
@@ -20,13 +25,10 @@ class Has implements Rule
 //     *
 //     * @return void
 //     */
-    public function __construct($request, $requireDependence)
-    {
-        $this->request = $request;
-        $this->field=$requireDependence['field'];
-        $this->slug=$requireDependence['slug'];
-        $this->service=Zsystem::service($this->slug);
-    }
+//    public function __construct($field)
+//    {
+//        $this->field=$field;
+//    }
 
     /**
      * Determine if the validation rule passes.
@@ -38,7 +40,9 @@ class Has implements Rule
      */
     public function passes($attribute, $value)
     {
-        $response=$this->service->search($attribute, $value);
+        $slug=getSlug(request());
+        $service=Zsystem::service($slug);
+        $response=$service->search($attribute, $value);
         if (!$response->code->status) {
             $this->message = '字段'.$attribute.'的值'. $value.'无法找到';
             return false;

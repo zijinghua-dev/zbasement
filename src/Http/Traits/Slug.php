@@ -10,7 +10,4 @@ trait Slug
     public function getSlug(){
         return $this->slug;
     }
-    public function show($uuid){
-
-    }
 }

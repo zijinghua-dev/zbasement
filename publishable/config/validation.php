@@ -187,6 +187,7 @@ return [
                     'rule' => [
                         'required',
                         'regex:/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}/',
+                        'new \Zijinghua\Zbasement\Rules\Has'
                     ],
                     'action'=>[
                         'show','update','updatePassword'

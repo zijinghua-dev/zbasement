@@ -10,6 +10,8 @@ use Zijinghua\Zbasement\Http\Models\ValidationConfig;
 use Zijinghua\Zbasement\Http\Repositories\Contracts\CodeMessageRepositoryInterface;
 use Zijinghua\Zbasement\Http\Repositories\CodeMessageRepository;
 use Zijinghua\Zbasement\Http\Repositories\ValidationRepository;
+use Zijinghua\Zbasement\Http\Resources\BaseResource;
+use Zijinghua\Zbasement\Http\Resources\UserShowResource;
 use Zijinghua\Zbasement\Http\Responses\MessageResponse;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -52,6 +54,18 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton('zsystem', function () {
             return new Zsystem();
         });
+
+        $loader->alias('userShowResource', UserShowResource::class);
+//        $this->app->bind('userShowResource', function () {
+//            return new UserShowResource();
+//        });
+
+        $loader->alias('baseResource', BaseResource::class);
+//        $this->app->bind('baseListResource', function () {
+//            return new BaseResource();
+//        });
+
+
         $loader->alias('messageResponse', MessageResponseInterface::class);
         $this->app->bind('messageResponse', function () {
             return new MessageResponse();

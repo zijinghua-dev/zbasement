@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Http\Request;
+
 function getConfigValue(string $config)
 {
     $value = config($config, null);
@@ -105,4 +108,12 @@ function objectToArray($obj)
     }
 
     return $obj;
+}
+
+function getSlug($request)
+{
+        $path=$request->path();
+        $slug = explode('/', $path)[2];
+
+    return $slug;
 }
