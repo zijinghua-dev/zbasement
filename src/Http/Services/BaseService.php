@@ -16,22 +16,33 @@ use Slug;
         return $response;
     }
 
+    //搜索到第一个就停止
+    public function multiFieldsExist($fields, $value){
+        foreach ($fields as $field){
+            $response=$this->search($field, $value);
+            if($response->code->status){
+                return $response;
+            }
+        }
+        return $response;
+    }
+
     //查询字段是否存在，值是否存在，如果存在，返回一个列表
     public function search($field, $value) {
         $result=$this->repository($this->slug)->fieldExist($field);
         if (!$result){
 
-            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_FIELD_SEARCH_FAILED';
+            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_VALIDATION';
             $messageResponse=$this->messageResponse($code);
             return $messageResponse;
         }
         $result=$this->repository($this->slug)->all($field, $value);
         if (!$result){
-            $code='VALUE_NOT_FOUND';
+            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_ERROR';
             $messageResponse=$this->messageResponse($code);
 
         } else {
-            $code='VALUE_FOUND_SUCCESS';
+            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_SUCCESS';
             $messageResponse=$this->messageResponse($code, result);
         }
         return $messageResponse;

@@ -1,12 +1,19 @@
 <?php
-namespace Zijinghua\Zbasement\Http\Models;
+namespace Zijinghua\Zbasement\Http\Models\Traits;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 
 trait UuidTrait
 {
+    use LogsActivity;
+
+    protected static $logFillable = true;
+    protected static $logAttributes = ['vendor_id'];
+    protected static $logOnlyDirty = true;
+
     /**
      * The "booting" method of the model.
      *

@@ -31,7 +31,7 @@ return [
                 ],
                 [
                     'rule'=>[
-                        'new Unique',
+                        'new \Zijinghua\Zbasement\Rules\Unique:username,mobile',
                     ],
                     'action'=>[
                         'store'
@@ -51,7 +51,7 @@ return [
                 ],
                 [
                     'rule'=>[
-                        'new Unique',
+                        'new \Zijinghua\Zbasement\Rules\Unique',
                     ],
                     'action'=>[
                         'store'
@@ -72,126 +72,126 @@ return [
                 ],
                 [
                     'rule'=>[
-                        'new Unique',
+                        'new \Zijinghua\Zbasement\Rules\Unique',
                     ],
                     'action'=>[
                         'store'
                     ],
                 ],
             ],
-                'account'=>[
-                    [
-                        'rule'=>[
-                            'nullable',
-                            'min:2',
-                            'max:255',
-                        ],
-                        'action'=>[
-                            'login',
-                        ],
+            'account'=>[
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:2',
+                        'max:255',
                     ],
+                    'action'=>[
+                        'login',
+                    ],
+                ],
 
-                ],
-                'password' => [
-                    [
-                        'rule'=>[
-                            'min:6',
-                            'max:255',
-                        ],
-                        'action'=>[
-                            'login','store'
-                        ],
+            ],
+            'password' => [
+                [
+                    'rule'=>[
+                        'min:6',
+                        'max:255',
                     ],
-                    [
-                        'rule'=>[
-                            'required_with:username,email,mobile,account'
-                        ],
-                        'action'=>[
-                            'login'
-                        ],
-                    ],
-                    [
-                        'rule'=>[
-                            'required_with:username,email,mobile'
-                        ],
-                        'action'=>[
-                            'store'
-                        ],
-                    ],
-                    [
-                        'rule'=>[
-                            'required'
-                        ],
-                        'action'=>[
-                            'updatePassword',
-                        ],
+                    'action'=>[
+                        'login','store'
                     ],
                 ],
-                'pre_password' => [
-                    [
-                        'rule'=>[
-                            'min:6',
-                            'max:255',
-                            'required'
-                        ],
-                        'action'=>[
-                            'updatePassword',
-                        ],
+                [
+                    'rule'=>[
+                        'required_with:username,email,mobile,account'
+                    ],
+                    'action'=>[
+                        'login'
                     ],
                 ],
-                'wechat_id' => [
-                    [
-                        'rule'=>[
-                            'nullable',
-                            'min:6',
-                            'max:255',
-                        ],
-                        'action'=>[
-                            'login','store'
-                        ],
+                [
+                    'rule'=>[
+                        'required_with:username,email,mobile'
                     ],
-                    [
-                        'rule'=>[
-                            'new Unique',
-                        ],
-                        'action'=>[
-                            'store'
-                        ],
+                    'action'=>[
+                        'store'
                     ],
                 ],
-                'currentPage' => [
-                    [
-                        'rule' => [
-                            'integer',
-                            'min:0',
-                        ],
-                        'action'=>[
-                            'index'
-                        ],
-                    ]
+                [
+                    'rule'=>[
+                        'required'
+                    ],
+                    'action'=>[
+                        'updatePassword',
+                    ],
                 ],
-                'pageSize' => [
-                    [
-                        'rule' => [
-                            'integer',
-                            'min:0',
-                        ],
-                        'action'=>[
-                            'index'
-                        ],
-                    ]
+            ],
+            'pre_password' => [
+                [
+                    'rule'=>[
+                        'min:6',
+                        'max:255',
+                        'required'
+                    ],
+                    'action'=>[
+                        'updatePassword',
+                    ],
+                ],
+            ],
+            'wechat_id' => [
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:6',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'login','store'
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'new \Zijinghua\Zbasement\Rules\Unique',
+                    ],
+                    'action'=>[
+                        'store'
+                    ],
+                ],
+            ],
+            'currentPage' => [
+                [
+                    'rule' => [
+                        'integer',
+                        'min:0',
+                    ],
+                    'action'=>[
+                        'index'
+                    ],
+                ]
+            ],
+            'pageSize' => [
+                [
+                    'rule' => [
+                        'integer',
+                        'min:0',
+                    ],
+                    'action'=>[
+                        'index'
+                    ],
+                ]
 
-                ],
-                'uuid' => [
-                    [
-                        'rule' => [
-                            'required',
-                            'regex:/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}/',
-                        ],
-                        'action'=>[
-                            'show','update','updatePassword'
-                        ],
-                    ]
+            ],
+            'uuid' => [
+                [
+                    'rule' => [
+                        'required',
+                        'regex:/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}/',
+                    ],
+                    'action'=>[
+                        'show','update','updatePassword'
+                    ],
+                ]
 
 
             ],
