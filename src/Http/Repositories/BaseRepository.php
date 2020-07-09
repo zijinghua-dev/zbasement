@@ -31,12 +31,15 @@ class BaseRepository implements BaseRepositoryInterface
 
     }
 
+    //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
         $model=$this->model();
-        foreach ($parameters as $key => $value){
-            $model->$key=$value;
-        }
+        //所有model都要实现fill方法，对输入参数进行过滤
+        $model->fill($parameters);
+//        foreach ($parameters as $key => $value){
+//            $model->$key=$value;
+//        }
         $model->save();
     }
 
