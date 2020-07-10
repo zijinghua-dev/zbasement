@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Zijinghua\Zbasement\Events\Api\InterfaceAfterEvent;
+use Zijinghua\Zbasement\Events\Api\InterfaceBeforeEvent;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Requests\IndexRequest;
 use Zijinghua\Zbasement\Http\Requests\ShowRequest;
@@ -12,7 +13,7 @@ use Zijinghua\Zbasement\Http\Requests\StoreRequest;
 
 class BaseController extends Controller
 {
-    private $slug;
+    protected $slug;
     public function execute($request,$action){
         //发送事件
         event(new InterfaceBeforeEvent($request));

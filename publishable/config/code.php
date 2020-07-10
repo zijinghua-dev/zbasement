@@ -20,6 +20,20 @@ return [
                 'status' => false,
                 'message' => '登录参数验证失败!'
             ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_LOGIN_LOAD_RULES',
+                    'status' => true,
+                    'message' => '登录操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_LOGIN_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => '登录操作所需验证规则的提示信息加载成功!'
+                ],
+            ],
         ],
         'index' => [
             'success' => [
