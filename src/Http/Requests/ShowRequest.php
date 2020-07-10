@@ -49,8 +49,9 @@ class ShowRequest extends FormRequestWithCode
      */
     public function all($keys = null)
     {
-        $data = parent::all($keys);
-        $data['uuid'] = $this->route('uuid');
+        $data=$this->route()->paremeters();
+//        $data = parent::all($keys);
+//        $data['uuid'] = $this->route('uuid');
         return $data;
     }
 }
