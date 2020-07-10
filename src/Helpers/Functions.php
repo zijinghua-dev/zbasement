@@ -1,17 +1,17 @@
 <?php
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 if (!function_exists('getConfigValue')) {
-    function getConfigValue(string $config)
+    function getConfigValue(string $config, int $default = null)
     {
-        $value = config($config, null);
+        $value = config($config, $default);
         if (!$value) {
-            throw new Exception('请配置'.$config);
+            throw new Exception('请配置' . $config);
         }
+
         return $value;
     }
 }
-
 //下划线命名到驼峰命名
 if (!function_exists('toCamelCase')) {
     function toCamelCase($str)
@@ -56,7 +56,6 @@ if (!function_exists('arrays_are_similar')) {
         return true;
     }
 }
-
 //不能是空，不能是null，不能是空格
 if (!function_exists('isEmptyOrNullString')) {
     function isEmptyOrNullString($str)

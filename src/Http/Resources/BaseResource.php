@@ -58,14 +58,28 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 //        }
 //        return [ 'data' => $this->collection, $this->messageBody];
 //        return [ 'data' => $this->collection->except($this->hiddenFields)];
-        $res=$this->collection->except($this->hiddenFields);
-        if (isset($this->hiddenFields)&&(!empty($this->hiddenFields))) {
-            return array_merge([
-                'data' => $res,
-            ], $this->messageBody);
-        } else {
-            return array_merge(['data' => $this->collection], $this->messageBody);
+//        $res=$this->collection->except($this->hiddenFields);
+        foreach ($this->collection as $key=>$item){
+            foreach ($this->hiddenFields as $hiddenField){
+                if(isset($item[$hiddenField])){
+                    unset($item[$hiddenField]);
+                }
+            }
+            $this->collection[$key]=$item;
         }
+        return array_merge(['data' => $this->collection], $this->messageBody);
+
+//        $res = $this->collection->each(function ($item, $key) {
+//            return collect($item)->except($this->hiddenFields)->toArray();
+//        });
+//        $res=$res->all();
+//        if (isset($this->hiddenFields)&&(!empty($this->hiddenFields))) {
+//            return array_merge([
+//                'data' => $res,
+//            ], $this->messageBody);
+//        } else {
+//            return array_merge(['data' => $this->collection], $this->messageBody);
+//        }
 
 //        return array_merge(['data' => $this->collection->except($this->hiddenFields),], $this->messageBody);
     }

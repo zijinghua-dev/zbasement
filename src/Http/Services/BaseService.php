@@ -8,6 +8,9 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 class BaseService
 {
 use Slug;
+    public function index($data){
+
+    }
     public function messageResponse($code, $data = null, $resourceClass = 'Zijinghua\Zbasement\Http\Resources\BaseResource') {
         $response=app('messageResponse');
         $messageRepository=Zsystem::repository('codeMessage');

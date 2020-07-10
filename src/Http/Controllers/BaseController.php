@@ -43,6 +43,7 @@ class BaseController extends Controller
     public function index(IndexRequest $request){
         //前端将搜索内容放在请求体内，以json形式，将搜索参数用键值对保存到数组里
         //pageIndex（目标页），orderby（排序字段），sort_order（顺序倒序），showSoftDeletes，[key ,filter,value](and or),
+        //indexrequest的权限还要处理搜索字段，不能有禁止搜索的字段
         $this->execute($request,'index');
     }
 
