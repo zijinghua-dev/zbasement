@@ -3,6 +3,9 @@
 
 namespace Zijinghua\Zbasement;
 
+use Illuminate\Support\Facades\Log;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Models\Activity as ActivityModel;
 use Zijinghua\Basement\Http\Models\Contracts\MessageModelInterface;
 use Zijinghua\Zbasement\Http\Models\Contracts\ValidationModelInterface;
 use Zijinghua\Zbasement\Http\Models\CodeMessageConfig;
@@ -26,10 +29,19 @@ use Zijinghua\Zbasement\Facades\Zsystem as ZsystemFacade;
 use Zijinghua\Zbasement\Http\Services\Contracts\CodeMessageServiceInterface;
 use Zijinghua\Zbasement\Http\Services\Contracts\ValidationServiceInterface;
 use Zijinghua\Zbasement\Http\Services\ValidationService;
+use Zijinghua\Zbasement\Observers\ActivityObserver;
 
 
 class ServiceProvider extends BaseServiceProvider
 {
+    protected static function getActivityModel()
+    {
+        return config('activitylog.activity_model') ?? ActivityModel::class;
+    }
+    public function boot()
+    {
+        self::getActivityModel()::observe(ActivityObserver::class);
+    }
     /**
      * 在服务容器里注册
      *
@@ -132,8 +144,10 @@ class ServiceProvider extends BaseServiceProvider
             dirname(__DIR__).'/publishable/config/code.php', 'zbasement.code'
         );
         $this->mergeConfigFrom(
+
             dirname(__DIR__).'/publishable/config/fields.php', 'zbasement.fields'
         );
+        $this->mergeConfigFrom(dirname(__DIR__).'/publishable/config/logging.php', 'logging.channels');
     }
 
     /**
