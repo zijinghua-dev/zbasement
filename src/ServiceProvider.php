@@ -67,7 +67,7 @@ class ServiceProvider extends BaseServiceProvider
             return new Zsystem();
         });
 
-        $loader->alias('userShowResource', UserShowResource::class);
+//        $loader->alias('userShowResource', UserShowResource::class);
 //        $this->app->bind('userShowResource', function () {
 //            return new UserShowResource();
 //        });
@@ -84,10 +84,10 @@ class ServiceProvider extends BaseServiceProvider
         });
 
 
-        $loader->alias('userModel', UserModelInterface::class);
-        $this->app->singleton('userModel', function () {
-            return new User();
-        });
+//        $loader->alias('userModel', UserModelInterface::class);
+//        $this->app->singleton('userModel', function () {
+//            return new User();
+//        });
 
         $loader->alias('codeMessageModel', CodeMessageModelInterface::class);
         $this->app->singleton('codeMessageModel', function () {
