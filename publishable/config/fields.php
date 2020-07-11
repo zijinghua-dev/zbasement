@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'login' => [
+    'auth' => [
         'internal'=>[
             'username','email','mobile',
         ],
