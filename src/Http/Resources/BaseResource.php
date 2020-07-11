@@ -12,6 +12,7 @@ use Zijinghua\Zbasement\Http\Resources\Contracts\BaseResourceInterface;
  */
 class BaseResource extends ResourceCollection implements BaseResourceInterface
 {
+    protected  $childResource;
     protected $hiddenFields=[];
 
     protected $messageBody=[
@@ -20,7 +21,7 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
         'message'=>null,
     ];
 
-    public function __construct($resource, $messageBody = null)
+    public function __construct($resource, $messageBody = null,$childResource=null)
     {
         $collection = new Collection();
         if (isset($resource)) {
@@ -36,6 +37,7 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
         parent::__construct($collection);
 
         $this->set($messageBody);
+        $this->childResource=$childResource;
     }
 
     public function set($messageBody)
@@ -49,6 +51,21 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 
     public function toArray($request)
     {
+        return $this->childResource::collection($this->collection);
+    }
+
+    /**
+     * 返回应该和资源一起返回的其他数据数组
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function with($request)
+    {
+        return $this->messageBody;
+    }
+//    public function toArray($request)
+//    {
 //        if (!($this->resource instanceof Collection)) {
 //            $res=new Collection();
 //            $res->push($this->resource) ;
@@ -59,15 +76,15 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 //        return [ 'data' => $this->collection, $this->messageBody];
 //        return [ 'data' => $this->collection->except($this->hiddenFields)];
 //        $res=$this->collection->except($this->hiddenFields);
-        foreach ($this->collection as $key=>$item){
-            foreach ($this->hiddenFields as $hiddenField){
-                if(isset($item[$hiddenField])){
-                    unset($item[$hiddenField]);
-                }
-            }
-            $this->collection[$key]=$item;
-        }
-        return array_merge(['data' => $this->collection], $this->messageBody);
+//        foreach ($this->collection as $key=>$item){
+//            foreach ($this->hiddenFields as $hiddenField){
+//                if(isset($item[$hiddenField])){
+//                    unset($item[$hiddenField]);
+//                }
+//            }
+//            $this->collection[$key]=$item;
+//        }
+//        return array_merge(['data' => $this->collection], $this->messageBody);
 
 //        $res = $this->collection->each(function ($item, $key) {
 //            return collect($item)->except($this->hiddenFields)->toArray();
@@ -82,5 +99,5 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 //        }
 
 //        return array_merge(['data' => $this->collection->except($this->hiddenFields),], $this->messageBody);
-    }
+//    }
 }

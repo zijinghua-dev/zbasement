@@ -4,6 +4,7 @@
 namespace Zijinghua\Zbasement\Http\Responses;
 
 use Zijinghua\Zbasement\Http\Repositories\Contracts\CodeMessageRepositoryInterface;
+use Zijinghua\Zbasement\Http\Resources\BaseResource;
 
 
 /**
@@ -84,7 +85,7 @@ class BaseMessageResponse
     {
 //        if(isset())
 //        $codeMessage=;
-        $res=new $this->resourceClass($this->data, objectToArray($this->code));
+        $res=new BaseResource($this->data, objectToArray($this->code),$this->resourceClass);
 //        $res=new $this->resourceClass($this->data);
         $res=$res->response()->getData(true);
         return $res;

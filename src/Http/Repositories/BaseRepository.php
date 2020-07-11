@@ -16,7 +16,7 @@ class BaseRepository implements BaseRepositoryInterface
     //输入参数过滤，只留下search,showsoftdelete,sort(orderby,sort_direction),pageindex
     //content=>{item=>{key=>field,key=>value,key=>filter,key=>alg}
     private function getIndexParameter($data){
-        $search=null;
+        $search=[];
         $showSoftDelete=null;
         $sort=null;
         $pageIndex=null;

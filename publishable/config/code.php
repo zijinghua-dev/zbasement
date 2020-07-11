@@ -54,6 +54,20 @@ return [
                 'status' => false,
                 'message' => '用户列表输入参数验证失败!'
             ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_INDEX_LOAD_RULES',
+                    'status' => true,
+                    'message' => '登录操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_INDEX_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => '登录操作所需验证规则的提示信息加载成功!'
+                ],
+            ],
         ],
         'show' => [
             'success' => [

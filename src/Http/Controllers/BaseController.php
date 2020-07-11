@@ -24,7 +24,8 @@ class BaseController extends Controller
         }
 
         $data=$request->all();
-        $message= $this->service($this->slug)->$action($data);
+        $service=$this->service($this->slug);
+        $message= $service->$action($data);
         $response=$message->response();
         event(new InterfaceAfterEvent($request,$response));
         return $response;
@@ -44,15 +45,16 @@ class BaseController extends Controller
         //前端将搜索内容放在请求体内，以json形式，将搜索参数用键值对保存到数组里
         //pageIndex（目标页），orderby（排序字段），sort_order（顺序倒序），showSoftDeletes，[key ,filter,value](and or),
         //indexrequest的权限还要处理搜索字段，不能有禁止搜索的字段
-        $this->execute($request,'index');
+        return $this->execute($request,'index');
     }
 
     public function store(StoreRequest $request){
-        $this->execute($request,'store');
+        $response=$this->execute($request,'store');
+        return $response;
     }
 
     public function show(ShowRequest $request){
-        $this->execute($request,'edit');
+        return $this->execute($request,'show');
     }
 
     public function service($slug){

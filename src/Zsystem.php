@@ -9,18 +9,31 @@ use Illuminate\Support\Str;
 
 class Zsystem
 {
-    public function resource($bread_action, $slug=null){
-        if(!isset($slug)) {
-            $slug='base';
-        }else{
-            if(isset($bread_action)){
-                $slug=$slug.ucfirst($bread_action);
+    public function resource($slug=null,$bread_action=null){
+        //资源类的规则是：第一是slug+action,然后是slug，然后是base
+        if(isset($slug)) {
+            $secondTryName = $slug;
+            if (isset($bread_action)) {
+                $firstTryName = $slug . ucfirst($bread_action);
             }
         }
-        $class= $this->getClass($slug, 'resource');
-        return $class;
-
+        $class=$this->reflectClass($firstTryName, 'resource');
+        if ($class) {
+            return $class;
+        }
+        //再找slug类
+        $class=$this->reflectClass($secondTryName, 'resource');
+        if ($class) {
+            return $class;
+        }
+        //最后是base
+        $class=$this->reflectClass('Base', 'resource');
+        if ($class) {
+             return $class;
+        }
+        throw new Exception('Baseresource资源类丢失。');
     }
+
     public function model($slug=null){
         $object=$this->reflectObject($slug, 'model');
         if (!$object) {

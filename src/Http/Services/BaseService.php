@@ -1,6 +1,7 @@
 <?php
 namespace Zijinghua\Zbasement\Http\Services;
 
+use App\Http\Resources\UserResource;
 use Zijinghua\Zbasement\Http\Responses\Contracts\MessageResponseInterface;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Traits\Slug;
@@ -9,7 +10,16 @@ class BaseService
 {
 use Slug;
     public function index($data){
-
+        $repository=$this->repository($this->slug);
+        $result=$repository->index($data);
+        //测试代码---------------------------------
+//        $result=UserResource::collection($result);
+        //测试代码结束---------------------------------
+        //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
+        $code='zbasement.code.'.$this->slug.'.index.success';
+        $resource=$this->getResource($this->slug,'index');
+        $messageResponse=$this->messageResponse($code, $result,$resource);
+        return $messageResponse;
     }
     public function messageResponse($code, $data = null, $resourceClass = 'Zijinghua\Zbasement\Http\Resources\BaseResource') {
         $response=app('messageResponse');
@@ -32,7 +42,8 @@ use Slug;
 
     //查询字段是否存在，值是否存在，如果存在，返回一个列表
     public function search($field, $value) {
-        $result=$this->repository($this->slug)->fieldExist($field);
+        $repository=$this->repository($this->slug);
+        $result=$repository->fieldExist($field);
         if (!$result){
 
             $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_VALIDATION';
@@ -64,15 +75,17 @@ use Slug;
         //这里没有进行参数的过滤，所有参数都传给repository了
         //应该放进队列，由队列进行写入，此时状态202
         //队列完成写入后，发送消息通知用户完成写入
-        $this->repository($this->slug)->store($parameters);
+        $data=$this->repository($this->slug)->store($parameters);
+//        $data=$this->repository($this->slug)->show($data->uuid);
         $code='zbasement.code.'.$this->slug.'.store.submit.success';
         $resource=$this->getResource($this->slug,'store');
-        $messageResponse=$this->messageResponse($code);
+        $messageResponse=$this->messageResponse($code,$data,$resource);
         return $messageResponse;
     }
 
     public function show($uuid){
-        $result=$this->repository($this->slug)->show($uuid);
+        $repository=$this->repository($this->slug);
+        $result=$repository->show($uuid);
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
         $code='zbasement.code.'.$this->slug.'.show.success';
         $resource=$this->getResource($this->slug,'show');
@@ -82,6 +95,6 @@ use Slug;
 
     public function getResource($slug, $bread_action){
         //resource类在app中注入的别名为$slug+$bread_action+resource
-        return Zsystem::resource($bread_action, $slug);//注意，这里位置颠倒了，有点不爽
+        return Zsystem::resource( $slug,$bread_action);//注意，这里位置颠倒了，有点不爽
     }
 }
