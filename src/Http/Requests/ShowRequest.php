@@ -9,12 +9,12 @@ namespace Zijinghua\Zbasement\Http\Requests;
 
 //use App\Exceptions\ValidationException;
 use Zijinghua\Zbasement\Rules\Has;
-use Zijinghua\Zbasement\Http\Requests\FormRequestWithCode;
+use Zijinghua\Zbasement\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Validation\Validator;
 
-class ShowRequest extends FormRequestWithCode
+class ShowRequest extends BaseRequest
 {
     protected $bread_action='show';
 //    public function __construct(

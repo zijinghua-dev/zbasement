@@ -4,7 +4,7 @@
 namespace Zijinghua\Zbasement\Http\Requests;
 
 
-class StoreRequest extends FormRequestWithCode
+class StoreRequest extends BaseRequest
 {
     protected $bread_action='store';
 }

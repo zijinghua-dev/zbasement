@@ -116,10 +116,19 @@ class BaseRepository implements BaseRepositoryInterface
         $model->save();
     }
 
-    public function show($uuid){
+    public function show($data){
+        $uuid=$data['uuid'];
         $model=$this->model();
-
         return $model->where('uuid', $uuid)->first();
+    }
+
+    //update,必须含有uuid
+    public function update($data){
+        $model=$this->model();
+        $uuid=$data['uuid'];
+        unset($data['uuid']);
+        $model->where('uuid',$uuid)->update($data);
+        return true;
     }
 
     public function model($slug=null){

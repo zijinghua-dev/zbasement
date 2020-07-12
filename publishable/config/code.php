@@ -123,25 +123,37 @@ return [
                 'message' => '注册用户时输入参数验证失败!'
             ],
         ],
-        'update'=>[
-            'password'=>[
+        'updatepassword'=>[
                 'success' => [
                     'http_code' => 200,
-                    'code' => 'ZBASEMENT_CODE_USER_UPDATE_PASSWORD_SUCCESS',
+                    'code' => 'ZBASEMENT_CODE_USER_UPDATEPASSWORD_SUCCESS',
                     'status' => true,
                     'message' => '更新用户密码成功!'
                 ],
                 'error' => [
                     'http_code' => 403,
-                    'code' => 'ZBASEMENT_CODE_USER_UPDATE_PASSWORD_ERROR',
+                    'code' => 'ZBASEMENT_CODE_USER_UPDATEPASSWORD_ERROR',
                     'status' => false,
                     'message' => '更新用户密码失败!'
                 ],
                 'validation' => [
                     'http_code' => 422,
-                    'code' => 'ZBASEMENT_CODE_USER_UPDATE_PASSWORD_VALIDATION',
+                    'code' => 'ZBASEMENT_CODE_USER_UPDATEPASSWORD_VALIDATION',
                     'status' => false,
                     'message' => '修改密码输入参数验证失败!'
+                ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_UPDATEPASSWORD_LOAD_RULES',
+                    'status' => true,
+                    'message' => '更新密码操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_UPDATEPASSWORD_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => '更新密码操作所需验证规则的提示信息加载成功!'
                 ],
             ],
         ],

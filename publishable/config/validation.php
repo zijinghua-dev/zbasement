@@ -254,8 +254,28 @@ return [
                     'action'=>[
                         'login','store','updatePassword'
                     ]
-                ]
+                ],
+                [
+                    'message' => [
+                        'required'=>'必须输入密码。',
+                    ],
+                    'action'=>[
+                        'updatePassword'
+                    ]
+                ],
 
+            ],
+            'pre_password' => [
+                [
+                    'message' => [
+                        'min'=>'password最少6位。',
+                        'max'=>'password最长255位。',
+                        'required'=>'必须输入原密码。',
+                    ],
+                    'action'=>[
+                        'updatePassword'
+                    ]
+                ],
             ],
             'wechat_id' => [
                 [
@@ -296,6 +316,7 @@ return [
             'uuid'=>[
                 [
                     'message'=>[
+                        'required'=>'必须输入用户ID',
                         'regex' => 'uuid格式不正确!',
                         'has'=>'不存在！',
                     ],
