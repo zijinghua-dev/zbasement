@@ -8,6 +8,7 @@ return [
                         'nullable',
                         'min:2',
                         'max:255',
+                        'regex:/^[^0-9]/'
                     ],
                     'action'=>[
                         'login','store'
@@ -206,6 +207,7 @@ return [
                         'min'=>'username最少2个字符。',
                         'max'=>'username最多不超过255个字符。',
                         'nullable' =>'username不能为null。',
+                        'regex'=>'用户名的首字符不能是数字。',
                     ],
                     'action'=>[
                         'login','store'
