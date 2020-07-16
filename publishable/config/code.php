@@ -170,7 +170,7 @@ return [
         'store'=>[
             'submit'=>[
                 'success'=>[
-                    'http_code' => 202,
+                    'http_code' => 201,
                     'code' => 'ZBASEMENT_CODE_USER_STORE_SUBMIT_SUCCESS',
                     'status' => true,
                     'message' => '已经接收到USER数据插入提交申请!'

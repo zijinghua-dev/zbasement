@@ -114,6 +114,7 @@ class BaseRepository implements BaseRepositoryInterface
 //            $model->$key=$value;
 //        }
         $model->save();
+        return $model;
     }
 
     public function show($data){
