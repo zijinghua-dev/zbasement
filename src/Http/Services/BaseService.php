@@ -9,6 +9,15 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 class BaseService
 {
 use Slug;
+    public function fetch($data){
+        $repository=$this->repository($this->slug);
+        $result=$repository->fetch($data);
+        //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
+        $code='zbasement.code.'.$this->slug.'.fetch.success';
+        $resource=$this->getResource($this->slug,'fetch');
+        $messageResponse=$this->messageResponse($code, $result,$resource);
+        return $messageResponse;
+    }
     public function index($data){
         $repository=$this->repository($this->slug);
         $result=$repository->index($data);

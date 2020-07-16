@@ -34,6 +34,52 @@ class BaseRepository implements BaseRepositoryInterface
         }
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
+    public function fetch($data){
+        $model=Zsystem::model($this->slug);
+        $field=null;
+        $fieldValue=null;
+        $filter='=';
+        $algorithm='or';
+        foreach ($data as $key =>$value){
+            switch ($key){
+                case 'field':
+                    $field=$value;
+                    if(!$this->fieldExist($field)){
+                        throw new Exception('数据对象'.$this->slug.'没有'.$field.'字段。');
+                    }
+                    //如果这个字段不在系统里，或者不能搜索，应当报错
+                    break;
+                case 'filter':
+                    $filter=$value;
+                    break;
+                case 'value':
+                    $fieldValue=$value;
+                    break;
+                case 'algorithm':
+                    $algorithm=$value;
+                    break;
+            }
+        }
+        if($field&&$fieldValue){
+            if($algorithm=='and'){
+                if($filter){
+                    $model=$model->where($field,$filter,$fieldValue);
+                }else{
+                    $model=$model->where($field,$fieldValue);
+                }
+
+            }elseif($algorithm=='or'){
+                if($filter){
+                    $model=$model->orWhere($field,$filter,$fieldValue);
+                }else{
+                    $model=$model->orWhere($field,$fieldValue);
+                }
+            }
+
+        }
+        return $model->first();
+    }
+
     public function index($data){
         $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
