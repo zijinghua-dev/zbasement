@@ -13,18 +13,18 @@ use Zijinghua\Zbasement\Http\Services\BaseService;
 class UserService extends BaseService implements UserServiceInterface
 {
     //只返回第一个用户，并且返回这个用户的全部数据
-    public function fetch($data){
-        $repository=Zsystem::repository($this->getSlug());
-        $users=$repository->index($data);
-        if (isset($users)) {
-            $codeStr = 'ZBASEMENT_CODE_USER_FETCH_SUCCESS';
-            $res = $this->messageResponse($codeStr, $users[0]);
-        } else {
-            $codeStr = 'ZBASEMENT_CODE_USER_FETCH_FAILED';
-            $res = $this->messageResponse($codeStr);
-        }
-        return $res;
-    }
+//    public function fetch($data){
+//        $repository=Zsystem::repository($this->getSlug());
+//        $users=$repository->index($data);
+//        if (isset($users)) {
+//            $codeStr = 'ZBASEMENT_CODE_USER_FETCH_SUCCESS';
+//            $res = $this->messageResponse($codeStr, $users[0]);
+//        } else {
+//            $codeStr = 'ZBASEMENT_CODE_USER_FETCH_FAILED';
+//            $res = $this->messageResponse($codeStr);
+//        }
+//        return $res;
+//    }
 //    public function login($data){
 //        $credentials = $this->getCredentials($data);
 //        if (!isset($credentials)||(empty($credentials))) {

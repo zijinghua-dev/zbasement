@@ -34,6 +34,12 @@ class BaseRepository implements BaseRepositoryInterface
         }
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
+
+    public function fetch($data){
+        $collection=$this->index($data);
+        return $collection[0];
+    }
+
     public function index($data){
         $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
