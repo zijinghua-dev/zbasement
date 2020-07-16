@@ -43,6 +43,12 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         self::getActivityModel()::observe(ActivityObserver::class);
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                realpath(__DIR__.'/../publishable/migration') => database_path('migrations')
+            ], 'migrations');
+        }
     }
     /**
      * 在服务容器里注册

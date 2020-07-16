@@ -113,7 +113,8 @@ class BaseRepository implements BaseRepositoryInterface
 //        foreach ($parameters as $key => $value){
 //            $model->$key=$value;
 //        }
-        return $model->save();
+        $model->save();
+        return $model;
     }
 
     public function show($data){
