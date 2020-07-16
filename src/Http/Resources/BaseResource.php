@@ -51,6 +51,9 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 
     public function toArray($request)
     {
+        if(!isset($this->childResource)){
+            return ['data' => $this->collection,];
+        }
         return $this->childResource::collection($this->collection);
     }
 

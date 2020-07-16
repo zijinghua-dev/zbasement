@@ -125,6 +125,6 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
     }
 
     public function getAction(){
-        
+
     }
 }

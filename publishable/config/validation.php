@@ -8,6 +8,7 @@ return [
                         'nullable',
                         'min:2',
                         'max:255',
+                        'regex:/^[^0-9]/'
                     ],
                     'action'=>[
                         'login','store'
@@ -18,7 +19,7 @@ return [
                         'required_without_all:email,mobile,account,wechat_id',
                     ],
                     'action'=>[
-                        'login',
+                        'login'
                     ],
                 ],
                 [
@@ -87,7 +88,7 @@ return [
                         'max:255',
                     ],
                     'action'=>[
-                        'login',
+                        'login'
                     ],
                 ],
 
@@ -206,6 +207,7 @@ return [
                         'min'=>'username最少2个字符。',
                         'max'=>'username最多不超过255个字符。',
                         'nullable' =>'username不能为null。',
+                        'regex'=>'用户名的首字符不能是数字。',
                     ],
                     'action'=>[
                         'login','store'
@@ -216,7 +218,7 @@ return [
                         'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
                     ],
                     'action'=>[
-                        'login','store',
+                        'login','store'
                     ]
                 ],
             ],
@@ -285,7 +287,7 @@ return [
                         'max'=> 'wechat_id最长255个字符。',
                     ],
                     'action'=>[
-                        'login','store',
+                        'login','store'
                     ]
                 ]
 
