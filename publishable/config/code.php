@@ -59,13 +59,47 @@ return [
                     'http_code' => 200,
                     'code' => 'ZBASEMENT_CODE_USER_INDEX_LOAD_RULES',
                     'status' => true,
-                    'message' => '登录操作所需验证规则加载成功!'
+                    'message' => '用户列表操作所需验证规则加载成功!'
                 ],
                 'messages'=>[
                     'http_code' => 200,
                     'code' => 'ZBASEMENT_CODE_USER_INDEX_LOAD_MESSAGES',
                     'status' => true,
-                    'message' => '登录操作所需验证规则的提示信息加载成功!'
+                    'message' => '用户列表操作所需验证规则的提示信息加载成功!'
+                ],
+            ],
+        ],
+        'fetch' => [
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_USER_FETCH_SUCCESS',
+                'status' => true,
+                'message' => '获取单个用户成功!'
+            ],
+            'error' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_USER_FETCH_ERROR',
+                'status' => false,
+                'message' => '获取单个用户失败!'
+            ],
+            'validation' => [
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_USER_FETCH_VALIDATION',
+                'status' => false,
+                'message' => '查找单个用户输入参数验证失败!'
+            ],
+            'load'=>[
+                'rules'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_FETCH_LOAD_RULES',
+                    'status' => true,
+                    'message' => '查找单个用户操作所需验证规则加载成功!'
+                ],
+                'messages'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_USER_FETCH_LOAD_MESSAGES',
+                    'status' => true,
+                    'message' => '查找单个用户操作所需验证规则的提示信息加载成功!'
                 ],
             ],
         ],

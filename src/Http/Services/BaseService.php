@@ -21,7 +21,7 @@ use Slug;
         $messageResponse=$this->messageResponse($code, $result,$resource);
         return $messageResponse;
     }
-    public function messageResponse($code, $data = null, $resourceClass = 'Zijinghua\Zbasement\Http\Resources\BaseResource') {
+    public function messageResponse($code, $data = null, $resourceClass = null) {
         $response=app('messageResponse');
         $messageRepository=Zsystem::repository('codeMessage');
         $message=$messageRepository->first('code',$code);

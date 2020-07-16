@@ -38,7 +38,7 @@ class BaseRepository implements BaseRepositoryInterface
         $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
         $model=Zsystem::model($this->slug);
-        $user=$model->where('username','admin@admin.com')->paginate(15);
+//        $user=$model->where('username','admin@admin.com')->paginate(15);
         foreach ($parameters['search'] as $items){
             $field=null;
             $fieldValue=null;
@@ -113,7 +113,7 @@ class BaseRepository implements BaseRepositoryInterface
 //        foreach ($parameters as $key => $value){
 //            $model->$key=$value;
 //        }
-        $model->save();
+        return $model->save();
     }
 
     public function show($data){

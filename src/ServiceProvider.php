@@ -27,7 +27,9 @@ use Zijinghua\Zbasement\Http\Services\Contracts\BaseServiceInterface;
 use Zijinghua\Zbasement\Http\Repositories\BaseRepository;
 use Zijinghua\Zbasement\Facades\Zsystem as ZsystemFacade;
 use Zijinghua\Zbasement\Http\Services\Contracts\CodeMessageServiceInterface;
+use Zijinghua\Zbasement\Http\Services\Contracts\UserServiceInterface;
 use Zijinghua\Zbasement\Http\Services\Contracts\ValidationServiceInterface;
+use Zijinghua\Zbasement\Http\Services\UserService;
 use Zijinghua\Zbasement\Http\Services\ValidationService;
 use Zijinghua\Zbasement\Observers\ActivityObserver;
 
@@ -84,10 +86,7 @@ class ServiceProvider extends BaseServiceProvider
         });
 
 
-//        $loader->alias('userModel', UserModelInterface::class);
-//        $this->app->singleton('userModel', function () {
-//            return new User();
-//        });
+
 
         $loader->alias('codeMessageModel', CodeMessageModelInterface::class);
         $this->app->singleton('codeMessageModel', function () {
@@ -127,6 +126,11 @@ class ServiceProvider extends BaseServiceProvider
         $loader->alias('codeMessageService', CodeMessageServiceInterface::class);
         $this->app->bind('codeMessageService', function () {
             return new CodeMessageService();
+        });
+
+        $loader->alias('userService', UserServiceInterface::class);
+        $this->app->singleton('userService', function () {
+            return new UserService();
         });
     }
 

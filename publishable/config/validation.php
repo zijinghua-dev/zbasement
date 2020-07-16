@@ -19,7 +19,7 @@ return [
                         'required_without_all:email,mobile,account,wechat_id',
                     ],
                     'action'=>[
-                        'login',
+                        'login'
                     ],
                 ],
                 [
@@ -88,7 +88,7 @@ return [
                         'max:255',
                     ],
                     'action'=>[
-                        'login',
+                        'login'
                     ],
                 ],
 
@@ -218,7 +218,7 @@ return [
                         'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
                     ],
                     'action'=>[
-                        'login','store',
+                        'login','store'
                     ]
                 ],
             ],
@@ -287,7 +287,7 @@ return [
                         'max'=> 'wechat_id最长255个字符。',
                     ],
                     'action'=>[
-                        'login','store',
+                        'login','store'
                     ]
                 ]
 
