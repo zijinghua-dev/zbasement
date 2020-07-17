@@ -10,6 +10,7 @@ use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Requests\IndexRequest;
 use Zijinghua\Zbasement\Http\Requests\ShowRequest;
 use Zijinghua\Zbasement\Http\Requests\StoreRequest;
+use Zijinghua\Zbasement\Http\Requests\UpdateRequest;
 
 class BaseController extends Controller
 {
