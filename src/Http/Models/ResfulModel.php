@@ -45,6 +45,11 @@ class ResfulModel extends BaseModel implements JWTSubject
             $this->setAttribute($key,$value);
         }
     }
+    public function store($data){
+        foreach ($data as $key=>$value){
+            $this->setAttribute($key,$value);
+        }
+    }
 //    public function getUuidAttribute()
 //    {
 //        if(isset($this->data)){
