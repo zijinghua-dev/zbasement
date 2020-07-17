@@ -13,8 +13,8 @@ use Slug;
         $repository=$this->repository($this->slug);
         $result=$repository->fetch($data);
         $code='zbasement.code.'.$this->slug.'.fetch.success';
-        $resource=$this->getResource($this->slug,'fetch');
-        $messageResponse=$this->messageResponse($code, $result,$resource);
+//        $resource=$this->getResource($this->slug,'fetch');
+        $messageResponse=$this->messageResponse($code, $result);
         return $messageResponse;
     }
 
