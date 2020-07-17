@@ -47,4 +47,18 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         $this->fill($data[0]);
         return $this;
     }
+
+    public function store($data){
+//        $host=getConfigValue('zvoyager');
+//        $host=getConfigValue('zvoyager.usercenter');
+        $host=getConfigValue('zvoyager.usercenter.host');
+
+        $fetchUri=getConfigValue('zvoyager.usercenter.api.store.uri');
+        $action=getConfigValue('zvoyager.usercenter.api.store.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $data=$this->connect($action,$fetchUri,$data);
+        $this->fill($data[0]);
+        return $this;
+    }
 }
