@@ -8,21 +8,13 @@ return [
                         'nullable',
                         'min:2',
                         'max:255',
-                        'regex:/^[^0-9]/'
+                        'regex:/^[^0-9]/',
+                        'required_without_all:email,mobile,account',
                     ],
                     'action'=>[
                         'login',
                     ],
                 ],
-                [
-                    'rule'=>[
-                        'required_without_all:email,mobile,account,wechat_id',
-                    ],
-                    'action'=>[
-                        'login'
-                    ],
-                ],
-
             ],
             'email' =>[
                 [
@@ -66,26 +58,7 @@ return [
                     'rule'=>[
                         'min:6',
                         'max:255',
-                    ],
-                    'action'=>[
-                        'login',
-                    ],
-                ],
-                [
-                    'rule'=>[
-                        'required_with:username,email,mobile,account'
-                    ],
-                    'action'=>[
-                        'login'
-                    ],
-                ],
-            ],
-            'wechat_id' => [
-                [
-                    'rule'=>[
-                        'nullable',
-                        'min:6',
-                        'max:255',
+                        'required',
                     ],
                     'action'=>[
                         'login',
@@ -286,14 +259,7 @@ return [
                         'max'=>'username最多不超过255个字符。',
                         'nullable' =>'username不能为null。',
                         'regex'=>'用户名的首字符不能是数字。',
-                    ],
-                    'action'=>[
-                        'login',
-                    ]
-                ],
-                [
-                    'message'=>[
-                        'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
+                        'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式',
                     ],
                     'action'=>[
                         'login',
@@ -329,26 +295,14 @@ return [
                     'message' => [
                         'min'=>'password最少6位。',
                         'max'=>'password最长255位。',
-                        'required_with'=>'必须输入密码。',
+                        'required'=>'必须输入密码。',
                     ],
                     'action'=>[
                         'login',
                     ]
                 ],
             ],
-            'wechat_id' => [
-                [
-                    'message'=>[
-                        'nullable' => 'wechat_id不能为null。',
-                        'min'=> 'wechat_id最少6位。',
-                        'max'=> 'wechat_id最长255个字符。',
-                    ],
-                    'action'=>[
-                        'login',
-                    ]
-                ]
 
-            ],
         ],
         'user' => [
             'username'=>[
