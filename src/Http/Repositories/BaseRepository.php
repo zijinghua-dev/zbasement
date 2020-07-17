@@ -35,57 +35,16 @@ class BaseRepository implements BaseRepositoryInterface
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
     public function fetch($data){
-        $model=Zsystem::model($this->slug);
-        $field=null;
-        $fieldValue=null;
-        $filter='=';
-        $algorithm='or';
-        foreach ($data as $key =>$value){
-            switch ($key){
-                case 'field':
-                    $field=$value;
-                    if(!$this->fieldExist($field)){
-                        throw new Exception('数据对象'.$this->slug.'没有'.$field.'字段。');
-                    }
-                    //如果这个字段不在系统里，或者不能搜索，应当报错
-                    break;
-                case 'filter':
-                    $filter=$value;
-                    break;
-                case 'value':
-                    $fieldValue=$value;
-                    break;
-                case 'algorithm':
-                    $algorithm=$value;
-                    break;
-            }
+        $model=$this->search($data);
+        if(isset($model)){
+            return $model->first();
         }
-        if($field&&$fieldValue){
-            if($algorithm=='and'){
-                if($filter){
-                    $model=$model->where($field,$filter,$fieldValue);
-                }else{
-                    $model=$model->where($field,$fieldValue);
-                }
 
-            }elseif($algorithm=='or'){
-                if($filter){
-                    $model=$model->orWhere($field,$filter,$fieldValue);
-                }else{
-                    $model=$model->orWhere($field,$fieldValue);
-                }
-            }
-
-        }
-        return $model->first();
     }
 
-    public function index($data){
-        $parameters=$this->getIndexParameter($data);
-        $paginate=getConfigValue('paginate',15);
+    public function search($data){
         $model=Zsystem::model($this->slug);
-//        $user=$model->where('username','admin@admin.com')->paginate(15);
-        foreach ($parameters['search'] as $items){
+        foreach ($data['search'] as $items){
             $field=null;
             $fieldValue=null;
             $filter='=';
@@ -98,7 +57,7 @@ class BaseRepository implements BaseRepositoryInterface
                             throw new Exception('数据对象'.$this->slug.'没有'.$field.'字段。');
                         }
                         //如果这个字段不在系统里，或者不能搜索，应当报错
-                    break;
+                        break;
                     case 'filter':
                         $filter=$value;
                         break;
@@ -126,9 +85,20 @@ class BaseRepository implements BaseRepositoryInterface
                     }
                 }
 
+            }else{
+                return;
             }
         }
-        return $model->paginate($paginate);
+        return $model;
+    }
+    public function index($data){
+        $parameters=$this->getIndexParameter($data);
+        $paginate=getConfigValue('paginate',15);
+
+        $model=$this->search($parameters);
+        if(isset($model)) {
+            return $model->paginate($paginate);
+        }
     }
 
     public function fieldExist($field){
@@ -144,10 +114,6 @@ class BaseRepository implements BaseRepositoryInterface
     public function all($field, $value){
         $model=$this->model($this->slug);
         return $model::where($field, $value)->paginate(15);
-    }
-
-    public function search($parameters){
-
     }
 
     //$parameters为数组，键值对形式

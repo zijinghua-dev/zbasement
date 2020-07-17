@@ -10,11 +10,26 @@ class BaseService
 {
 use Slug;
     public function fetch($data){
+        //fetch接收到的是body里的json字符串，需要转换
+//        $parameters=[];
+//        foreach ($data as $value){
+//            if(!is_array($value)){
+//                $parameters[]=json_decode($value);
+//            }
+//        }
+
         $repository=$this->repository($this->slug);
         $result=$repository->fetch($data);
-        $code='zbasement.code.'.$this->slug.'.fetch.success';
+        if(isset($result)){
+            $code='zbasement.code.'.$this->slug.'.fetch.success';
 //        $resource=$this->getResource($this->slug,'fetch');
-        $messageResponse=$this->messageResponse($code, $result);
+            $messageResponse=$this->messageResponse($code, $result);
+        }else{
+            $code='zbasement.code.'.$this->slug.'.fetch.error';
+//        $resource=$this->getResource($this->slug,'fetch');
+            $messageResponse=$this->messageResponse($code);
+        }
+
         return $messageResponse;
     }
 
