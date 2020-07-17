@@ -1,7 +1,7 @@
 <?php
 return [
     'rules'=>[
-        'user'=>[
+        'auth'=>[
             'username' =>[
                 [
                     'rule'=>[
@@ -11,7 +11,7 @@ return [
                         'regex:/^[^0-9]/'
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ],
                 ],
                 [
@@ -22,22 +22,6 @@ return [
                         'login'
                     ],
                 ],
-                [
-                    'rule'=>[
-                        'required_without_all:email,mobile,wechat_id',
-                    ],
-                    'action'=>[
-                        'store'
-                    ],
-                ],
-                [
-                    'rule'=>[
-                        'new \Zijinghua\Zbasement\Rules\Unique:username,mobile',
-                    ],
-                    'action'=>[
-                        'store'
-                    ],
-                ]
 
             ],
             'email' =>[
@@ -47,17 +31,9 @@ return [
                         'email',
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ],
                 ],
-                [
-                    'rule'=>[
-                        'new \Zijinghua\Zbasement\Rules\Unique',
-                    ],
-                    'action'=>[
-                        'store'
-                    ],
-                ]
             ],
             'mobile' => [
                 [
@@ -68,15 +44,7 @@ return [
                         'max:255',
                     ],
                     'action'=>[
-                        'login','store'
-                    ],
-                ],
-                [
-                    'rule'=>[
-                        'new \Zijinghua\Zbasement\Rules\Unique',
-                    ],
-                    'action'=>[
-                        'store'
+                        'login',
                     ],
                 ],
             ],
@@ -100,7 +68,7 @@ return [
                         'max:255',
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ],
                 ],
                 [
@@ -109,6 +77,115 @@ return [
                     ],
                     'action'=>[
                         'login'
+                    ],
+                ],
+            ],
+            'wechat_id' => [
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:6',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'login',
+                    ],
+                ],
+            ],
+        ],
+
+        'user'=>[
+            'username' =>[
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:2',
+                        'max:255',
+                        'regex:/^[^0-9]/'
+                    ],
+                    'action'=>[
+                        'store',
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'required_without_all:email,mobile,wechat_id',
+                    ],
+                    'action'=>[
+                        'store',
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'new \Zijinghua\Zbasement\Rules\Unique:username,mobile',
+                    ],
+                    'action'=>[
+                        'store',
+                    ],
+                ]
+
+            ],
+            'email' =>[
+                [
+                    'rule'=>[
+                        'nullable',
+                        'email',
+                    ],
+                    'action'=>[
+                        'store',
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'new \Zijinghua\Zbasement\Rules\Unique',
+                    ],
+                    'action'=>[
+                        'store'
+                    ],
+                ]
+            ],
+            'mobile' => [
+                [
+                    'rule'=>[
+                        'nullable',
+                        'regex:/^(1(([3456789][0-9])|(47)|[8][01236789]))\d{8}$/' ,
+                        'min:8',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'store',
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'new \Zijinghua\Zbasement\Rules\Unique',
+                    ],
+                    'action'=>[
+                        'store'
+                    ],
+                ],
+            ],
+            'account'=>[
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:2',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'login',
+                    ],
+                ],
+
+            ],
+            'password' => [
+                [
+                    'rule'=>[
+                        'min:6',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'store',
                     ],
                 ],
                 [
@@ -148,7 +225,7 @@ return [
                         'max:255',
                     ],
                     'action'=>[
-                        'login','store'
+                        'store',
                     ],
                 ],
                 [
@@ -198,9 +275,10 @@ return [
 
             ],
         ],
+
     ],
     'messages'=>[
-        'user' => [
+        'auth' => [
             'username'=>[
                 [
                     'message'=>[
@@ -210,7 +288,7 @@ return [
                         'regex'=>'用户名的首字符不能是数字。',
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ]
                 ],
                 [
@@ -218,7 +296,7 @@ return [
                         'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ]
                 ],
             ],
@@ -229,7 +307,7 @@ return [
                         'email'=>'必须符合Email格式要求。',
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ]
                 ]
 
@@ -241,7 +319,7 @@ return [
                         'regex'=> '必须符合手机号码格式要求。' ,
                     ],
                     'action'=>[
-                        'login','store'
+                        'login',
                     ]
                 ]
 
@@ -254,7 +332,79 @@ return [
                         'required_with'=>'必须输入密码。',
                     ],
                     'action'=>[
-                        'login','store','updatePassword'
+                        'login',
+                    ]
+                ],
+            ],
+            'wechat_id' => [
+                [
+                    'message'=>[
+                        'nullable' => 'wechat_id不能为null。',
+                        'min'=> 'wechat_id最少6位。',
+                        'max'=> 'wechat_id最长255个字符。',
+                    ],
+                    'action'=>[
+                        'login',
+                    ]
+                ]
+
+            ],
+        ],
+        'user' => [
+            'username'=>[
+                [
+                    'message'=>[
+                        'min'=>'username最少2个字符。',
+                        'max'=>'username最多不超过255个字符。',
+                        'nullable' =>'username不能为null。',
+                        'regex'=>'用户名的首字符不能是数字。',
+                    ],
+                    'action'=>[
+                        'store'
+                    ]
+                ],
+                [
+                    'message'=>[
+                        'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
+                    ],
+                    'action'=>[
+                        'store'
+                    ]
+                ],
+            ],
+            'email'=>[
+                [
+                    'message'=>[
+                        'nullable' =>'email不能为null。',
+                        'email'=>'必须符合Email格式要求。',
+                    ],
+                    'action'=>[
+                        'store'
+                    ]
+                ]
+
+            ],
+            'mobile'=>[
+                [
+                    'message'=>[
+                        'nullable' => 'mobile不能为null。',
+                        'regex'=> '必须符合手机号码格式要求。' ,
+                    ],
+                    'action'=>[
+                        'store'
+                    ]
+                ]
+
+            ],
+            'password' => [
+                [
+                    'message' => [
+                        'min'=>'password最少6位。',
+                        'max'=>'password最长255位。',
+                        'required_with'=>'必须输入密码。',
+                    ],
+                    'action'=>[
+                        'store','updatePassword'
                     ]
                 ],
                 [
@@ -287,7 +437,7 @@ return [
                         'max'=> 'wechat_id最长255个字符。',
                     ],
                     'action'=>[
-                        'login','store'
+                        'store'
                     ]
                 ]
 
