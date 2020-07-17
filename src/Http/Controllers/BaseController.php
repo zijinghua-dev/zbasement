@@ -49,6 +49,7 @@ class BaseController extends Controller
         return $this->execute($request,'index');
     }
 
+    //StoreRequest
     public function store(StoreRequest $request){
         $response=$this->execute($request,'store');
         return $response;

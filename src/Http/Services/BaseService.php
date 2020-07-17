@@ -102,8 +102,8 @@ use Slug;
         $data=$this->repository($this->slug)->store($parameters);
 //        $data=$this->repository($this->slug)->show($data->uuid);
         $code='zbasement.code.'.$this->slug.'.store.submit.success';
-        $resource=$this->getResource($this->slug,'store');
-        $messageResponse=$this->messageResponse($code,$data,$resource);
+//        $resource=$this->getResource($this->slug,'store');
+        $messageResponse=$this->messageResponse($code,$data);
         return $messageResponse;
     }
 

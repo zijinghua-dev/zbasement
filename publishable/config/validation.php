@@ -319,7 +319,7 @@ return [
                 ],
                 [
                     'message'=>[
-                        'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种登录方式'
+                        'required_without_all'=>'至少使用username,email,mobile,微信账号当中的一种注册方式'
                     ],
                     'action'=>[
                         'store'
