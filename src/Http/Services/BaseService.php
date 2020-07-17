@@ -9,15 +9,32 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 class BaseService
 {
 use Slug;
+    //调用fetch的位置，要将参数转换成这样的格式
+    //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algothm":"or"}]}
     public function fetch($data){
+        //fetch接收到的是body里的json字符串，需要转换
+//        $parameters=[];
+//        foreach ($data as $value){
+//            if(!is_array($value)){
+//                $parameters[]=json_decode($value);
+//            }
+//        }
+
         $repository=$this->repository($this->slug);
         $result=$repository->fetch($data);
-        //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
-        $code='zbasement.code.'.$this->slug.'.fetch.success';
-        $resource=$this->getResource($this->slug,'fetch');
-        $messageResponse=$this->messageResponse($code, $result,$resource);
+        if(isset($result)){
+            $code='zbasement.code.'.$this->slug.'.fetch.success';
+//        $resource=$this->getResource($this->slug,'fetch');
+            $messageResponse=$this->messageResponse($code, $result);
+        }else{
+            $code='zbasement.code.'.$this->slug.'.fetch.error';
+//        $resource=$this->getResource($this->slug,'fetch');
+            $messageResponse=$this->messageResponse($code);
+        }
+
         return $messageResponse;
     }
+
     public function index($data){
         $repository=$this->repository($this->slug);
         $result=$repository->index($data);
@@ -87,8 +104,8 @@ use Slug;
         $data=$this->repository($this->slug)->store($parameters);
 //        $data=$this->repository($this->slug)->show($data->uuid);
         $code='zbasement.code.'.$this->slug.'.store.submit.success';
-        $resource=$this->getResource($this->slug,'store');
-        $messageResponse=$this->messageResponse($code,$data,$resource);
+//        $resource=$this->getResource($this->slug,'store');
+        $messageResponse=$this->messageResponse($code,$data);
         return $messageResponse;
     }
 

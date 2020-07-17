@@ -87,6 +87,7 @@ class BaseMessageResponse
 //        $codeMessage=;
         $res=new BaseResource($this->data, objectToArray($this->code),$this->resourceClass);
 //        $res=new $this->resourceClass($this->data);
+//        $res=$res->response();
         $res=$res->response()->getData(true);
         return $res;
 //        if (isset($this->data)&&isset($this->resourceClass)) {

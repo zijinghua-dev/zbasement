@@ -14,13 +14,12 @@ use Zijinghua\Zbasement\Http\Repositories\Contracts\CodeMessageRepositoryInterfa
 use Zijinghua\Zbasement\Http\Repositories\CodeMessageRepository;
 use Zijinghua\Zbasement\Http\Repositories\ValidationRepository;
 use Zijinghua\Zbasement\Http\Resources\BaseResource;
-use Zijinghua\Zbasement\Http\Resources\UserShowResource;
+
 use Zijinghua\Zbasement\Http\Responses\MessageResponse;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Zijinghua\Zbasement\Http\Responses\Contracts\MessageResponseInterface;
-use Zijinghua\Zbasement\Http\Models\Contracts\UserModelInterface;
-use Zijinghua\Zbasement\Http\Models\User;
+
 use Zijinghua\Zbasement\Http\Services\BaseService;
 use Zijinghua\Zbasement\Http\Services\CodeMessageService;
 use Zijinghua\Zbasement\Http\Services\Contracts\BaseServiceInterface;
@@ -134,10 +133,10 @@ class ServiceProvider extends BaseServiceProvider
             return new CodeMessageService();
         });
 
-        $loader->alias('userService', UserServiceInterface::class);
-        $this->app->singleton('userService', function () {
-            return new UserService();
-        });
+//        $loader->alias('userService', UserServiceInterface::class);
+//        $this->app->singleton('userService', function () {
+//            return new UserService();
+//        });
     }
 
     public function registerConsoleCommands()
