@@ -64,20 +64,24 @@ class BaseRepository implements BaseRepositoryInterface
             if($algorithm=='and'){
                 if($filter){
                     $model=$model->where($field,$filter,$fieldValue);
+                    return $model->first();
                 }else{
                     $model=$model->where($field,$fieldValue);
+                    return $model->first();
                 }
 
             }elseif($algorithm=='or'){
                 if($filter){
                     $model=$model->orWhere($field,$filter,$fieldValue);
+                    return $model->first();
                 }else{
                     $model=$model->orWhere($field,$fieldValue);
+                    return $model->first();
                 }
             }
 
         }
-        return $model->first();
+
     }
 
     public function index($data){
