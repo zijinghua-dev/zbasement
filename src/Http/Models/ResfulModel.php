@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Models;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -17,7 +18,7 @@ class ResfulModel extends BaseModel implements JWTSubject
 
     protected function createRestfulClient(){
         if(!$this->client){
-            $this->client = new Client(['headers' => [ 'Content-Type' => 'application/x-www-form-urlencoded' ]]);
+            $this->client = new Client(['headers' => [ 'Content-Type' => 'application/json' ,'Accept'=> 'application/json']]);
 //            application/x-www-form-urlencoded
         }
     }
@@ -32,9 +33,17 @@ class ResfulModel extends BaseModel implements JWTSubject
 
         $parameters=['body' => json_encode($parameters)];
 
+        try {
+            $response = $this->client->$action($url, $parameters);
+            $content=$response->getBody();
+        }
+        catch (RequestException  $e) {
+            $response = $e->getResponse();
+            $content = $response->getBody()->getContents();
+        }
+        //还需要处理网络故障异常
 
-        $response = $this->client->$action($url, $parameters);
-        $content=$response->getBody();
+
         $json=json_decode($content);
         if(isset($json->status)&&$json->status){
             return $json->data;

@@ -9,6 +9,8 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 class BaseService
 {
 use Slug;
+    //调用fetch的位置，要将参数转换成这样的格式
+    //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algothm":"or"}]}
     public function fetch($data){
         $repository=$this->repository($this->slug);
         $result=$repository->fetch($data);
