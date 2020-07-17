@@ -1,6 +1,6 @@
 <?php
 return [
-    'user' => [
+    'auth' => [
         'login' => [
             'success' => [
                 'http_code' => 200,
@@ -35,6 +35,8 @@ return [
                 ],
             ],
         ],
+    ],
+    'user' => [
         'index' => [
             'success' => [
                 'http_code' => 200,
