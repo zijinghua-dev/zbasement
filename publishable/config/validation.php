@@ -9,7 +9,7 @@ return [
                         'min:2',
                         'max:255',
                         'regex:/^[^0-9]/',
-                        'required_without_all:email,mobile,account',
+                        'required_without_all:email,mobile,account,wechat_id',
                     ],
                     'action'=>[
                         'login',
@@ -53,12 +53,24 @@ return [
                 ],
 
             ],
+            'wechat_id' => [
+                [
+                    'rule'=>[
+                        'nullable',
+                        'min:6',
+                        'max:255',
+                    ],
+                    'action'=>[
+                        'login',
+                    ],
+                ],
+            ],
             'password' => [
                 [
                     'rule'=>[
                         'min:6',
                         'max:255',
-                        'required',
+                        'required_with:username,email,mobile,account',
                     ],
                     'action'=>[
                         'login',
@@ -295,7 +307,7 @@ return [
                     'message' => [
                         'min'=>'password最少6位。',
                         'max'=>'password最长255位。',
-                        'required'=>'必须输入密码。',
+                        'required_with'=>'必须输入密码。',
                     ],
                     'action'=>[
                         'login',

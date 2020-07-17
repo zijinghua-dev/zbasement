@@ -9,6 +9,8 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 class BaseService
 {
 use Slug;
+    //调用fetch的位置，要将参数转换成这样的格式
+    //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algothm":"or"}]}
     public function fetch($data){
         //fetch接收到的是body里的json字符串，需要转换
 //        $parameters=[];
