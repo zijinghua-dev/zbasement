@@ -133,10 +133,10 @@ class ServiceProvider extends BaseServiceProvider
             return new CodeMessageService();
         });
 
-        $loader->alias('userService', UserServiceInterface::class);
-        $this->app->singleton('userService', function () {
-            return new UserService();
-        });
+//        $loader->alias('userService', UserServiceInterface::class);
+//        $this->app->singleton('userService', function () {
+//            return new UserService();
+//        });
     }
 
     public function registerConsoleCommands()
