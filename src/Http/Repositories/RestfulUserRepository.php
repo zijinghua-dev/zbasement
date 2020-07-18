@@ -4,8 +4,8 @@
 namespace Zijinghua\Zbasement\Http\Repositories;
 
 
-use Zijinghua\Zbasement\Http\Contracts\UserRepositoryInterface;
-use Zijinghua\Zbasement\Http\Repositories\BaseRepository;
+use Zijinghua\Zbasement\Http\Repositories\Contracts\UserRepositoryInterface;
+
 
 class RestfulUserRepository extends BaseRepository implements UserRepositoryInterface
 {

@@ -119,8 +119,8 @@ use Slug;
         return $messageResponse;
     }
 
-    public function getResource($slug, $bread_action){
+    public function getResource($slug, $bread_action=null){
         //resource类在app中注入的别名为$slug+$bread_action+resource
-        return Zsystem::resource( $slug,$bread_action);//注意，这里位置颠倒了，有点不爽
+        return Zsystem::resource( $slug,$bread_action);
     }
 }

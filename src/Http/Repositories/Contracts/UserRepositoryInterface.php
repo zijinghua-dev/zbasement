@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zijinghua\Zbasement\Http\Contracts;
+namespace Zijinghua\Zbasement\Http\Repositories\Contracts;
 
 
 interface UserRepositoryInterface

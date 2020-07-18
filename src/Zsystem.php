@@ -15,10 +15,11 @@ class Zsystem
             $secondTryName = $slug;
             if (isset($bread_action)) {
                 $firstTryName = $slug . ucfirst($bread_action);
+                $class=$this->reflectClass($firstTryName, 'resource');
             }
         }
-        $class=$this->reflectClass($firstTryName, 'resource');
-        if ($class) {
+
+        if (isset($class)) {
             return $class;
         }
         //再找slug类
