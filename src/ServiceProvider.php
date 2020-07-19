@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Models\Activity as ActivityModel;
 use Zijinghua\Basement\Http\Models\Contracts\MessageModelInterface;
+
 use Zijinghua\Zbasement\Http\Models\Contracts\ValidationModelInterface;
 use Zijinghua\Zbasement\Http\Models\CodeMessageConfig;
 use Zijinghua\Zbasement\Http\Models\ValidationConfig;
@@ -45,9 +46,10 @@ class ServiceProvider extends BaseServiceProvider
         self::getActivityModel()::observe(ActivityObserver::class);
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                realpath(__DIR__.'/../publishable/migration') => database_path('migrations')
-            ], 'migrations');
+            $this->loadMigrationsFrom(realpath(__DIR__ . '/../publishable/migrations'));
+//            $this->publishes([
+//                realpath(__DIR__.'/../publishable/migrations') => database_path('migrations')
+//            ], 'migrations');
         }
     }
     /**
@@ -59,12 +61,16 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->bindingClass();
 
-        if ($this->app->runningInConsole()) {
-            $this->registerConsoleCommands();
-        }
-
         $this->registerConfigs();
         $this->loadHelpers();
+
+        if ($this->app->runningInConsole()) {
+            $this->registerPublishableResources();
+            $this->registerConsoleCommands();
+
+        }
+
+
     }
 
     public function bindingClass()
@@ -143,6 +149,7 @@ class ServiceProvider extends BaseServiceProvider
     public function registerConsoleCommands()
     {
         $this->commands(Commands\Install::class);
+        $this->commands(Commands\PublishRoutes::class);
     }
 
     public function registerConfigs()
@@ -170,5 +177,22 @@ class ServiceProvider extends BaseServiceProvider
         }
     }
 
+    protected function registerPublishableResources()
+    {
+        $publishable = [
+            'config' => [
+                $this->getPublishablePath()."/config/zbasement.php" => config_path('zbasement.php'),
+            ],
+        ];
+
+        foreach ($publishable as $group => $paths) {
+            $this->publishes($paths, $group);
+        }
+    }
+
+    protected function getPublishablePath()
+    {
+        return realpath(__DIR__.'/../publishable');
+    }
 }
 

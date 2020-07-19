@@ -4,6 +4,8 @@ namespace Zijinghua\Zbasement\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Console\Input\InputOption;
+use Zijinghua\Zbasement\ServiceProvider;
 
 class Install extends Command
 {
@@ -12,7 +14,8 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'fm:install';
+//    protected $signature = 'zbasement:install';
+    protected $name = 'zbasement:install';
 
     /**
      * The console command description.
@@ -22,34 +25,41 @@ class Install extends Command
     protected $description = 'this package init';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle(Filesystem $filesystem)
     {
-        $this->publishRoutes($filesystem);
+//        $this->publishRoutes($filesystem);
+        $this->publishConfigs();
+        $this->publishMigrates();
     }
 
-    private function publishRoutes($filesystem){
-        $this->info('Publish snack.php route to routes/api.php');
-        $contents = $filesystem->get(base_path('routes/api.php'));
-        if (false === strpos($contents, 'Zsystem::routes()')) {
-            $filesystem->append(
-                base_path('routes/api.php'),
-                "\n\nRoute::group(['middleware' => 'api', 'prefix' => 'v1'], function() {\n".
-                "\tZijinghua\Basement\Zsystem::routes();\n});\n"
-            );
-        }
+
+
+    private function publishConfigs(){
+        $this->info('Publish zbasement.php config to config/zbasement.php');
+        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['config']]);
+        $this->call('config:clear');
+    }
+
+    private function publishMigrates(){
+        $this->info('Migrating the database tables into your application');
+        $option= ['--force' => $this->option('force')];
+        $this->call('migrate', $option);//
+    }
+
+    public function fire(Filesystem $filesystem)
+    {
+        return $this->handle($filesystem);
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production', null],
+            ['with-dummy', null, InputOption::VALUE_NONE, 'Install with dummy data', null],
+        ];
     }
 }
