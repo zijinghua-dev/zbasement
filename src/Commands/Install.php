@@ -32,17 +32,18 @@ class Install extends Command
     public function handle(Filesystem $filesystem)
     {
 //        $this->publishRoutes($filesystem);
-        $this->publishConfigs();
+//        $this->publishConfigs();
         $this->publishMigrates();
+//        $this->publishRoutes();
     }
 
 
 
-    private function publishConfigs(){
-        $this->info('Publish zbasement.php config to config/zbasement.php');
-        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['config']]);
-        $this->call('config:clear');
-    }
+//    private function publishConfigs(){
+//        $this->info('Publish zbasement.php configs to configs/zbasement.php');
+//        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['config']]);
+//        $this->call('config:clear');
+//    }
 
     private function publishMigrates(){
         $this->info('Migrating the database tables into your application');
@@ -50,6 +51,11 @@ class Install extends Command
         $this->call('migrate', $option);//
     }
 
+//    private function publishRoutes(){
+//        $this->info('Publish zbasement.php routes to app/http/routes/zbasement.php');
+//        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['route']]);
+//        $this->call('route:cache');
+//    }
     public function fire(Filesystem $filesystem)
     {
         return $this->handle($filesystem);

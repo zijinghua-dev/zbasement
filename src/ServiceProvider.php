@@ -6,6 +6,7 @@ namespace Zijinghua\Zbasement;
 use Illuminate\Support\Facades\Log;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Models\Activity as ActivityModel;
+use TCG\Voyager\Providers\VoyagerEventServiceProvider;
 use Zijinghua\Basement\Http\Models\Contracts\MessageModelInterface;
 
 use Zijinghua\Zbasement\Http\Models\Contracts\ValidationModelInterface;
@@ -33,6 +34,7 @@ use Zijinghua\Zbasement\Http\Services\UserService;
 use Zijinghua\Zbasement\Http\Services\ValidationService;
 use Zijinghua\Zbasement\Observers\ActivityObserver;
 use Zijinghua\Zbasement\Providers\BaseServiceProvider;
+use Zijinghua\Zbasement\Providers\RouteServiceProvider;
 
 
 class ServiceProvider extends BaseServiceProvider
@@ -64,13 +66,12 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerConfigs();
         $this->loadHelpers();
 
+//        $this->registerServiceProviders();
         if ($this->app->runningInConsole()) {
             $this->registerPublishableResources();
             $this->registerConsoleCommands();
 
         }
-
-
     }
 
     public function bindingClass()
@@ -146,25 +147,30 @@ class ServiceProvider extends BaseServiceProvider
 //        });
     }
 
+//    public function registerServiceProviders(){
+//        $this->app->register(RouteServiceProvider::class);
+//    }
+
     public function registerConsoleCommands()
     {
         $this->commands(Commands\Install::class);
-        $this->commands(Commands\PublishRoutes::class);
+//        $this->commands(Commands\PublishRoutes::class);
     }
 
     public function registerConfigs()
     {
-        $this->mergeConfigFrom(
-            dirname(__DIR__).'/publishable/config/validation.php', 'zbasement.validation'
-        );
-        $this->mergeConfigFrom(
-            dirname(__DIR__).'/publishable/config/code.php', 'zbasement.code'
-        );
-        $this->mergeConfigFrom(
-
-            dirname(__DIR__).'/publishable/config/fields.php', 'zbasement.fields'
-        );
-        $this->mergeConfigFrom(dirname(__DIR__).'/publishable/config/logging.php', 'logging.channels');
+//        $this->mergeConfigFrom(
+//            dirname(__DIR__) . '/publishable/configs/validation.php', 'zbasement.validation'
+//        );
+//        $this->mergeConfigFrom(
+//            dirname(__DIR__) . '/publishable/configs/code.php', 'zbasement.code'
+//        );
+//        $this->mergeConfigFrom(
+//
+//            dirname(__DIR__) . '/publishable/configs/fields.php', 'zbasement.fields'
+//        );
+        $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/logging.php', 'logging.channels');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/zbasement.php', 'zbasement');
     }
 
     /**
@@ -180,9 +186,12 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerPublishableResources()
     {
         $publishable = [
-            'config' => [
-                $this->getPublishablePath()."/config/zbasement.php" => config_path('zbasement.php'),
-            ],
+//            'config' => [
+//                $this->getPublishablePath()."/configs/zbasement.php" => config_path('zbasement.php'),
+//            ],
+//            'route' => [
+//                $this->getPublishablePath()."/routes/zbasement.php" => app_path('App\\Http\\Routes\\zbasement.php'),
+//            ],
         ];
 
         foreach ($publishable as $group => $paths) {

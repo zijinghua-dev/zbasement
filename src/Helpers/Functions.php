@@ -127,3 +127,16 @@ function getSlug($request)
 
     return $slug;
 }
+
+function getRouteSlugs()
+{
+    $slugs  = [];
+    $routes = Route::getRoutes();
+
+    foreach ($routes as $route)
+    {
+        $slugs[] = $route->uri();
+    }
+
+    return array_unique($slugs);
+}

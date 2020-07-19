@@ -34,18 +34,7 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
         $this->errorMessages=$service->messages($this->slug, $this->bread_action)->data;
     }
 
-//    public function __construct(
-//        array $query = [],
-//        array $request = [],
-//        array $attributes = [],
-//        array $cookies = [],
-//        array $files = [],
-//        array $server = [],
-//        $content = null
-//    ) {
-//        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-//
-//    }
+
 
     public function rules()
     {
