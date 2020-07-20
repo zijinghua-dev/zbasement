@@ -40,7 +40,7 @@ class Install extends Command
 
 
 //    private function publishConfigs(){
-//        $this->info('Publish zbasement.php configs to configs/zbasement.php');
+//        $this->info('Publish api.php configs to configs/api.php');
 //        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['config']]);
 //        $this->call('config:clear');
 //    }
@@ -52,7 +52,7 @@ class Install extends Command
     }
 
 //    private function publishRoutes(){
-//        $this->info('Publish zbasement.php routes to app/http/routes/zbasement.php');
+//        $this->info('Publish api.php routes to app/http/routes/api.php');
 //        $this->call('vendor:publish', ['--provider' => ServiceProvider::class, '--tag' => ['route']]);
 //        $this->call('route:cache');
 //    }

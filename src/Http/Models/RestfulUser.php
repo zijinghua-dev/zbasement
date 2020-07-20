@@ -37,10 +37,10 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
     public function fetch($data){
 //        $host=getConfigValue('zvoyager');
 //        $host=getConfigValue('zvoyager.usercenter');
-        $host=getConfigValue('zbasement.usercenter.host');
+        $host=getConfigValue('zbasement.api.usercenter.host');
 
-        $fetchUri=getConfigValue('zbasement.usercenter.api.fetch.uri');
-        $action=getConfigValue('zbasement.usercenter.api.fetch.action');
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.fetch.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.fetch.action');
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
         $data=$this->connect($action,$fetchUri,$data);
@@ -54,10 +54,10 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
     public function store($data){
 //        $host=getConfigValue('zvoyager');
 //        $host=getConfigValue('zvoyager.usercenter');
-        $host=getConfigValue('zbasement.usercenter.host');
+        $host=getConfigValue('zbasement.api.usercenter.host');
 
-        $fetchUri=getConfigValue('zbasement.usercenter.api.store.uri');
-        $action=getConfigValue('zbasement.usercenter.api.store.action');
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.store.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.store.action');
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
         $data=$this->connect($action,$fetchUri,$data);

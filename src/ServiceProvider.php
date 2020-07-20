@@ -171,7 +171,7 @@ class ServiceProvider extends BaseServiceProvider
 //            dirname(__DIR__) . '/publishable/configs/fields.php', 'zbasement.fields'
 //        );
         $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/logging.php', 'logging.channels');
-        $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/zbasement.php', 'zbasement');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/api.php', 'zbasement.api');
     }
 
     /**
@@ -188,10 +188,10 @@ class ServiceProvider extends BaseServiceProvider
     {
         $publishable = [
 //            'config' => [
-//                $this->getPublishablePath()."/configs/zbasement.php" => config_path('zbasement.php'),
+//                $this->getPublishablePath()."/configs/api.php" => config_path('api.php'),
 //            ],
 //            'route' => [
-//                $this->getPublishablePath()."/routes/zbasement.php" => app_path('App\\Http\\Routes\\zbasement.php'),
+//                $this->getPublishablePath()."/routes/api.php" => app_path('App\\Http\\Routes\\api.php'),
 //            ],
         ];
 

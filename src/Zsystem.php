@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Zsystem
 {
     public function resource($slug=null,$bread_action=null){
-        //资源类的规则是：第一是slug+action,然后是slug，然后是base
+        //资源类的规则是：第一是slug+action,然后是slug，找不到，返回null
         if(isset($slug)) {
             $secondTryName = $slug;
             if (isset($bread_action)) {
@@ -27,12 +27,12 @@ class Zsystem
         if ($class) {
             return $class;
         }
-        //最后是base
-        $class=$this->reflectClass('Base', 'resource');
-        if ($class) {
-             return $class;
-        }
-        throw new Exception('Baseresource资源类丢失。');
+//        //最后是base
+//        $class=$this->reflectClass('Base', 'resource');
+//        if ($class) {
+//             return $class;
+//        }
+//        throw new Exception('Baseresource资源类丢失。');
     }
 
     public function model($slug=null){

@@ -27,8 +27,8 @@ use Slug;
         $result=$repository->fetch($data);
         if(isset($result)){
 //            $code='zbasement.code.'.$this->slug.'.fetch.success';
-//        $resource=$this->getResource($this->slug,'fetch');
-            $messageResponse=$this->messageResponse($this->slug,'fetch.success', $result);
+        $resource=$this->getResource($this->slug,'fetch');
+            $messageResponse=$this->messageResponse($this->slug,'fetch.success', $result,$resource);
         }else{
             $code='zbasement.code.'.$this->slug.'.fetch.error';
 //        $resource=$this->getResource($this->slug,'fetch');
@@ -45,7 +45,7 @@ use Slug;
 //        $result=UserResource::collection($result);
         //测试代码结束---------------------------------
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
-//        $code='zbasement.code.'.$this->slug.'.index.success';
+        $code='zbasement.code.'.$this->slug.'.index.success';
         $resource=$this->getResource($this->slug,'index');
         $messageResponse=$this->messageResponse($this->slug,'index.success', $result,$resource);
         return $messageResponse;
@@ -144,8 +144,8 @@ use Slug;
         $data=$this->repository($this->slug)->store($parameters);
 //        $data=$this->repository($this->slug)->show($data->uuid);
 //        $code='zbasement.code.'.$this->slug.'.store.submit.success';
-//        $resource=$this->getResource($this->slug,'store');
-        $messageResponse=$this->messageResponse($this->slug,'store.submit.success',$data);
+        $resource=$this->getResource($this->slug,'store');
+        $messageResponse=$this->messageResponse($this->slug,'store.submit.success',$data,$resource);
         return $messageResponse;
     }
 
@@ -154,8 +154,8 @@ use Slug;
         $result=$repository->show($data);
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
-//        $resource=$this->getResource($this->slug,'show');
-        $messageResponse=$this->messageResponse($this->slug,'show.success', $result);
+        $resource=$this->getResource($this->slug,'show');
+        $messageResponse=$this->messageResponse($this->slug,'show.success', $result,$resource);
         return $messageResponse;
     }
 
@@ -167,8 +167,8 @@ use Slug;
         }
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
-//        $resource=$this->getResource($this->slug,'show');
-        $messageResponse=$this->messageResponse($this->slug,'update.submit.success', $result);
+        $resource=$this->getResource($this->slug,'show');
+        $messageResponse=$this->messageResponse($this->slug,'update.submit.success', $result,$resource);
         return $messageResponse;
     }
 

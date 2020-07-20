@@ -16,12 +16,12 @@ class BaseServiceProvider extends ServiceProvider
      * @param  string  $key
      * @return void
      */
-    protected function mergeConfigFrom($path, $key)
-    {
-        $config = $this->app['config']->get($key, []);
-
-        $this->app['config']->set($key, $this->mergeConfig(require $path, $config));
-    }
+//    protected function mergeConfigFrom($path, $key)
+//    {
+//        $config = $this->app['config']->get($key, []);
+//
+//        $this->app['config']->set($key, $this->mergeConfig(require $path, $config));
+//    }
 
     /**
      * Merges the configs together and takes multi-dimensional arrays into account.
