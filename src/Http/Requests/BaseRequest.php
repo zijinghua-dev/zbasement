@@ -31,7 +31,11 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 //        $this->errorMessages=app('validationRepository')->messages($this->slug);
         $service=Zsystem::service('validation');
         //slug转完整字段
-        $this->errorMessages=$service->messages($this->slug, $this->bread_action)->data;
+        $message=$service->messages($this->slug, $this->bread_action);
+        if(isset($message)){
+            $this->errorMessages=$message->data;
+        }
+//        $this->errorMessages=$service->messages($this->slug, $this->bread_action)->data;
     }
 
 
@@ -40,13 +44,19 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
     {
         $this->slug=$this->getSlug();
         $this->loadRules();
-
-        return $this->validateRules;
+        if(!isset($this->validateRules)){
+            return [];
+        }else{
+            return $this->validateRules;
+        }
     }
 
     public function messages()
     {
         $this->loadMessages();
+        if(!isset($this->errorMessages)){
+            return [];
+        }
         $messages=[];
         foreach ($this->errorMessages as $field => $values) {
             foreach ($values as $key => $value) {
@@ -62,7 +72,7 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 
         $codeMessageService=Zsystem::service('codeMessage');
 //        $codeMessage=$codeMessageService->show($this->errorCode);
-        $response=$codeMessageService->show($this->errorCode);
+        $response=$codeMessageService->createMessageResponse($this->slug,$this->bread_action.'_VALIDATION');
         $response->appendMessages($validator->errors()->all());
         $response=$response->response();
 //        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\BaseResource');

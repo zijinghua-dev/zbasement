@@ -18,6 +18,9 @@ class ValidationRepository extends BaseRepository implements ValidationRepositor
     public function getRulesFromConfig($slug, $action){
         $model=$this->model('validation');
         $data=$model->rules($slug);
+        if(!isset($data)||empty($data)){
+            return;
+        }
         //转换成两层数组格式
         $result=[];
         foreach ($data as  $field => $items){
@@ -40,6 +43,9 @@ class ValidationRepository extends BaseRepository implements ValidationRepositor
     public function getMessagesFromConfig($slug, $action){
         $model=$this->model('validation');
         $data=$model->messages($slug);
+        if(!isset($data)){
+            return;
+        }
         //转换成两层数组格式
         $result=[];
         foreach ($data as  $field => $items){

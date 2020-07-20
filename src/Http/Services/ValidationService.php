@@ -13,15 +13,25 @@ class ValidationService extends BaseService implements ValidationServiceInterfac
         $repository=$this->repository();
         //把格式更换为两层数组格式
         $rules=$repository->rules($slug, $action);
-        $rules=$this->changeCustomRule($rules);
-        return $this->messageResponse('ZBASEMENT_CODE_'.$slug.'_'.$action.'_LOAD_RULES',$rules);
+        if(isset($rules)&&(!empty($rules))){
+            $rules=$this->changeCustomRule($rules);
+            return $this->messageResponse($slug,$action.'_LOAD_RULES_SUCCESS',$rules);
+        }else{
+            return $this->messageResponse($slug,$action.'_LOAD_RULES_FAILED');
+        }
+
 
     }
     public function messages($slug, $action){
         $repository=$this->repository('validation');
         //把格式更换为两层数组格式
         $messages=$repository->messages($slug, $action);
-        return $this->messageResponse('ZBASEMENT_CODE_'.$slug.'_'.$action.'_LOAD_MESSAGES',$messages);
+        if(emptyObjectOrArray($messages)){
+            return $this->messageResponse($slug,$action.'_LOAD_MESSAGES_SUCCESS',$messages);
+        }else{
+            return $this->messageResponse($slug,$action.'_LOAD_MESSAGES_FAILED');
+        }
+
     }
 
     //不能输入空字符串

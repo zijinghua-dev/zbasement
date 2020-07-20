@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Zijinghua\Zbasement\Events\Api\InterfaceAfterEvent;
 use Zijinghua\Zbasement\Events\Api\InterfaceBeforeEvent;
 use Zijinghua\Zbasement\Facades\Zsystem;
+use Zijinghua\Zbasement\Http\Requests\FetchRequest;
 use Zijinghua\Zbasement\Http\Requests\IndexRequest;
 use Zijinghua\Zbasement\Http\Requests\ShowRequest;
 use Zijinghua\Zbasement\Http\Requests\StoreRequest;
@@ -64,6 +65,8 @@ class BaseController extends Controller
         return $service;
     }
 
-
+    public function fetch(FetchRequest $request){
+        return $this->execute($request,'fetch');
+    }
 
 }

@@ -33,7 +33,7 @@ class CodeMessageConfig implements CodeMessageModelInterface
     {
         //code转换为config文件的index
 
-        $data = getConfigValue($index);
+        $data = config($index);
         if (isset($data)) {
             if (!empty($data)) {
                 $data=$this->changeToCamel($data);

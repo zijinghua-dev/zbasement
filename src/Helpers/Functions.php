@@ -120,6 +120,34 @@ if (!function_exists('objectToArray')) {
     }
 }
 
+if (!function_exists('emptyObject')) {
+    function emptyObject($object)
+    {
+        if(!isset($object)){
+            return false;
+        }
+        return get_object_vars($object);
+    }
+}
+
+if (!function_exists('emptyObjectOrArray')) {
+    function emptyObjectOrArray($object)
+    {
+        if(is_string($object)){
+            return isEmptyOrNullString($object);
+        }
+        if(is_int($object)){
+            return isZeroOrNullInteger($object);
+        }
+        if (is_array($object)) {
+            return empty($object);
+        }
+        if (is_object($object)) {
+           return emptyObject($object);
+        }
+    }
+}
+
 function getSlug($request)
 {
         $path=$request->path();

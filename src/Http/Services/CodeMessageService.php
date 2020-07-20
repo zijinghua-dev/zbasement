@@ -9,10 +9,10 @@ use Zijinghua\Zbasement\Http\Services\Contracts\CodeMessageServiceInterface;
 
 class CodeMessageService extends BaseService implements CodeMessageServiceInterface
 {
-    public function show($code){
+    public function createMessageResponse($slug,$action){
 //        $repository=$this->repository();
 //        $result=$repository->first('code', $code);
-        return $this->messageResponse($code);
+        return $this->messageResponse($slug,$action);
     }
 
     public function showExceptionResponse($code){
