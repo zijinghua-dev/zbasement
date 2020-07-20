@@ -11,6 +11,18 @@ return [
                 'uri' => '/api/v1/user/',
                 'action'=>'post'
             ],
+            'show'=>[
+                'uri' => '/api/v1/user/',
+                'action'=>'get'
+            ],
+            'index'=>[
+                'uri' => '/api/v1/user/index',
+                'action'=>'post'
+            ],
+            'update'=>[
+                'uri' => '/api/v1/user',
+                'action'=>'put'
+            ],
         ],
 
     ],

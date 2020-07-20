@@ -42,7 +42,9 @@ class Has implements Rule
     {
         $slug=getSlug(request());
         $service=Zsystem::service($slug);
-        $response=$service->search($attribute, $value);
+        //拼接查询参数
+        $parameters['search'][]=['field'=>$attribute,'value'=>$value];
+        $response=$service->fetch($parameters);
         if (!$response->code->status) {
             $this->message = '字段'.$attribute.'的值'. $value.'无法找到';
             return false;

@@ -67,4 +67,39 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         }
 
     }
+
+    public function update(array $attributes = [], array $options = []){
+//        $host=getConfigValue('zvoyager');
+//        $host=getConfigValue('zvoyager.usercenter');
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.update.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.update.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $data=$this->connect($action,$fetchUri,$attributes);
+        if(isset($data)){
+            $this->fill($data[0]);
+            return $this;
+        }
+
+    }
+
+
+    public function show($data){
+//        $host=getConfigValue('zvoyager');
+//        $host=getConfigValue('zvoyager.usercenter');
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.show.uri').$data['uuid'];
+        $action=getConfigValue('zbasement.api.usercenter.api.show.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $data=$this->connect($action,$fetchUri,$data);
+        if(isset($data)){
+            $this->fill($data[0]);
+            return $this;
+        }
+
+    }
 }
