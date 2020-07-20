@@ -142,6 +142,7 @@ use Slug;
         //应该放进队列，由队列进行写入，此时状态202
         //队列完成写入后，发送消息通知用户完成写入
         $data=$this->repository($this->slug)->store($parameters);
+        //这里有可能出现写入错误
 //        $data=$this->repository($this->slug)->show($data->uuid);
 //        $code='zbasement.code.'.$this->slug.'.store.submit.success';
         $resource=$this->getResource($this->slug,'store');
