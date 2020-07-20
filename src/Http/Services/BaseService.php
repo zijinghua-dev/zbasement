@@ -32,7 +32,7 @@ use Slug;
         }else{
             $code='zbasement.code.'.$this->slug.'.fetch.error';
 //        $resource=$this->getResource($this->slug,'fetch');
-            $messageResponse=$this->messageResponse($this->slug,'fetch.error');
+            $messageResponse=$this->messageResponse($this->slug,'fetch.failed');
         }
 
         return $messageResponse;
