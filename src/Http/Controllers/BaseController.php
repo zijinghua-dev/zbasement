@@ -33,11 +33,12 @@ class BaseController extends Controller
         return $response;
     }
 
-    public function edit(EditRequst $request){
-        $this->execute($request,'edit');
-    }
+//    public function edit(EditRequst $request){
+//      return  $this->execute($request,'edit');
+//    }
+
     public function update(UpdateRequest $request){
-        $this->execute($request,'update');
+       return  $this->execute($request,'update');
     }
     public function delete(DeleteRequest $request){
         $this->execute($request,'delete');

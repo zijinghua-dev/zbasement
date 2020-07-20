@@ -149,13 +149,26 @@ use Slug;
         return $messageResponse;
     }
 
-    public function show($uuid){
+    public function show($data){
         $repository=$this->repository($this->slug);
-        $result=$repository->show($uuid);
+        $result=$repository->show($data);
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
-        $resource=$this->getResource($this->slug,'show');
-        $messageResponse=$this->messageResponse($this->slug,'show.success', $result,$resource);
+//        $resource=$this->getResource($this->slug,'show');
+        $messageResponse=$this->messageResponse($this->slug,'show.success', $result);
+        return $messageResponse;
+    }
+
+    public function update($parameters){
+        $repository=$this->repository($this->slug);
+        $result=$repository->update($parameters);
+        if(isset($result)){
+            $result=$repository->show(['uuid'=>$parameters['uuid']]);
+        }
+        //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
+//        $code='zbasement.code.'.$this->slug.'.show.success';
+//        $resource=$this->getResource($this->slug,'show');
+        $messageResponse=$this->messageResponse($this->slug,'update.submit.success', $result);
         return $messageResponse;
     }
 
