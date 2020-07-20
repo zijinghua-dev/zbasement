@@ -61,7 +61,10 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
         $data=$this->connect($action,$fetchUri,$data);
-        $this->fill($data[0]);
-        return $this;
+        if(isset($data)){
+            $this->fill($data[0]);
+            return $this;
+        }
+
     }
 }
