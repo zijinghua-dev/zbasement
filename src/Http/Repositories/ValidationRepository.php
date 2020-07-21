@@ -12,14 +12,20 @@ class ValidationRepository extends BaseRepository implements ValidationRepositor
 {
     use Slug;
     public function rules($slug, $action){
-        $result=$this->getRulesFromConfig($slug, $action);
-        return $result;
+        //先加载无slug的rules，再去找有slug的rules
+        $withoutSlug=$this->getRulesFromConfig('base', $action);
+        $hasSlug=$this->getRulesFromConfig($slug, $action);
+//        if(emptyObjectOrArray($result))
+        return array_merge_recursive($withoutSlug,$hasSlug);
     }
     public function getRulesFromConfig($slug, $action){
         $model=$this->model('validation');
         $data=$model->rules($slug);
+//        if(!isset($data)||empty($data)){
+//            $data=$model->rules(null);
+//        }
         if(!isset($data)||empty($data)){
-            return;
+            return[];
         }
         //转换成两层数组格式
         $result=[];
@@ -36,15 +42,23 @@ class ValidationRepository extends BaseRepository implements ValidationRepositor
         return $result;
     }
     public function messages($slug, $action){
-        $result=$this->getMessagesFromConfig($slug, $action);
-        return $result;
+//        $result=$this->getMessagesFromConfig($slug, $action);
+//        return $result;
+        //先加载无slug的messages，再去找有slug的messages
+        $withoutSlug=$this->getMessagesFromConfig('base', $action);
+        $hasSlug=$this->getMessagesFromConfig($slug, $action);
+//        if(emptyObjectOrArray($result))
+        return array_merge_recursive($withoutSlug,$hasSlug);
     }
 
     public function getMessagesFromConfig($slug, $action){
         $model=$this->model('validation');
         $data=$model->messages($slug);
-        if(!isset($data)){
-            return;
+//        if(!isset($data)||empty($data)){
+//            $data=$model->messages(null);
+//        }
+        if(!isset($data)||empty($data)){
+            return[];
         }
         //转换成两层数组格式
         $result=[];

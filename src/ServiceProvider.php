@@ -159,9 +159,9 @@ class ServiceProvider extends BaseServiceProvider
 
     public function registerConfigs()
     {
-//        $this->mergeConfigFrom(
-//            dirname(__DIR__) . '/publishable/configs/validation.php', 'zbasement.validation'
-//        );
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/publishable/configs/validation.php', 'zbasement.validation'
+        );
         $path=dirname(__DIR__) . '/publishable/configs/code.php';
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/publishable/configs/code.php', 'zbasement.code'
