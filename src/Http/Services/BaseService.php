@@ -150,7 +150,11 @@ use Slug;
             }
         }
         $result=$repository->index($data);
-        if(!isset($result)||(empty($result))||$result->count()==0){
+        if(!isset($result)||(empty($result))){
+            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            return $messageResponse;
+        }
+        if(count($result)==0){
             $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
             return $messageResponse;
         }

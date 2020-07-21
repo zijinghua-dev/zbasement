@@ -53,9 +53,9 @@ class BaseRepository implements BaseRepositoryInterface
                 switch ($key){
                     case 'field':
                         $field=$value;
-                        if(!$this->fieldExist($field)){
-                            throw new Exception('数据对象'.$this->slug.'没有'.$field.'字段。');
-                        }
+//                        if(!$this->fieldExist($field)){
+//                            throw new Exception('数据对象'.$this->slug.'没有'.$field.'字段。');
+//                        }
                         //如果这个字段不在系统里，或者不能搜索，应当报错
                         break;
                     case 'filter':
@@ -101,10 +101,10 @@ class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function fieldExist($field){
-        $model=$this->model($this->slug);
-        return $model->fieldExist($field);
-    }
+//    public function fieldExist($field){
+//        $model=$this->model($this->slug);
+//        return $model->fieldExist($field);
+//    }
 
     public function first($field, $value){
         $model=$this->model($this->slug);

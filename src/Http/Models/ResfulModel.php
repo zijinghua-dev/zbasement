@@ -79,6 +79,23 @@ class ResfulModel extends BaseModel implements JWTSubject
             $this->setAttribute($key,$value);
         }
     }
+
+    public function index($parameters)
+    {
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.index.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.index.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $data=$this->connect($action,$fetchUri,$parameters);
+//        if(isset($data)){
+//            $this->fill($data[0]);
+        return $data;
+//        }
+
+    }
+
     public function fields($fields)
     {
         //组装成
@@ -97,10 +114,10 @@ class ResfulModel extends BaseModel implements JWTSubject
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
         $data=$this->connect($action,$fetchUri,$parameters);
-        if(isset($data)){
-            $this->fill($data[0]);
-            return $this;
-        }
+//        if(isset($data)){
+//            $this->fill($data[0]);
+            return $data[0];
+//        }
 
     }
 

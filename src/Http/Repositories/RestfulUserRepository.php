@@ -28,4 +28,9 @@ class RestfulUserRepository extends BaseRepository implements UserRepositoryInte
         $model=$this->model($this->getSlug());
         return $model->update($data);
     }
+
+    public function index($data){
+        $model=$this->model($this->getSlug());
+        return $model->index($data);
+    }
 }
