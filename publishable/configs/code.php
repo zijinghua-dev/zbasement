@@ -281,8 +281,14 @@ return [
         'failed'=>[
             'code'=>'ZBASEMENT_CODE_SEARCH_FAILED',
             'http_code'=>'403',
-            'message'=>'未找到自定义信息码！',
+            'message'=>'搜索失败！',
             'status'=>false,
-            ]
+            ],
+        'success'=>[
+            'code'=>'ZBASEMENT_CODE_SEARCH_SUCCESS',
+            'http_code'=>'200',
+            'message'=>'搜索成功！',
+            'status'=>true,
+        ]
     ],
 ];

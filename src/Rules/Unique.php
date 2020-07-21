@@ -57,7 +57,7 @@ class Unique implements Rule
         $internal = getConfigValue('zbasement.fields.auth.internal');
         $external=getConfigValue('zbasement.fields.auth.external');
         $fields=array_merge($internal,$external);
-        $response = $service->multiFieldsExist($fields, $value);
+        $response = $service->search(['fields'=>$fields, 'values'=>$value]);
         //判断一下是否是自己，如果是自己，允许重复
         if ($response->code->status) {
             if(Auth::user()){

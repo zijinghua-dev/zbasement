@@ -98,44 +98,65 @@ use Slug;
         return $response;
     }
 
-    //搜索到第一个就停止
-    public function multiFieldsExist($fields, $value){
-        foreach ($fields as $field){
-            $response=$this->search($field, $value);
-            if($response->code->status){
-                return $response;
-            }
-        }
-        return $response;
-    }
+//    //搜索到第一个就停止
+//    public function multiFieldsExist($fields, $value){
+//        foreach ($fields as $field){
+//            $response=$this->search($field, $value);
+//            if($response->code->status){
+//                return $response;
+//            }
+//        }
+//        return $response;
+//    }
 
     //search应该支持全文检索，不分字段,这一个应该被废弃
     //查询字段是否存在，值是否存在，如果存在，返回一个列表
-    public function search($field, $value) {
-
-        $repository=$this->repository($this->slug);
-        $result=$repository->fieldExist($field);
-        if (!$result){
-            $messageResponse=$this->messageResponse($this->slug,'INDEX_VALIDATION');
-            return $messageResponse;
-        }
-        $result=$this->repository($this->slug)->all($field, $value);
-        if (!$result->count()){
-//            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_ERROR';
-            $messageResponse=$this->messageResponse($this->slug,'INDEX_FAILED');
-
-        } else {
-//            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_SUCCESS';
-            $messageResponse=$this->messageResponse($this->slug,'INDEX_SUCCESS', $result);
-        }
-        return $messageResponse;
-    }
+//    public function search($field, $value) {
+//
+//        $repository=$this->repository($this->slug);
+//        $result=$repository->fieldExist($field);
+//        if (!$result){
+//            $messageResponse=$this->messageResponse($this->slug,'INDEX_VALIDATION');
+//            return $messageResponse;
+//        }
+//        $result=$this->repository($this->slug)->all($field, $value);
+//        if (!$result->count()){
+////            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_ERROR';
+//            $messageResponse=$this->messageResponse($this->slug,'INDEX_FAILED');
+//
+//        } else {
+////            $code='ZBASEMENT_CODE_'.strtoupper($this->slug).'_INDEX_SUCCESS';
+//            $messageResponse=$this->messageResponse($this->slug,'INDEX_SUCCESS', $result);
+//        }
+//        return $messageResponse;
+//    }
 
     //全文检索，不分字段，由repository决定可检索的字段
-    //$parameters,参数1，scope范围，即表；参数2，fields，字段；参数3，values
+    //$parameters,fields，values
     //首先排除不存在的表和字段
-    public function search1($parameters){
-
+    public function search($parameters){
+        $fields=$parameters['fields'];
+        $repository=$this->repository($this->slug);
+        $filtedFields=$repository->fields($fields);
+        if(!isset($filtedFields)||(empty($filtedFields))){
+            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            return $messageResponse;
+        }
+        //拼接查询数据集
+        $values=$parameters['values'];
+        foreach ($filtedFields as $field){
+            foreach ($values as $value){
+                $data['search'][]=['field'=>$field,'value'=>$value];
+            }
+        }
+        $result=$repository->index($data);
+        if(!isset($result)||(empty($result))||$result->count()==0){
+            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            return $messageResponse;
+        }
+        $resource=$this->getResource($this->slug,'search');
+        $messageResponse=$this->messageResponse($this->slug,'SEARCH_SUCCESS',$result,$resource);
+        return $messageResponse;
     }
 
     public function repository($slug=null){
