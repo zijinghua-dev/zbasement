@@ -27,6 +27,10 @@ return [
                 'uri' => '/api/v1/user/fields',
                 'action'=>'post'
             ],
+            'search'=>[
+                'uri' => '/api/v1/user/search',
+                'action'=>'post'
+            ],
         ],
 
     ],
