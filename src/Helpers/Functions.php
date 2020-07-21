@@ -126,7 +126,7 @@ if (!function_exists('emptyObject')) {
         if(!isset($object)){
             return false;
         }
-        return get_object_vars($object);
+        return !get_object_vars($object);
     }
 }
 
@@ -145,6 +145,24 @@ if (!function_exists('emptyObjectOrArray')) {
         if (is_object($object)) {
            return emptyObject($object);
         }
+    }
+}
+
+if (!function_exists('perPage')) {
+    function perPage($number)
+    {
+        $perPageMax=getConfigValue('zbasement.api.search.perpagemax');
+        if(!isset($number)){
+            return  getConfigValue('zbasement.api.search.perpage');
+        }
+        if(!is_int($number)||(empty($number)))
+        {
+            return  getConfigValue('zbasement.api.search.perpage');
+        }
+        if($number>$perPageMax){
+            return $perPageMax;
+        }
+            return $number;
     }
 }
 
@@ -168,3 +186,5 @@ function getRouteSlugs()
 
     return array_unique($slugs);
 }
+
+

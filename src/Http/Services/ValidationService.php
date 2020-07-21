@@ -26,7 +26,7 @@ class ValidationService extends BaseService implements ValidationServiceInterfac
         $repository=$this->repository('validation');
         //把格式更换为两层数组格式
         $messages=$repository->messages($slug, $action);
-        if(emptyObjectOrArray($messages)){
+        if(!emptyObjectOrArray($messages)){
             return $this->messageResponse($slug,$action.'_LOAD_MESSAGES_SUCCESS',$messages);
         }else{
             return $this->messageResponse($slug,$action.'_LOAD_MESSAGES_FAILED');

@@ -10,7 +10,9 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Zijinghua\Zbasement\Http\Models\Contracts\UserModelInterface;
 
 class RestfulUser extends ResfulModel implements UserModelInterface,    AuthenticatableContract,
@@ -84,11 +86,20 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         $action=getConfigValue('zbasement.api.usercenter.api.update.action');
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
-        $data=$this->connect($action,$fetchUri,$attributes);
-        if(isset($data)){
-            $this->fill($data[0]);
-            return $this;
+        $reponse=$this->connectWithAllResponse($action,$fetchUri,$attributes);
+        if(isset($reponse)){
+            if(isset($reponse->status)&&($reponse->status==false)){
+                return false;
+            }
+            if(isset($reponse->data)){
+                $this->fill($reponse->data[0]);
+                return $this;
+            }
         }
+//        if(isset($data)){
+//            $this->fill($data[0]);
+//            return $this;
+//        }
 
     }
 
@@ -107,6 +118,48 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
             $this->fill($data[0]);
             return $this;
         }
+
+    }
+
+    public function index($parameters)
+    {
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.index.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.index.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $response=$this->connectWithAllResponse($action,$fetchUri,$parameters);
+        $total=$response->meta->total;
+        $perPage=@$parameters['perPage'];
+        $perPage=perPage($perPage);
+        $currentPage=isset($parameters['page'])?$parameters['page']:0;
+//        $first
+//            $last
+//                $prev
+//                    $next
+//                 current_page
+//                 from
+//                 last_page
+//                 path
+//                 per_page
+//                 to
+//                 total
+        $collection=new Collection();
+        foreach ($response->data as $key=>$item){
+            $collection->push(new \Zijinghua\Zvoyager\Http\Models\User(objectToArray($item)));
+        }
+        return new LengthAwarePaginator($collection,$total,$perPage, $currentPage);
+//        if(isset($response)){
+//            //只留下data、
+//            $data=objectToArray($response->data);
+//            $links=objectToArray($response->links);
+//            $meta=objectToArray($response->meta);
+//        }
+//            $this->fill($data[0]);
+//        return new Collection(['data'=>$data,'links'=>$links,'meta'=>$meta]);
+//        return $data;
+//        }
 
     }
 }

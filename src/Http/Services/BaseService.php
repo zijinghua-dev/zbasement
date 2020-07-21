@@ -3,6 +3,7 @@ namespace Zijinghua\Zbasement\Http\Services;
 
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Zijinghua\Zbasement\Exceptions\ValidationException;
 use Zijinghua\Zbasement\Http\Responses\Contracts\MessageResponseInterface;
@@ -46,7 +47,7 @@ use Slug;
 //        $result=UserResource::collection($result);
         //测试代码结束---------------------------------
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
-        $code='zbasement.code.'.$this->slug.'.index.success';
+//        $code='zbasement.code.'.$this->slug.'.index.success';
         $resource=$this->getResource($this->slug,'index');
         $messageResponse=$this->messageResponse($this->slug,'index.success', $result,$resource);
         return $messageResponse;
@@ -74,20 +75,21 @@ use Slug;
 
         $message=$messageRepository->first('code',$code);
 
-        if(!emptyObjectOrArray($message)){
+        if(emptyObjectOrArray($message)){
             if(isset($action)&&(!empty($action))){
                 //查找不带slug的code
                 $code='zbasement.code.'.$action;
                 $message=$messageRepository->first('code',$code);
             }
 
-            if(!emptyObjectOrArray($message)){
+            if(emptyObjectOrArray($message)){
                 //报错
                 $code='search.failed';
-
-                $response=$this->messageResponse(null,$code);
-                $response->appendMessages('slug='.$slug.';action='.$action.';');
-                throw (new HttpResponseException($response->response()));
+                $response=['code'=>'zbasement.code.search.failed','status'=>false,'httpCode'=>403,'data'=>[]];
+//                $response=$this->messageResponse(null,$code);
+//                $response->appendMessages('slug='.$slug.';action='.$action.';');
+                $response=new Response(json_encode($response));
+                throw (new HttpResponseException($response));
 
 //                $response=$response->response();
 //                throw (new HttpResponseException($response->code->httpCode, $response->response(), null, ['Content-Type'=>'application/json','Accept'=>'application/json']));

@@ -36,5 +36,9 @@ return [
     ],
     'api' => [
         'version'=>'v1',
+    ],
+    'search'=>[
+        'perpage'=>15,
+        'perpagemax'=>100,
     ]
 ];
