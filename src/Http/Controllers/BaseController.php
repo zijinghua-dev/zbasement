@@ -70,7 +70,8 @@ class BaseController extends Controller
         return $this->execute($request,'fetch');
     }
 
-    public function search(SearchRequest $request){
+    //fields和values
+    public function search(Request $request){
         return $this->execute($request,'search');
     }
 
