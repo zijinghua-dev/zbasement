@@ -166,10 +166,10 @@ class ServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/publishable/configs/code.php', 'zbasement.code'
         );
-//        $this->mergeConfigFrom(
-//
-//            dirname(__DIR__) . '/publishable/configs/fields.php', 'zbasement.fields'
-//        );
+        $this->mergeConfigFrom(
+
+            dirname(__DIR__) . '/publishable/configs/fields.php', 'zbasement.fields'
+        );
         $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/logging.php', 'logging.channels');
         $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/api.php', 'zbasement.api');
     }
