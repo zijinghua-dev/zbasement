@@ -49,6 +49,26 @@ class ResfulModel extends BaseModel implements JWTSubject
             return $json->data;
         }
     }
+    public function connectWithAllResponse($action,$url,$parameters){
+
+        $parameters=['body' => json_encode($parameters)];
+
+        try {
+            $response = $this->client->$action($url, $parameters);
+            $content=$response->getBody();
+        }
+        catch (RequestException  $e) {
+            $response = $e->getResponse();
+            $content = $response->getBody()->getContents();
+        }
+        //还需要处理网络故障异常
+
+
+        $json=json_decode($content);
+
+            return $json;
+
+    }
     public function fill($data){
         foreach ($data as $key=>$value){
             $this->setAttribute($key,$value);

@@ -155,6 +155,13 @@ use Slug;
         //这里有可能出现写入错误
 //        $data=$this->repository($this->slug)->show($data->uuid);
 //        $code='zbasement.code.'.$this->slug.'.store.submit.success';
+
+        //如果false，用户已经存在；null，网络错误
+        if(isset($data)&&($data==false)){
+            $messageResponse=$this->messageResponse($this->slug,'store.submit.failed');
+            return $messageResponse;
+        }
+
         $resource=$this->getResource($this->slug,'store');
         $messageResponse=$this->messageResponse($this->slug,'store.submit.success',$data,$resource);
         return $messageResponse;

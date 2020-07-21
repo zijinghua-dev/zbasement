@@ -51,6 +51,7 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
 
     }
 
+    //如果用户已经存在，返回false；网络问题，返回null；
     public function store($data){
 //        $host=getConfigValue('zvoyager');
 //        $host=getConfigValue('zvoyager.usercenter');
@@ -60,11 +61,17 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         $action=getConfigValue('zbasement.api.usercenter.api.store.action');
         $fetchUri=$host.$fetchUri;
 //        $parameters=$data;
-        $data=$this->connect($action,$fetchUri,$data);
-        if(isset($data)){
-            $this->fill($data[0]);
-            return $this;
+        $reponse=$this->connectWithAllResponse($action,$fetchUri,$data);
+        if(isset($reponse)){
+            if(isset($reponse->status)&&($reponse->status==false)){
+                return false;
+            }
+            if(isset($reponse->data)){
+                $this->fill($reponse->data[0]);
+                return $this;
+            }
         }
+
 
     }
 
