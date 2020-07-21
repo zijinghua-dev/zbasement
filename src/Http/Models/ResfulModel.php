@@ -59,13 +59,30 @@ class ResfulModel extends BaseModel implements JWTSubject
             $this->setAttribute($key,$value);
         }
     }
-//    public function getUuidAttribute()
-//    {
-//        if(isset($this->data)){
-//            return $this->data[0]->uuid;
-//        }
-//
-//    }
+    public function fields($fields)
+    {
+        //组装成
+        //{
+        //    "search":
+        //    [
+        //        "wechat_id",
+        //        "username"
+        //    ]
+        //}
+        $parameters['search']=$fields;
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.fields.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.fields.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $data=$this->connect($action,$fetchUri,$parameters);
+        if(isset($data)){
+            $this->fill($data[0]);
+            return $this;
+        }
+
+    }
 
     public function getKey()
     {

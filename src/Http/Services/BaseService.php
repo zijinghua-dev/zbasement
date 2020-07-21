@@ -38,6 +38,7 @@ use Slug;
         return $messageResponse;
     }
 
+    //返回结果：1，没有这个字段，false；2，没有值，null
     public function index($data){
         $repository=$this->repository($this->slug);
         $result=$repository->index($data);
@@ -108,8 +109,10 @@ use Slug;
         return $response;
     }
 
+    //search应该支持全文检索，不分字段,这一个应该被废弃
     //查询字段是否存在，值是否存在，如果存在，返回一个列表
     public function search($field, $value) {
+
         $repository=$this->repository($this->slug);
         $result=$repository->fieldExist($field);
         if (!$result){
@@ -126,6 +129,13 @@ use Slug;
             $messageResponse=$this->messageResponse($this->slug,'INDEX_SUCCESS', $result);
         }
         return $messageResponse;
+    }
+
+    //全文检索，不分字段，由repository决定可检索的字段
+    //$parameters,参数1，scope范围，即表；参数2，fields，字段；参数3，values
+    //首先排除不存在的表和字段
+    public function search1($parameters){
+
     }
 
     public function repository($slug=null){
@@ -176,5 +186,18 @@ use Slug;
     public function getResource($slug, $bread_action=null){
         //resource类在app中注入的别名为$slug+$bread_action+resource
         return Zsystem::resource( $slug,$bread_action);
+    }
+
+
+    //返回存在的字段,没有找到为null，出错为false
+    public function fields($parameters){
+        $fields=$parameters['search'];
+        $repository=$this->repository($this->slug);
+        $result=(object)$repository->fields($fields);
+        if(isset($result)){
+            $messageResponse=$this->messageResponse($this->slug,'fields.search.success', $result);
+            return $messageResponse;
+        }
+
     }
 }

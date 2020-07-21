@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use stdClass;
 use Zijinghua\Zbasement\Http\Resources\Contracts\BaseResourceInterface;
 
 /**
@@ -27,11 +28,16 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
         if (isset($resource)) {
             if ($resource instanceof LengthAwarePaginator) {
                 $collection=$resource;
-            } elseif (!($resource instanceof Collection)) {
+            } elseif ($resource instanceof Collection) {
+                $collection=$resource;
+            } elseif(is_array($resource)) {
+                $collection->push($resource);
+            }elseif($resource instanceof StdClass){
+                $collection->push($resource);
+            }else{
                 $arrayResource=$resource->toArray();
                 $collection->push($arrayResource);
-            } else {
-                $collection=$resource;
+
             }
         }
         parent::__construct($collection);

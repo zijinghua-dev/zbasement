@@ -165,6 +165,22 @@ return [
             ],
         ],
     ],
+    'fields'=>[
+        'search'=>[
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_SUCCESS',
+                'status' => true,
+                'message' => '数据模型中字段搜索成功!'
+            ],
+            'failed'=>[
+                'http_code' => 500,
+                'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_FAILED',
+                'status' => false,
+                'message' => '数据模型中字段搜索失败!'
+            ],
+        ],
+    ],
     'store'=>[
         'submit'=>[
             'success'=>[

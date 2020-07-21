@@ -70,4 +70,12 @@ class BaseController extends Controller
         return $this->execute($request,'fetch');
     }
 
+    public function search(SearchRequest $request){
+        return $this->execute($request,'search');
+    }
+
+    //可输入多个字段名，查看在当前slug中是否存在，忽略key，只取第一个value，将value还原成数组形式
+    public function fields(Request $request){
+        return $this->execute($request,'fields');
+    }
 }

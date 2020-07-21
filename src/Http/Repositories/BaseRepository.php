@@ -35,14 +35,14 @@ class BaseRepository implements BaseRepositoryInterface
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
     public function fetch($data){
-        $model=$this->search($data);
+        $model=$this->find($data);
         if(isset($model)){
             return $model->first();
         }
 
     }
 
-    public function search($data){
+    public function find($data){
         $model=Zsystem::model($this->slug);
         foreach ($data['search'] as $items){
             $field=null;
@@ -95,7 +95,7 @@ class BaseRepository implements BaseRepositoryInterface
         $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
 
-        $model=$this->search($parameters);
+        $model=$this->find($parameters);
         if(isset($model)) {
             return $model->paginate($paginate);
         }
@@ -151,5 +151,9 @@ class BaseRepository implements BaseRepositoryInterface
         return Zsystem::model($this->slug);
     }
 
+    public function fields($fields){
+        $model=$this->model($this->slug);
+        return $model->fields($fields);
+    }
 
 }

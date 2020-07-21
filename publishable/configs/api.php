@@ -23,6 +23,10 @@ return [
                 'uri' => '/api/v1/user',
                 'action'=>'put'
             ],
+            'fields'=>[
+                'uri' => '/api/v1/user/fields',
+                'action'=>'post'
+            ],
         ],
 
     ],

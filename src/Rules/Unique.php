@@ -26,11 +26,11 @@ class Unique implements Rule
      *
      * @return void
      */
-    public function __construct($requireDependence=['username','email','mobile','wechat_id'])
-    {
-        $this->service = Zsystem::service('user');
-        $this->requireDependence = $requireDependence;
-    }
+//    public function __construct($requireDependence=['username','email','mobile','wechat_id'])
+//    {
+//        $this->service = Zsystem::service('user');
+//        $this->requireDependence = $requireDependence;
+//    }
 //    public function __construct($request, $requireDependence)
 //    {
 //        $this->request = $request;
@@ -52,8 +52,12 @@ class Unique implements Rule
      */
     public function passes($attribute, $value)
     {
-//        $this->service = Zsystem::service('user');
-        $response = $this->service->multiFieldsExist($this->requireDependence, $value);
+        $service = Zsystem::service('user');
+
+        $internal = getConfigValue('zbasement.fields.auth.internal');
+        $external=getConfigValue('zbasement.fields.auth.external');
+        $fields=array_merge($internal,$external);
+        $response = $service->multiFieldsExist($fields, $value);
         //判断一下是否是自己，如果是自己，允许重复
         if ($response->code->status) {
             if(Auth::user()){

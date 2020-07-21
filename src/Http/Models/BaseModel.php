@@ -31,4 +31,10 @@ abstract class BaseModel extends Model
     public function fieldExist($field){
         return Schema::hasColumn($this->table, $field);
     }
+
+    public function fields($fields){
+        $columns=Schema::getColumnListing($this->table);
+        $result=array_intersect($fields,$columns);
+        return $result;
+    }
 }
