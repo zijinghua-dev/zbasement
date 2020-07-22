@@ -7,6 +7,7 @@ namespace Zijinghua\Zbasement\Http\Models;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Zijinghua\Zbasement\Http\Models\BaseModel;
@@ -102,6 +103,22 @@ class ResfulModel extends BaseModel implements JWTSubject
 //            $this->fill($data[0]);
             return $data[0];
 //        }
+
+    }
+
+    public function index($parameters,$action,$url){
+        $response=$this->connectWithAllResponse($action,$url,$parameters);
+        $total=$response->meta->total;
+        $perPage=@$parameters['perPage'];
+        $perPage=perPage($perPage);
+        $currentPage=isset($parameters['page'])?$parameters['page']:0;
+        $collection=new \Illuminate\Database\Eloquent\Collection();
+        $class=get_called_class();
+        foreach ($response->data as $key=>$item){
+
+            $collection->push(new $class(objectToArray($item)));
+        }
+        return new LengthAwarePaginator($collection,$total,$perPage, $currentPage);
 
     }
 

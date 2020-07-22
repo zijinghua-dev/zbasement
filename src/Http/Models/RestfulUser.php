@@ -121,46 +121,15 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
 
     }
 
-    public function index($parameters)
+    public function index($parameters,$action=null,$fetchUri=null)
     {
         $host=getConfigValue('zbasement.api.usercenter.host');
 
         $fetchUri=getConfigValue('zbasement.api.usercenter.api.index.uri');
         $action=getConfigValue('zbasement.api.usercenter.api.index.action');
         $fetchUri=$host.$fetchUri;
-//        $parameters=$data;
-        $response=$this->connectWithAllResponse($action,$fetchUri,$parameters);
-        $total=$response->meta->total;
-        $perPage=@$parameters['perPage'];
-        $perPage=perPage($perPage);
-        $currentPage=isset($parameters['page'])?$parameters['page']:0;
-//        $first
-//            $last
-//                $prev
-//                    $next
-//                 current_page
-//                 from
-//                 last_page
-//                 path
-//                 per_page
-//                 to
-//                 total
-        $collection=new Collection();
-        foreach ($response->data as $key=>$item){
-
-            $collection->push(new RestfulUser(objectToArray($item)));
-        }
-        return new LengthAwarePaginator($collection,$total,$perPage, $currentPage);
-//        if(isset($response)){
-//            //只留下data、
-//            $data=objectToArray($response->data);
-//            $links=objectToArray($response->links);
-//            $meta=objectToArray($response->meta);
-//        }
-//            $this->fill($data[0]);
-//        return new Collection(['data'=>$data,'links'=>$links,'meta'=>$meta]);
-//        return $data;
-//        }
+        $result=parent::index($parameters,$action,$fetchUri);
+        return $result;
 
     }
 }
