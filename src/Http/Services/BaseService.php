@@ -24,16 +24,16 @@ use Slug;
 //            }
 //        }
 
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $result=$repository->fetch($data);
         if(isset($result)){
 //            $code='zbasement.code.'.$this->slug.'.fetch.success';
-        $resource=$this->getResource($this->slug,'fetch');
-            $messageResponse=$this->messageResponse($this->slug,'fetch.success', $result,$resource);
+        $resource=$this->getResource($this->getSlug(),'fetch');
+            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.success', $result,$resource);
         }else{
 //            $code='zbasement.code.'.$this->slug.'.fetch.error';
 //        $resource=$this->getResource($this->slug,'fetch');
-            $messageResponse=$this->messageResponse($this->slug,'fetch.failed');
+            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.failed');
         }
 
         return $messageResponse;
@@ -41,15 +41,15 @@ use Slug;
 
     //返回结果：1，没有这个字段，false；2，没有值，null
     public function index($data){
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $result=$repository->index($data);
         //测试代码---------------------------------
 //        $result=UserResource::collection($result);
         //测试代码结束---------------------------------
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.index.success';
-        $resource=$this->getResource($this->slug,'index');
-        $messageResponse=$this->messageResponse($this->slug,'index.success', $result,$resource);
+        $resource=$this->getResource($this->getSlug(),'index');
+        $messageResponse=$this->messageResponse($this->getSlug(),'index.success', $result,$resource);
         return $messageResponse;
     }
     //$slug,$action
@@ -138,10 +138,10 @@ use Slug;
     //首先排除不存在的表和字段
     public function search($parameters){
         $fields=$parameters['fields'];
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $filtedFields=$repository->fields($fields);
         if(!isset($filtedFields)||(empty($filtedFields))){
-            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
             return $messageResponse;
         }
         //拼接查询数据集
@@ -153,15 +153,15 @@ use Slug;
         }
         $result=$repository->index($data);
         if(!isset($result)||(empty($result))){
-            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
             return $messageResponse;
         }
         if(count($result)==0){
-            $messageResponse=$this->messageResponse($this->slug,'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
             return $messageResponse;
         }
-        $resource=$this->getResource($this->slug,'search');
-        $messageResponse=$this->messageResponse($this->slug,'SEARCH_SUCCESS',$result,$resource);
+        $resource=$this->getResource($this->getSlug(),'search');
+        $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUCCESS',$result,$resource);
         return $messageResponse;
     }
 
@@ -171,49 +171,49 @@ use Slug;
         if(isset($slug)){
             return Zsystem::repository($slug);
         }
-        return Zsystem::repository($this->slug);
+        return Zsystem::repository($this->getSlug());
     }
 
     public function store($parameters){
         //这里没有进行参数的过滤，所有参数都传给repository了
         //应该放进队列，由队列进行写入，此时状态202
         //队列完成写入后，发送消息通知用户完成写入
-        $data=$this->repository($this->slug)->store($parameters);
+        $data=$this->repository($this->getSlug())->store($parameters);
         //这里有可能出现写入错误
 //        $data=$this->repository($this->slug)->show($data->uuid);
 //        $code='zbasement.code.'.$this->slug.'.store.submit.success';
 
         //如果false，用户已经存在；null，网络错误
         if(isset($data)&&($data==false)){
-            $messageResponse=$this->messageResponse($this->slug,'store.submit.failed');
+            $messageResponse=$this->messageResponse($this->getSlug(),'store.submit.failed');
             return $messageResponse;
         }
 
-        $resource=$this->getResource($this->slug,'store');
-        $messageResponse=$this->messageResponse($this->slug,'store.submit.success',$data,$resource);
+        $resource=$this->getResource($this->getSlug(),'store');
+        $messageResponse=$this->messageResponse($this->getSlug(),'store.submit.success',$data,$resource);
         return $messageResponse;
     }
 
     public function show($data){
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $result=$repository->show($data);
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
-        $resource=$this->getResource($this->slug,'show');
-        $messageResponse=$this->messageResponse($this->slug,'show.success', $result,$resource);
+        $resource=$this->getResource($this->getSlug(),'show');
+        $messageResponse=$this->messageResponse($this->getSlug(),'show.success', $result,$resource);
         return $messageResponse;
     }
 
     public function update($parameters){
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $result=$repository->update($parameters);
         if(isset($result)){
             $result=$repository->show(['uuid'=>$parameters['uuid']]);
         }
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
-        $resource=$this->getResource($this->slug,'show');
-        $messageResponse=$this->messageResponse($this->slug,'update.submit.success', $result,$resource);
+        $resource=$this->getResource($this->getSlug(),'show');
+        $messageResponse=$this->messageResponse($this->getSlug(),'update.submit.success', $result,$resource);
         return $messageResponse;
     }
 
@@ -226,10 +226,10 @@ use Slug;
     //返回存在的字段,没有找到为null，出错为false
     public function fields($parameters){
         $fields=$parameters['search'];
-        $repository=$this->repository($this->slug);
+        $repository=$this->repository($this->getSlug());
         $result=(object)$repository->fields($fields);
         if(isset($result)){
-            $messageResponse=$this->messageResponse($this->slug,'fields.search.success', $result);
+            $messageResponse=$this->messageResponse($this->getSlug(),'fields.search.success', $result);
             return $messageResponse;
         }
 

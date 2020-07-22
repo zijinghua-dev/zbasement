@@ -12,7 +12,7 @@ class CodeMessageRepository extends BaseRepository
     public $slug='codeMessage';
 
     public function fieldExist($field){
-        $model=$this->model($this->slug);
+        $model=$this->model($this->getSlug());
         return $model->fieldExist($field);
     }
 

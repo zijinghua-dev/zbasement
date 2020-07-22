@@ -12,10 +12,11 @@ use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Responses\BaseMessageResponse;
 use Zijinghua\Zbasement\Http\Responses\ExceptionResponse;
 use Zijinghua\Zbasement\Http\Responses\ValidationExceptionResponse;
+use Zijinghua\Zbasement\Http\Traits\Slug;
 
 class BaseRequest extends FormRequest implements ValidatesWhenResolved
 {
-    protected $slug;
+    use Slug;
     public $errorCode;
     public $errorMessages=[];
     public $validateRules=[];
@@ -25,13 +26,13 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
         $service=Zsystem::service('validation');
         //slug转完整字段
 //        $this->validateRules=$service->rules($this->slug, $this->bread_action);
-        $this->validateRules=$service->rules($this->slug, $this->bread_action)->data;
+        $this->validateRules=$service->rules($this->getSlug(), $this->bread_action)->data;
     }
     protected function loadMessages(){
 //        $this->errorMessages=app('validationRepository')->messages($this->slug);
         $service=Zsystem::service('validation');
         //slug转完整字段
-        $message=$service->messages($this->slug, $this->bread_action);
+        $message=$service->messages($this->getSlug(), $this->bread_action);
         if(isset($message)){
             $this->errorMessages=$message->data;
         }
@@ -42,7 +43,7 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 
     public function rules()
     {
-        $this->slug=$this->getSlug();
+        $this->setSlug(getSlug($this));
         $this->loadRules();
         if(!isset($this->validateRules)){
             return [];
@@ -68,11 +69,11 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 
     protected function failedValidation(Validator $validator)
     {
-        $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->slug).'_'.strtoupper($this->bread_action).'_VALIDATION';
+        $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->getSlug()).'_'.strtoupper($this->bread_action).'_VALIDATION';
 
         $codeMessageService=Zsystem::service('codeMessage');
 //        $codeMessage=$codeMessageService->show($this->errorCode);
-        $response=$codeMessageService->createMessageResponse($this->slug,$this->bread_action.'_VALIDATION');
+        $response=$codeMessageService->createMessageResponse($this->getSlug(),$this->bread_action.'_VALIDATION');
         $response->appendMessages($validator->errors()->all());
         $response=$response->response();
 //        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\BaseResource');

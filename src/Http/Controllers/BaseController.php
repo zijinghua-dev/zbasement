@@ -12,21 +12,22 @@ use Zijinghua\Zbasement\Http\Requests\IndexRequest;
 use Zijinghua\Zbasement\Http\Requests\ShowRequest;
 use Zijinghua\Zbasement\Http\Requests\StoreRequest;
 use Zijinghua\Zbasement\Http\Requests\UpdateRequest;
+use Zijinghua\Zbasement\Http\Traits\Slug;
 
 class BaseController extends Controller
 {
-    protected $slug;
+    use Slug;
     public function execute($request,$action){
         //发送事件
         event(new InterfaceBeforeEvent($request));
         //从request里获取参数（slug，查询参数）----记得在service里面过滤参数，去掉不用的参数
         //找到对应的resource类
-        if(!isset($this->slug)){
-            $this->slug=getSlug($request);
+        if(empty($this->getSlug())){
+            $this->setSlug(getSlug($request));
         }
 
         $data=$request->all();
-        $service=$this->service($this->slug);
+        $service=$this->service($this->getSlug());
         $message= $service->$action($data);
         $response=$message->response();
         event(new InterfaceAfterEvent($request,$response));
@@ -53,12 +54,12 @@ class BaseController extends Controller
         event(new InterfaceBeforeEvent($request));
         //从request里获取参数（slug，查询参数）----记得在service里面过滤参数，去掉不用的参数
         //找到对应的resource类
-        if(!isset($this->slug)){
-            $this->slug=getSlug($request);
+        if(empty($this->getSlug())){
+            $this->setSlug(getSlug($request));
         }
 
         $data=$request->all();
-        $service=$this->service($this->slug);
+        $service=$this->service($this->getSlug());
         $message= $service->index($data);
         $url = $request->url();
         if(!emptyObjectOrArray($message->data)){

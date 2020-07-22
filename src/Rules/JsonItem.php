@@ -12,14 +12,14 @@ use Illuminate\Contracts\Validation\Rule;
  */
 class JsonItem implements Rule
 {
-    protected $field;
-//
-    protected $request;
-//
-    protected $slug;
-//
-    protected $service;
-    protected $message;
+//    protected $field;
+////
+//    protected $request;
+////
+////    protected $slug;
+////
+//    protected $service;
+//    protected $message;
 //    /**
 //     * Create a new rule instance.
 //     *

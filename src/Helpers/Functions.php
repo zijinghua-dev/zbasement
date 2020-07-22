@@ -169,7 +169,8 @@ if (!function_exists('perPage')) {
 function getSlug($request)
 {
         $path=$request->path();
-        $slug = explode('/', $path)[2];
+        $index=getConfigValue('zbasement.api.slug.index');
+        $slug = explode('/', $path)[$index];
 
     return $slug;
 }

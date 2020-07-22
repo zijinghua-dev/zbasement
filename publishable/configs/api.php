@@ -40,5 +40,8 @@ return [
     'search'=>[
         'perpage'=>15,
         'perpagemax'=>100,
-    ]
+    ],
+    'slug'=>[
+        'index'=>env('SLUG_INDEX',2),
+        ],
 ];

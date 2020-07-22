@@ -43,7 +43,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     public function find($data){
-        $model=Zsystem::model($this->slug);
+        $model=Zsystem::model($this->getSlug());
         foreach ($data['search'] as $items){
             $field=null;
             $fieldValue=null;
@@ -107,12 +107,12 @@ class BaseRepository implements BaseRepositoryInterface
 //    }
 
     public function first($field, $value){
-        $model=$this->model($this->slug);
+        $model=$this->model($this->getSlug());
         return $model::where($field, $value)->first();
     }
 
     public function all($field, $value){
-        $model=$this->model($this->slug);
+        $model=$this->model($this->getSlug());
         return $model::where($field, $value)->paginate(15);
     }
 
@@ -148,11 +148,11 @@ class BaseRepository implements BaseRepositoryInterface
         if(isset($slug)){
             return Zsystem::model($slug);
         }
-        return Zsystem::model($this->slug);
+        return Zsystem::model($this->getSlug());
     }
 
     public function fields($fields){
-        $model=$this->model($this->slug);
+        $model=$this->model($this->getSlug());
         return $model->fields($fields);
     }
 
