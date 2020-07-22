@@ -144,4 +144,28 @@ class Zsystem
     {
         require __DIR__.'/../routes/snack.php';
     }
+
+
+    //返回一个class数组
+    public function typeSearch($classType){
+        $loader = AliasLoader::getInstance();
+        $aliases=$loader->getAliases();
+        $result=[];
+        $classType=ucfirst($classType);
+        foreach($aliases as $key=>$value){
+            $index=strpos($key,$classType);
+            //不是开头，却是结尾
+            if($index==0||$index==false){
+                continue;
+            }
+            $shouldbe=strlen($key)-strlen($classType);
+            if($index!=$shouldbe){
+                continue;
+            }
+            //因为有可能绑定的只是接口，还需要解析出类来
+
+            $result[$key]=$value;
+        }
+        return $result;
+    }
 }

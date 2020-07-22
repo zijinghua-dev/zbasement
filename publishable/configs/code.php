@@ -111,9 +111,9 @@ return [
             'status' => true,
             'message' => '获取详情信息成功!'
         ],
-        'error' => [
+        'failed' => [
             'http_code' => 403,
-            'code' => 'ZBASEMENT_CODE_SHOW_ERROR',
+            'code' => 'ZBASEMENT_CODE_SHOW_FAILED',
             'status' => false,
             'message' => '获取详情信息失败!'
         ],
@@ -288,6 +288,20 @@ return [
             'code'=>'ZBASEMENT_CODE_SEARCH_SUCCESS',
             'http_code'=>'200',
             'message'=>'搜索成功！',
+            'status'=>true,
+        ]
+    ],
+    'authorize'=>[
+        'failed'=>[
+            'code'=>'ZBASEMENT_CODE_AUTHORIZE_FAILED',
+            'http_code'=>'403',
+            'message'=>'授权失败，用户无权限访问该资源！',
+            'status'=>false,
+        ],
+        'success'=>[
+            'code'=>'ZBASEMENT_CODE_AUTHORIZE_SUCCESS',
+            'http_code'=>'200',
+            'message'=>'授权成功！',
             'status'=>true,
         ]
     ],
