@@ -4,8 +4,8 @@ namespace Zijinghua\Zbasement\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Zijinghua\Zvoyager\Base;
-use Zijinghua\Zvoyager\ZServiceProvider;
+//use Zijinghua\Zvoyager\Base;
+//use Zijinghua\Zvoyager\ZServiceProvider;
 
 class PublishRoutes extends Command
 {

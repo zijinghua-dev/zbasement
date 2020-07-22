@@ -147,7 +147,8 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
 //                 total
         $collection=new Collection();
         foreach ($response->data as $key=>$item){
-            $collection->push(new \Zijinghua\Zvoyager\Http\Models\User(objectToArray($item)));
+
+            $collection->push(new RestfulUser(objectToArray($item)));
         }
         return new LengthAwarePaginator($collection,$total,$perPage, $currentPage);
 //        if(isset($response)){
