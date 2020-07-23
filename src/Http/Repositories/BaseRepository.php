@@ -111,9 +111,11 @@ class BaseRepository implements BaseRepositoryInterface
         return $model::where($field, $value)->first();
     }
 
-    public function all($field, $value){
+    //不同于index和search，all没有分页功能
+    //all主要是给内部调用，一次性返回全部数据，所以，需要调用者考虑性能
+    public function all($fields){
         $model=$this->model($this->getSlug());
-        return $model::where($field, $value)->paginate(15);
+        return $model::select($fields)->get();
     }
 
     //$parameters为数组，键值对形式
@@ -156,4 +158,8 @@ class BaseRepository implements BaseRepositoryInterface
         return $model->fields($fields);
     }
 
+//    public function all($fields){
+//        $model=$this->model($this->getSlug());
+//        return $model->fields($fields);
+//    }
 }
