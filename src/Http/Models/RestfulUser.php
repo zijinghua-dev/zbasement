@@ -21,6 +21,7 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
 {
     use Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;
     protected $fillable=[];
+
 //    public function getUsernameAttribute()
 //    {
 //        if(isset($this->data)){
@@ -29,13 +30,7 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
 //
 //    }
 //
-//    public function getPasswordAttribute()
-//    {
-//        if(isset($this->data)){
-//            return $this->data[0]->password;
-//        }
-//
-//    }
+
     public function fetch($data){
 //        $host=getConfigValue('zvoyager');
 //        $host=getConfigValue('zvoyager.usercenter');

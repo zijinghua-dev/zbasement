@@ -61,7 +61,7 @@ use Slug;
 //        return $response;
 //    }
 
-    public function messageResponse($slug,$action, $data = null, $resourceClass = null) {
+    public function messageResponse($slug,$action, $data = null, $resourceClass = null,$token=null) {
         $response=app('messageResponse');
         $messageRepository=Zsystem::repository('codeMessage');
         //拼接带slug的code，
@@ -96,7 +96,7 @@ use Slug;
             }
         }
 
-        $response->set($message,$data,$resourceClass);
+        $response->set($message,$data,$resourceClass,$token);
         return $response;
     }
 

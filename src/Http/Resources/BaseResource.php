@@ -22,8 +22,10 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
         'message'=>null,
     ];
 
-    public function __construct($resource, $messageBody = null,$childResource=null)
+    protected $token=null;
+    public function __construct($resource, $messageBody = null,$childResource=null,$token=null)
     {
+        $this->token=$token;
         $collection = new Collection();
         if (isset($resource)) {
             if ($resource instanceof LengthAwarePaginator) {
@@ -35,9 +37,9 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
             }elseif($resource instanceof StdClass){
                 $collection->push($resource);
             }else{
+                //检查附加属性
                 $arrayResource=$resource->toArray();
                 $collection->push($arrayResource);
-
             }
         }
         parent::__construct($collection);
@@ -71,7 +73,7 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
      */
     public function with($request)
     {
-        return $this->messageBody;
+        return array_merge($this->messageBody,['token'=>$this->token]);
     }
 //    public function toArray($request)
 //    {
