@@ -6,7 +6,7 @@ return [
                 [
                     'rule'=>[
                         'required',
-                        'new \Zijinghua\Zbasement\Rules\JsonItem:field,value,filter,algothm',
+                        'new \Zijinghua\Zbasement\Rules\JsonItem:field,value,filter,algorithm',
                     ],
                     'action'=>[
                         'fetch','index',

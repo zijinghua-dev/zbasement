@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Repositories\Contracts\BaseRepositoryInterface;
 use Zijinghua\Zbasement\Http\Traits\Slug;
@@ -162,4 +163,66 @@ class BaseRepository implements BaseRepositoryInterface
 //        $model=$this->model($this->getSlug());
 //        return $model->fields($fields);
 //    }
+
+    public function key($name){
+        $parameter=$name;
+        if(is_string($name)){
+            $parameter['search'][]=['field'=>'name','value'=>$name];
+        }
+        $object=$this->fetch($parameter);
+        if(isset($object)){
+            return $object->id;
+        }
+    }
+
+    public function transferKey($item){
+        $parameter['search'][]=['field'=>array_key_first($item),'value'=>$item[array_key_first($item)]];
+        $object=$this->fetch($parameter);
+        if(isset($object)){
+            if(isset($item['id'])){
+                return $object->uuid;
+            }else{
+                return $object->id;
+            }
+
+        }
+    }
+
+    public function delete($parameters){
+        //批量删除
+        $parameters=$this->getIndexParameter($parameters);
+
+        $model=$this->find($parameters);
+        if(isset($model)) {
+            return $model->delete();
+        }
+    }
+
+    public function destroy($parameters){
+        //单一删除
+        $parameters=$this->getIndexParameter($parameters);
+
+        $model=$this->find($parameters);
+        if(isset($model)) {
+            return $model->delete();
+        }
+    }
+
+    public function clear($parameters){
+        //组内移除，并不删除
+        //必须通过group_objects model来做
+        $this->setSlug('groupObject');
+        //组内移除需要将uuid变成 object_id，
+
+        foreach ($parameters['search'] as $key=>$item){
+            if($item['field']=='uuid'){
+                $parameters['search'] [$key]['field']='object_uuid';
+            }
+        }
+
+        $model=$this->find($parameters);
+        if(isset($model)) {
+            return $model->delete();
+        }
+    }
 }

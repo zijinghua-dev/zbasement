@@ -263,7 +263,7 @@ return [
                 ],
                 'failed'=>[
                     'http_code' => 403,
-                    'code' => 'ZBASEMENT_CODE_USER_UPDATE_LOAD_MESSAGES_FAILED',
+                    'code' => 'ZBASEMENT_CODE_UPDATE_LOAD_MESSAGES_FAILED',
                     'status' => false,
                     'message' => '数据更新操作所需验证规则的提示信息加载失败!'
                 ],
@@ -304,5 +304,149 @@ return [
             'message'=>'授权成功！',
             'status'=>true,
         ]
+    ],
+    'delete'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_DELETE_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到批量数据删除提交申请!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_DELETE_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '批量数据删除操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_DELETE_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '批量数据删除操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_DELETE_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '批量数据删除操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_DELETE_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '批量数据删除操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_DELETE_VALIDATION',
+            'status' => false,
+            'message' => '批量删除数据时输入参数验证失败!'
+        ],
+    ],
+    'destroy'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_DESTROY_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到数据删除提交申请!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_DESTROY_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '数据删除操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_DESTROY_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '数据删除操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_DESTROY_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '数据删除操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_DESTROY_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '数据删除操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_DESTROY_VALIDATION',
+            'status' => false,
+            'message' => '删除数据时输入参数验证失败!'
+        ],
+    ],
+    'clear'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_CLEAR_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到组内数据移除提交申请!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_CLEAR_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '组内数据移除操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_CLEAR_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '组内数据移除操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_CLEAR_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '组内数据移除操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_CLEAR_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '组内数据移除操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_CLEAR_VALIDATION',
+            'status' => false,
+            'message' => '组内数据移除时输入参数验证失败!'
+        ],
     ],
 ];

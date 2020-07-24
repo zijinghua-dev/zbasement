@@ -175,6 +175,21 @@ function getSlug($request)
     return $slug;
 }
 
+function getUuids($request){
+    if(isset($request['uuid'])){
+        return $request['uuid'];
+    }
+    if(isset($request['uuids'])){
+        return $request['uuids'];
+    }
+}
+
+function getGroupUuid($request){
+    if(isset($request['groupUuid'])){
+        return $request['groupUuid'];
+    }
+}
+
 function getRouteSlugs()
 {
     $slugs  = [];

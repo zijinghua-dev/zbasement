@@ -14,7 +14,7 @@ class BaseService
 {
 use Slug;
     //调用fetch的位置，要将参数转换成这样的格式
-    //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algothm":"or"}]}
+    //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algorithm":"or"}]}
     public function fetch($data){
         //fetch接收到的是body里的json字符串，需要转换
 //        $parameters=[];
@@ -233,5 +233,35 @@ use Slug;
             return $messageResponse;
         }
 
+    }
+
+    public function delete($parameters){
+        //批量删除
+        $repository=$this->repository($this->getSlug());
+        $result=$repository->delete($parameters);
+        if($result){
+            $messageResponse=$this->messageResponse($this->getSlug(),'delete.submit.success', $result);
+            return $messageResponse;
+        }
+    }
+
+    public function destroy($parameters){
+        //单一删除
+        $repository=$this->repository($this->getSlug());
+        $result=$repository->destroy($parameters);
+        if($result){
+            $messageResponse=$this->messageResponse($this->getSlug(),'destroy.submit.success', $result);
+            return $messageResponse;
+        }
+    }
+
+    public function clear($parameters){
+        //组内移除，并不删除
+        $repository=$this->repository($this->getSlug());
+        $result=$repository->clear($parameters);
+        if($result){
+            $messageResponse=$this->messageResponse($this->getSlug(),'clear.submit.success');
+            return $messageResponse;
+        }
     }
 }

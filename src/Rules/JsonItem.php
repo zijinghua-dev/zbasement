@@ -40,7 +40,7 @@ class JsonItem implements Rule
      */
     public function passes($attribute, $value)
     {
-        //必须是{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algothm":"or"}]}这个结构
+        //必须是{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algorithm":"or"}]}这个结构
         if(emptyObjectOrArray($value)){
             return false;
         }

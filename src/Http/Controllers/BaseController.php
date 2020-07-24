@@ -7,6 +7,9 @@ use Illuminate\Routing\Controller;
 use Zijinghua\Zbasement\Events\Api\InterfaceAfterEvent;
 use Zijinghua\Zbasement\Events\Api\InterfaceBeforeEvent;
 use Zijinghua\Zbasement\Facades\Zsystem;
+use Zijinghua\Zbasement\Http\Requests\ClearRequest;
+use Zijinghua\Zbasement\Http\Requests\DeleteRequest;
+use Zijinghua\Zbasement\Http\Requests\DestroyRequest;
 use Zijinghua\Zbasement\Http\Requests\FetchRequest;
 use Zijinghua\Zbasement\Http\Requests\IndexRequest;
 use Zijinghua\Zbasement\Http\Requests\ShowRequest;
@@ -41,8 +44,20 @@ class BaseController extends Controller
     public function update(UpdateRequest $request){
        return  $this->execute($request,'update');
     }
+
+    //从组内移除，并不删除
+    public function clear(ClearRequest $request){
+        return  $this->execute($request,'clear');
+    }
+
+    //批量删除
     public function delete(DeleteRequest $request){
-        $this->execute($request,'delete');
+        return  $this->execute($request,'delete');
+    }
+
+    //单一删除
+    public function destroy(DestroyRequest $request){
+        return  $this->execute($request,'destroy');
     }
 
     //index涉及到返回的数据包要
