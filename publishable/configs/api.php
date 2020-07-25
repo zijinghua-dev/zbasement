@@ -31,6 +31,10 @@ return [
                 'uri' => '/api/v1/user/search',
                 'action'=>'post'
             ],
+            'transferkey'=>[
+                'uri' => '/api/v1/user/transferkey',
+                'action'=>'post'
+            ],
         ],
 
     ],
