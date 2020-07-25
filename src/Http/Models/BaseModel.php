@@ -3,6 +3,7 @@
 namespace Zijinghua\Zbasement\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Schema;
 use Zijinghua\Zbasement\Http\Models\Traits\UuidTrait;
 /**
@@ -12,7 +13,8 @@ use Zijinghua\Zbasement\Http\Models\Traits\UuidTrait;
  */
 abstract class BaseModel extends Model
 {
-    use UuidTrait;
+//    use UuidTrait;
+    use SoftDeletes;
 
     protected $fillable = [
     ];
@@ -36,5 +38,12 @@ abstract class BaseModel extends Model
         $columns=Schema::getColumnListing($this->table);
         $result=array_intersect($fields,$columns);
         return $result;
+    }
+
+    public function softDelete(){
+        if(config('softdelete',true)){
+            return $this->forceDelete();
+        }
+        return $this->delete();
     }
 }

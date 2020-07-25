@@ -127,4 +127,24 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
         return $result;
 
     }
+
+    public function transferKey($uuid){
+        $host=getConfigValue('zbasement.api.usercenter.host');
+
+        $fetchUri=getConfigValue('zbasement.api.usercenter.api.transferkey.uri');
+        $action=getConfigValue('zbasement.api.usercenter.api.transferkey.action');
+        $fetchUri=$host.$fetchUri;
+//        $parameters=$data;
+        $reponse=$this->connectWithAllResponse($action,$fetchUri,$uuid);
+        if(isset($reponse)){
+            if(isset($reponse->status)&&($reponse->status==false)){
+                return false;
+            }
+            if(isset($reponse->data)){
+                $this->fill($reponse->data[0]);
+                return $this;
+            }
+        }
+
+    }
 }

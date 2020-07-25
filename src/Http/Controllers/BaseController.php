@@ -113,4 +113,8 @@ class BaseController extends Controller
     public function fields(Request $request){
         return $this->execute($request,'fields');
     }
+
+    public function transferKey(Request $request){
+        return $this->execute($request,'transferKey');
+    }
 }

@@ -7,16 +7,17 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 use Exception;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
+use Zijinghua\Zbasement\Http\Models\Traits\SoftDelete;
 use Zijinghua\Zbasement\Http\Repositories\Contracts\BaseRepositoryInterface;
 use Zijinghua\Zbasement\Http\Traits\Slug;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-    use Slug;
+    use Slug,SoftDelete;
 
     //输入参数过滤，只留下search,showsoftdelete,sort(orderby,sort_direction),pageindex
     //content=>{item=>{key=>field,key=>value,key=>filter,key=>alg}
-    private function getIndexParameter($data){
+    protected function getIndexParameter($data){
         $search=[];
         $showSoftDelete=null;
         $sort=null;
@@ -175,27 +176,14 @@ class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function transferKey($item){
-        $parameter['search'][]=['field'=>array_key_first($item),'value'=>$item[array_key_first($item)]];
-        $object=$this->fetch($parameter);
-        if(isset($object)){
-            if(isset($item['id'])){
-                return $object->uuid;
-            }else{
-                return $object->id;
-            }
 
-        }
-    }
 
     public function delete($parameters){
         //批量删除
         $parameters=$this->getIndexParameter($parameters);
 
         $model=$this->find($parameters);
-        if(isset($model)) {
-            return $model->delete();
-        }
+        return $model->softDelete();
     }
 
     public function destroy($parameters){
@@ -203,9 +191,8 @@ class BaseRepository implements BaseRepositoryInterface
         $parameters=$this->getIndexParameter($parameters);
 
         $model=$this->find($parameters);
-        if(isset($model)) {
-            return $model->delete();
-        }
+        return $model->softDelete();
+
     }
 
     public function clear($parameters){
@@ -221,8 +208,24 @@ class BaseRepository implements BaseRepositoryInterface
         }
 
         $model=$this->find($parameters);
-        if(isset($model)) {
-            return $model->delete();
+        return $model->softDelete();
+    }
+
+    public function transferKey($uuid){
+        $model=$this->model($this->getSlug());
+        if(is_array($uuid)){
+            $result=$model->select('id')->whereIn('uuid',$uuid)->get();
+        }else{
+            $result=$model->select('id')->where('uuid',$uuid)->first();
         }
+
+        return $result;
+//        if(isset($object)){
+//            if(isset($item['id'])){
+//                return $object->uuid;
+//            }else{
+//                return $object->id;
+//            }
+//        }
     }
 }
