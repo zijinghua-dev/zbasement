@@ -211,21 +211,5 @@ class BaseRepository implements BaseRepositoryInterface
         return $model->softDelete();
     }
 
-    public function transferKey($uuid){
-        $model=$this->model($this->getSlug());
-        if(is_array($uuid)){
-            $result=$model->select('id')->whereIn('uuid',$uuid)->get();
-        }else{
-            $result=$model->select('id')->where('uuid',$uuid)->first();
-        }
 
-        return $result;
-//        if(isset($object)){
-//            if(isset($item['id'])){
-//                return $object->uuid;
-//            }else{
-//                return $object->id;
-//            }
-//        }
-    }
 }
