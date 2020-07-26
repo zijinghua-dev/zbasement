@@ -15,7 +15,7 @@
 //    $pageApiVersion = \Zijinghua\Zbasement\Zsystem::getPageApiVersion();
 //    $controllerNamespace = '\\' . config('zbasement.controller.namespace') . '\\';
 //    try {
-//        foreach (DataType::all() as $dataType) {
+//        foreach (Datatype::all() as $dataType) {
 //            $breadController = $dataType->controller
 //                ? Str::start($dataType->controller, '\\')
 //                : $controllerNamespace . 'BaseController';

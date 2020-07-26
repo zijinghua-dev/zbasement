@@ -6,7 +6,7 @@ namespace Zijinghua\Zbasement\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DataTypeController extends BaseController
+class DatatypeController extends BaseController
 {
 
 }

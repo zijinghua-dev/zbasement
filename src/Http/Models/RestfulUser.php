@@ -141,8 +141,8 @@ class RestfulUser extends ResfulModel implements UserModelInterface,    Authenti
                 return false;
             }
             if(isset($reponse->data)){
-                $this->fill($reponse->data[0]);
-                return $this;
+//                $this->fill($reponse->data[0]);
+                return $reponse->data;
             }
         }
 

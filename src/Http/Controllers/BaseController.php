@@ -45,10 +45,7 @@ class BaseController extends Controller
        return  $this->execute($request,'update');
     }
 
-    //从组内移除，并不删除
-    public function clear(ClearRequest $request){
-        return  $this->execute($request,'clear');
-    }
+
 
     //批量删除
     public function delete(DeleteRequest $request){

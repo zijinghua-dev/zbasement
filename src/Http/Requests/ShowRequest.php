@@ -47,12 +47,12 @@ class ShowRequest extends BaseRequest
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function all($keys = null)
-    {
-        $route=$this->route();
-        $data=$route->parameters();
-//        $data = parent::all($keys);
-//        $data['uuid'] = $this->route('uuid');
-        return $data;
-    }
+//    public function all($keys = null)
+//    {
+//        $route=$this->route();
+//        $data=$route->parameters();
+////        $data = parent::all($keys);
+////        $data['uuid'] = $this->route('uuid');
+//        return $data;
+//    }
 }

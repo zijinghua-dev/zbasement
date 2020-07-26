@@ -123,6 +123,7 @@ class BaseRepository implements BaseRepositoryInterface
     //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
+        //暂不支持批量插入
         $model=$this->model();
         //所有model都要实现fill方法，对输入参数进行过滤
         $model->fill($parameters);
@@ -177,7 +178,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
 
-
+    //输入参数仍然是search格式，但是，filter变成In
     public function delete($parameters){
         //批量删除
         $parameters=$this->getIndexParameter($parameters);
@@ -195,20 +196,23 @@ class BaseRepository implements BaseRepositoryInterface
 
     }
 
-    public function clear($parameters){
-        //组内移除，并不删除
-        //必须通过group_objects model来做
-        $this->setSlug('groupObject');
-        //组内移除需要将uuid变成 object_id，
+    //输入格式：field=>value，全部为并且关系，支持value为数组
+    public function remove($parameters){
+        $model=$this->model($this->getSlug());
 
-        foreach ($parameters['search'] as $key=>$item){
-            if($item['field']=='uuid'){
-                $parameters['search'] [$key]['field']='object_uuid';
+        foreach ($parameters as $key =>$value){
+            if(is_array($parameters[$key])){
+                $value=$parameters[$key];
+                $where[] = [function($query) use ($key,$value){
+                    $query->whereIn($key, $value);
+                }];
+            }else{
+                $where[$key]=$value;
             }
         }
+        $model = $model::where($where);
+        return $this->softDelete($model);
 
-        $model=$this->find($parameters);
-        return $model->softDelete();
     }
 
 

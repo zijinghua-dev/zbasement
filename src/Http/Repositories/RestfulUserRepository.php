@@ -36,8 +36,14 @@ class RestfulUserRepository extends BaseRepository implements UserRepositoryInte
 
     public function transferKey($uuid){
         $model=$this->model($this->getSlug());
-        return $model->transferKey($uuid);
-//        if(isset($object)){
+        $result= $model->transferKey(['uuid'=>$uuid]);
+        $id=[];
+        if(isset($result)&&(!empty($result))){
+            foreach ($result as $key=>$item){
+                $id[]=$item->id;
+            }
+        }
+        return $id;
 //            if(isset($item['id'])){
 //                return $object->uuid;
 //            }else{

@@ -9,9 +9,10 @@ trait SoftDelete
     public function softDelete($model){
         if(isset($model)) {
             if(config('softdelete',true)){
-                return $model->forceDelete();
+                return $model->delete();
+
             }
-            return $model->delete();
+            return $model->forceDelete();
         }
     }
 }

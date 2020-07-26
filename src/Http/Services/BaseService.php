@@ -239,8 +239,12 @@ use Slug;
         //批量删除
         $repository=$this->repository($this->getSlug());
         $result=$repository->delete($parameters);
-        if($result){
-            $messageResponse=$this->messageResponse($this->getSlug(),'delete.submit.success', $result);
+        //result是记录条数
+        if(isset($result)){
+            $messageResponse=$this->messageResponse($this->getSlug(),'delete.submit.success', ['num'=>$result]);
+            return $messageResponse;
+        }else{
+            $messageResponse=$this->messageResponse($this->getSlug(),'delete.submit.failed');
             return $messageResponse;
         }
     }

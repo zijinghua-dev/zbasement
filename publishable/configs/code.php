@@ -449,4 +449,166 @@ return [
             'message' => '组内数据移除时输入参数验证失败!'
         ],
     ],
+    'append'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_APPEND_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到组内数据添加提交申请!'
+            ],
+            'failed'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_APPEND_SUBMIT_FAILED',
+                'status' => true,
+                'message' => '组内数据添加失败!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_APPEND_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '组内数据添加操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_APPEND_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '组内数据添加操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_APPEND_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '组内数据添加操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_APPEND_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '组内数据添加操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_APPEND_VALIDATION',
+            'status' => false,
+            'message' => '组内数据添加时输入参数验证失败!'
+        ],
+    ],
+    'expand'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_EXPAND_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到组属性添加提交申请!'
+            ],
+            'failed'=>[
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_EXPAND_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '组属性添加失败!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_EXPAND_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '组属性添加操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_EXPAND_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '组属性添加操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_EXPAND_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '组属性添加操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_EXPAND_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '组属性添加操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_EXPAND_VALIDATION',
+            'status' => false,
+            'message' => '组属性添加时输入参数验证失败!'
+        ],
+    ],
+    'shrink'=>[
+        'submit'=>[
+            'success'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_SHRINK_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '已经接收到组属性移除提交申请!'
+            ],
+            'failed'=>[
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_SHRINK_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '组属性移除失败!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_SHRINK_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '组属性移除操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_SHRINK_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '组属性移除操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_SHRINK_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '组属性移除操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_SHRINK_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '组属性移除操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+        'validation' => [
+            'http_code' => 422,
+            'code' => 'ZBASEMENT_CODE_SHRINK_VALIDATION',
+            'status' => false,
+            'message' => '组属性移除时输入参数验证失败!'
+        ],
+    ],
 ];
