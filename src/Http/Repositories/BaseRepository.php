@@ -135,9 +135,11 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     public function show($data){
-        $id=$data['id'];
         $model=$this->model();
-        return $model->where('id', $id)->first();
+            $id=$data['id'];
+            return $model->where('id', $id)->first();
+
+
     }
 
     //update,必须含有uuid
