@@ -148,7 +148,7 @@ use Slug;
         $values=$parameters['values'];
         foreach ($filtedFields as $field){
             foreach ($values as $value){
-                $data['search'][]=['field'=>$field,'value'=>$value];
+                $data['search'][]=['field'=>$field,'value'=>$value,'filter'=>'=','algorithm'=>'or'];
             }
         }
         $result=$repository->index($data);
