@@ -2,23 +2,34 @@
 return [
 
     'index' => [
-        'success' => [
-            'http_code' => 200,
-            'code' => 'ZBASEMENT_CODE_NDEX_SUCCESS',
-            'status' => true,
-            'message' => '获取列表成功!'
+        'submit'=>[
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_INDEX_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '获取列表成功!'
+            ],
+            'failed' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_INDEX_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '获取用户列表失败!'
+            ],
         ],
-        'failed' => [
-            'http_code' => 403,
-            'code' => 'ZBASEMENT_CODE_INDEX_FAILED',
-            'status' => false,
-            'message' => '获取用户列表失败!'
-        ],
+
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_INDEX_VALIDATION',
-            'status' => false,
-            'message' => '列表输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_INDEX_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '列表输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_INDEX_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '列表输入参数验证成功!'
+            ],
         ],
         'load'=>[
             'rules'=>[
@@ -54,23 +65,34 @@ return [
         ],
     ],
     'fetch' => [
-        'success' => [
-            'http_code' => 200,
-            'code' => 'ZBASEMENT_CODE_FETCH_SUCCESS',
-            'status' => true,
-            'message' => '获取单个记录成功!'
+        'submit'=>[
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_FETCH_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '获取单个记录成功!'
+            ],
+            'failed' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_FETCH_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '获取单个记录失败!'
+            ],
         ],
-        'failed' => [
-            'http_code' => 403,
-            'code' => 'ZBASEMENT_CODE_FETCH_FAILED',
-            'status' => false,
-            'message' => '获取单个记录失败!'
-        ],
+
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_FETCH_VALIDATION',
-            'status' => false,
-            'message' => '查找单个记录输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_FETCH_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '查找单个记录输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_FETCH_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '查找单个记录输入参数验证成功!'
+            ],
         ],
         'load'=>[
             'rules'=>[
@@ -105,23 +127,34 @@ return [
         ],
     ],
     'show' => [
-        'success' => [
-            'http_code' => 200,
-            'code' => 'ZBASEMENT_CODE_SHOW_SUCCESS',
-            'status' => true,
-            'message' => '获取详情信息成功!'
+        'submit'=>[
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_SHOW_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '获取详情信息成功!'
+            ],
+            'failed' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_SHOW_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '获取详情信息失败!'
+            ],
         ],
-        'failed' => [
-            'http_code' => 403,
-            'code' => 'ZBASEMENT_CODE_SHOW_FAILED',
-            'status' => false,
-            'message' => '获取详情信息失败!'
-        ],
+
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_SHOW_VALIDATION',
-            'status' => false,
-            'message' => '详情信息输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_SHOW_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '详情信息输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_SHOW_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '详情信息输入参数验证成功!'
+            ],
         ],
         'load'=>[
             'rules'=>[
@@ -157,28 +190,34 @@ return [
     ],
     'field'=>[
         'search'=>[
-            'failed'=>[
-                'http_code' => 500,
-                'code' => 'ZBASEMENT_CODE_FIELD_SEARCH_FAILED',
-                'status' => false,
-                'message' => '数据模型中字段丢失!'
-            ],
+            'submit'=>[
+                'failed'=>[
+                    'http_code' => 500,
+                    'code' => 'ZBASEMENT_CODE_FIELD_SEARCH_SUBMIT_FAILED',
+                    'status' => false,
+                    'message' => '数据模型中字段丢失!'
+                ],
+            ]
+
         ],
     ],
     'fields'=>[
         'search'=>[
-            'success'=>[
-                'http_code' => 200,
-                'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_SUCCESS',
-                'status' => true,
-                'message' => '数据模型中字段搜索成功!'
+            'submit'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_SUBMIT_SUCCESS',
+                    'status' => true,
+                    'message' => '数据模型中字段搜索成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 500,
+                    'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_SUBMIT_FAILED',
+                    'status' => false,
+                    'message' => '数据模型中字段搜索失败!'
+                ],
             ],
-            'failed'=>[
-                'http_code' => 500,
-                'code' => 'ZBASEMENT_CODE_FIELDS_SEARCH_FAILED',
-                'status' => false,
-                'message' => '数据模型中字段搜索失败!'
-            ],
+
         ],
     ],
     'store'=>[
@@ -223,10 +262,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_STORE_VALIDATION',
-            'status' => false,
-            'message' => '新建用户帐户时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_STORE_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '新建用户帐户时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_STORE_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '新建用户帐户时输入参数验证成功!'
+            ],
         ],
     ],
     'update'=>[
@@ -236,6 +283,12 @@ return [
                 'code' => 'ZBASEMENT_CODE_UPDATE_SUBMIT_SUCCESS',
                 'status' => true,
                 'message' => '已经接收到数据更新提交申请!'
+            ],
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_UPDATE_SUBMIT_FAILED',
+                'status' => true,
+                'message' => '数据更新提交失败!'
             ],
         ],
         'load'=>[
@@ -271,39 +324,53 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_UPDATE_VALIDATION',
-            'status' => false,
-            'message' => '更新数据时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_UPDATE_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '更新数据时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_UPDATE_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '更新数据时输入参数验证失败!'
+            ],
         ],
     ],
     'search'=>[
-        'failed'=>[
-            'code'=>'ZBASEMENT_CODE_SEARCH_FAILED',
-            'http_code'=>'403',
-            'message'=>'搜索失败！',
-            'status'=>false,
+        'submit'=>[
+            'failed'=>[
+                'code'=>'ZBASEMENT_CODE_SEARCH_SUBMIT_FAILED',
+                'http_code'=>'403',
+                'message'=>'搜索失败！',
+                'status'=>false,
             ],
-        'success'=>[
-            'code'=>'ZBASEMENT_CODE_SEARCH_SUCCESS',
-            'http_code'=>'200',
-            'message'=>'搜索成功！',
-            'status'=>true,
-        ]
+            'success'=>[
+                'code'=>'ZBASEMENT_CODE_SEARCH_SUBMIT_SUCCESS',
+                'http_code'=>'200',
+                'message'=>'搜索成功！',
+                'status'=>true,
+            ]
+        ],
+
     ],
     'authorize'=>[
-        'failed'=>[
-            'code'=>'ZBASEMENT_CODE_AUTHORIZE_FAILED',
-            'http_code'=>'403',
-            'message'=>'授权失败，用户无权限访问该资源！',
-            'status'=>false,
+        'submit'=>[
+            'failed'=>[
+                'code'=>'ZBASEMENT_CODE_AUTHORIZE_SUBMIT_FAILED',
+                'http_code'=>'403',
+                'message'=>'授权失败，用户无权限访问该资源！',
+                'status'=>false,
+            ],
+            'success'=>[
+                'code'=>'ZBASEMENT_CODE_AUTHORIZE_SUBMIT_SUCCESS',
+                'http_code'=>'200',
+                'message'=>'授权成功！',
+                'status'=>true,
+            ]
         ],
-        'success'=>[
-            'code'=>'ZBASEMENT_CODE_AUTHORIZE_SUCCESS',
-            'http_code'=>'200',
-            'message'=>'授权成功！',
-            'status'=>true,
-        ]
+
     ],
     'delete'=>[
         'submit'=>[
@@ -347,10 +414,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_DELETE_VALIDATION',
-            'status' => false,
-            'message' => '批量删除数据时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_DELETE_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '批量删除数据时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_DELETE_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '批量删除数据时输入参数验证成功!'
+            ],
         ],
     ],
     'destroy'=>[
@@ -395,10 +470,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_DESTROY_VALIDATION',
-            'status' => false,
-            'message' => '删除数据时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_DESTROY_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '删除数据时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_DESTROY_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '删除数据时输入参数验证成功!'
+            ],
         ],
     ],
     'clear'=>[
@@ -443,10 +526,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_CLEAR_VALIDATION',
-            'status' => false,
-            'message' => '组内数据移除时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_CLEAR_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '组内数据移除时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_CLEAR_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '组内数据移除时输入参数验证成功!'
+            ],
         ],
     ],
     'append'=>[
@@ -497,10 +588,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_APPEND_VALIDATION',
-            'status' => false,
-            'message' => '组内数据添加时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_APPEND_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '组内数据添加时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_APPEND_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '组内数据添加时输入参数验证成功!'
+            ],
         ],
     ],
     'expand'=>[
@@ -551,10 +650,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_EXPAND_VALIDATION',
-            'status' => false,
-            'message' => '组属性添加时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_EXPAND_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '组属性添加时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_EXPAND_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '组属性添加时输入参数验证成功!'
+            ],
         ],
     ],
     'shrink'=>[
@@ -605,10 +712,18 @@ return [
             ],
         ],
         'validation' => [
-            'http_code' => 422,
-            'code' => 'ZBASEMENT_CODE_SHRINK_VALIDATION',
-            'status' => false,
-            'message' => '组属性移除时输入参数验证失败!'
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_SHRINK_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '组属性移除时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_SHRINK_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '组属性移除时输入参数验证成功!'
+            ]
         ],
     ],
 ];
