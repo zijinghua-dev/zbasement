@@ -178,7 +178,8 @@ use Slug;
         //这里没有进行参数的过滤，所有参数都传给repository了
         //应该放进队列，由队列进行写入，此时状态202
         //队列完成写入后，发送消息通知用户完成写入
-        $data=$this->repository($this->getSlug())->store($parameters);
+        $repository=$this->repository($this->getSlug());
+        $data=$repository->store($parameters);
         //这里有可能出现写入错误
 //        $data=$this->repository($this->slug)->show($data->uuid);
 //        $code='zbasement.code.'.$this->slug.'.store.submit.success';
