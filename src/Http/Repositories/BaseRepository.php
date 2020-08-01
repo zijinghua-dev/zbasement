@@ -120,6 +120,12 @@ class BaseRepository implements BaseRepositoryInterface
         return $model::select($fields)->get();
     }
 
+    //$index对应的是位置，不是id
+    public function get($index,$num){
+        $model=$this->model($this->getSlug());
+        return $model::offset($index)->limit($num)->get();
+    }
+
     //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
