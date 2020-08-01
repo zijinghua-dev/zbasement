@@ -123,7 +123,7 @@ class BaseRepository implements BaseRepositoryInterface
     //$index对应的是位置，不是id
     public function get($index,$num){
         $model=$this->model($this->getSlug());
-        return $model::offset($index)->limit($num)->get();
+        return $model::offset($index)->limit($num)->orderBy('id','asc')->get();
     }
 
     //$parameters为数组，键值对形式

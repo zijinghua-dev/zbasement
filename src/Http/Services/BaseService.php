@@ -29,11 +29,11 @@ use Slug;
         if(isset($result)){
 //            $code='zbasement.code.'.$this->slug.'.fetch.success';
         $resource=$this->getResource($this->getSlug(),'fetch');
-            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.success', $result,$resource);
+            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.submit.success', $result,$resource);
         }else{
 //            $code='zbasement.code.'.$this->slug.'.fetch.error';
 //        $resource=$this->getResource($this->slug,'fetch');
-            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.failed');
+            $messageResponse=$this->messageResponse($this->getSlug(),'fetch.submit.failed');
         }
 
         return $messageResponse;
@@ -141,7 +141,7 @@ use Slug;
         $repository=$this->repository($this->getSlug());
         $filtedFields=$repository->fields($fields);
         if(!isset($filtedFields)||(empty($filtedFields))){
-            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUBMIT_FAILED');
             return $messageResponse;
         }
         //拼接查询数据集
@@ -153,15 +153,15 @@ use Slug;
         }
         $result=$repository->index($data);
         if(!isset($result)||(empty($result))){
-            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUBMIT_FAILED');
             return $messageResponse;
         }
         if(count($result)==0){
-            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_FAILED');
+            $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUBMIT_FAILED');
             return $messageResponse;
         }
         $resource=$this->getResource($this->getSlug(),'search');
-        $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUCCESS',$result,$resource);
+        $messageResponse=$this->messageResponse($this->getSlug(),'SEARCH_SUBMIT_SUCCESS',$result,$resource);
         return $messageResponse;
     }
 
