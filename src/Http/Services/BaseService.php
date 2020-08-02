@@ -49,7 +49,7 @@ use Slug;
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.index.success';
         $resource=$this->getResource($this->getSlug(),'index');
-        $messageResponse=$this->messageResponse($this->getSlug(),'index.success', $result,$resource);
+        $messageResponse=$this->messageResponse($this->getSlug(),'index.submit.success', $result,$resource);
         return $messageResponse;
     }
     //$slug,$action
