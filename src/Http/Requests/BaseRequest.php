@@ -69,11 +69,11 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 
     protected function failedValidation(Validator $validator)
     {
-        $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->getSlug()).'_'.strtoupper($this->bread_action).'_VALIDATION';
+        $this->errorCode='ZBASEMENT_CODE_'.strtoupper($this->getSlug()).'_'.strtoupper($this->bread_action).'_VALIDATION_FAILED';
 
         $codeMessageService=Zsystem::service('codeMessage');
 //        $codeMessage=$codeMessageService->show($this->errorCode);
-        $response=$codeMessageService->createMessageResponse($this->getSlug(),$this->bread_action.'_VALIDATION');
+        $response=$codeMessageService->createMessageResponse($this->getSlug(),$this->bread_action.'_VALIDATION_FAILED');
         $response->appendMessages($validator->errors()->all());
         $response=$response->response();
 //        $response->set($codeMessage, null, 'Zijinghua\Zbasement\Http\Resources\BaseResource');
