@@ -143,4 +143,17 @@ class BaseMessageResponse
             $this->code->message=$this->code->message.' '.$messages;
         }
     }
+
+    //验证成功，true，验证不成功，为false，没有找到为null
+    public function getValidationResult(){
+        //如果没有验证参数，则结果为null
+        $result=strripos($this->code->code,'validation_failed');
+        if($result){
+            return false;
+        }
+        $result=strripos($this->code->code,'validation_success');
+        if($result){
+            return true;
+        }
+    }
 }

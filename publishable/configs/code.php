@@ -370,7 +370,20 @@ return [
                 'status'=>true,
             ]
         ],
-
+        'validation' => [
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_AUTHORIZE_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '授权时输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_AUTHORIZE_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '授权时输入参数验证成功!'
+            ],
+        ],
     ],
     'delete'=>[
         'submit'=>[
