@@ -73,17 +73,21 @@ class BaseRepository implements BaseRepositoryInterface
             }
             if($field&&$fieldValue){
                 if($algorithm=='and'){
-                    if($filter){
-                        $model=$model->where($field,$filter,$fieldValue);
-                    }else{
+                    if($filter=='in'){
+                        $model=$model->whereIn($field,$fieldValue);
+                    }elseif(!$filter){
                         $model=$model->where($field,$fieldValue);
+                    }else{
+                        $model=$model->where($field,$filter,$fieldValue);
                     }
 
                 }elseif($algorithm=='or'){
-                    if($filter){
-                        $model=$model->orWhere($field,$filter,$fieldValue);
-                    }else{
+                    if($filter=='in'){
+                        $model=$model->orWhereIn($field,$fieldValue);
+                    }elseif(!$filter){
                         $model=$model->orWhere($field,$fieldValue);
+                    }else{
+                        $model=$model->orWhere($field,$filter,$fieldValue);
                     }
                 }
 
