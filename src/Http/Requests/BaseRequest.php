@@ -113,15 +113,16 @@ class BaseRequest extends FormRequest implements ValidatesWhenResolved
 
     public function getSlug()
     {
+
 //        if (isset($this->slug)) {
 //            $slug = $this->slug;
 //        } else {
-            $path=$this->path();
-            $slug = explode('/', $path)[2];
+//            $path=$this->path();
+//            $slug = explode('/', $path)[1];
 //            $slug = explode('.', $request->route()->getName())[0];
 //        }
 
-        return $slug;
+        return getSlug($this);
     }
 
     public function getAction(){

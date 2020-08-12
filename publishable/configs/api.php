@@ -46,6 +46,6 @@ return [
         'perpagemax'=>100,
     ],
     'slug'=>[
-        'index'=>env('SLUG_INDEX',2),
+        'index'=>env('SLUG_INDEX',1),
         ],
 ];

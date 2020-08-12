@@ -102,6 +102,7 @@ class BaseRepository implements BaseRepositoryInterface
         $paginate=getConfigValue('paginate',15);
 
         $model=$this->find($parameters);
+//        $sql=$model->toSql();
         if(isset($model)) {
             return $model->paginate($paginate);
         }
