@@ -739,4 +739,131 @@ return [
             ]
         ],
     ],
+
+    'mine' => [
+        'submit'=>[
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_MINE_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '获取我的列表成功!'
+            ],
+            'failed' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_MINE_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '获取我的列表失败!'
+            ],
+        ],
+
+        'validation' => [
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_MINE_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '我的列表输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_MINE_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '我的列表输入参数验证成功!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_MINE_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '我的列表操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_MINE_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '我的列表操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_MINE_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '我的列表操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_MINE_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '我的列表操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+    ],
+    'run' => [
+        'submit'=>[
+            'success' => [
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_RUN_SUBMIT_SUCCESS',
+                'status' => true,
+                'message' => '运行成功!'
+            ],
+            'failed' => [
+                'http_code' => 403,
+                'code' => 'ZBASEMENT_CODE_RUN_SUBMIT_FAILED',
+                'status' => false,
+                'message' => '运行失败!'
+            ],
+        ],
+
+        'validation' => [
+            'failed'=>[
+                'http_code' => 422,
+                'code' => 'ZBASEMENT_CODE_RUN_VALIDATION_FAILED',
+                'status' => false,
+                'message' => '运行操作输入参数验证失败!'
+            ],
+            'success'=>[
+                'http_code' => 200,
+                'code' => 'ZBASEMENT_CODE_RUN_VALIDATION_SUCCESS',
+                'status' => true,
+                'message' => '运行操作输入参数验证成功!'
+            ],
+        ],
+        'load'=>[
+            'rules'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_RUN_LOAD_RULES_SUCCESS',
+                    'status' => true,
+                    'message' => '运行操作所需验证规则加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_RUN_LOAD_RULES_FAILED',
+                    'status' => false,
+                    'message' => '运行操作所需验证规则加载失败!'
+                ],
+
+            ],
+            'messages'=>[
+                'success'=>[
+                    'http_code' => 200,
+                    'code' => 'ZBASEMENT_CODE_RUN_LOAD_MESSAGES_SUCCESS',
+                    'status' => true,
+                    'message' => '运行操作所需验证规则的提示信息加载成功!'
+                ],
+                'failed'=>[
+                    'http_code' => 403,
+                    'code' => 'ZBASEMENT_CODE_RUN_LOAD_MESSAGES_FAILED',
+                    'status' => false,
+                    'message' => '运行操作所需验证规则的提示信息加载失败!'
+                ],
+
+            ],
+        ],
+    ],
 ];

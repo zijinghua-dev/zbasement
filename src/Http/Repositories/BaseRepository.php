@@ -145,12 +145,20 @@ class BaseRepository implements BaseRepositoryInterface
         return $model;
     }
 
+    //$parameters为数组，键值对形式，需要调用者处理参数，并且，一次只能一条
+    public function save($parameters){
+        //这里要进行参数过滤
+        //暂不支持批量插入
+        $model=$this->model();
+        //所有model都要实现fill方法，对输入参数进行过滤
+        $result=$model->firstOrCreate($parameters);
+        return $result;
+    }
+
     public function show($data){
         $model=$this->model();
             $id=$data['id'];
             return $model->where('id', $id)->first();
-
-
     }
 
     //update,必须含有uuid
@@ -158,8 +166,8 @@ class BaseRepository implements BaseRepositoryInterface
         $model=$this->model();
         $id=$data['id'];
         unset($data['id']);
-        $model->where('id',$id)->update($data);
-        return true;
+        $result=$model->where('id',$id)->update($data);
+        return $result;
     }
 
     public function model($slug=null){
