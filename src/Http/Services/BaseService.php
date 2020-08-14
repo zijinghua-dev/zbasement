@@ -250,23 +250,23 @@ use Slug;
         }
     }
 
-    public function destroy($parameters){
-        //单一删除
-        $repository=$this->repository($this->getSlug());
-        $result=$repository->destroy($parameters);
-        if($result){
-            $messageResponse=$this->messageResponse($this->getSlug(),'destroy.submit.success', $result);
-            return $messageResponse;
-        }
-    }
+//    public function destroy($parameters){
+//        //单一删除
+//        $repository=$this->repository($this->getSlug());
+//        $result=$repository->destroy($parameters);
+//        if($result){
+//            $messageResponse=$this->messageResponse($this->getSlug(),'destroy.submit.success', $result);
+//            return $messageResponse;
+//        }
+//    }
 
-    public function clear($parameters){
-        //组内移除，并不删除
-        $repository=$this->repository($this->getSlug());
-        $result=$repository->clear($parameters);
-        if($result){
-            $messageResponse=$this->messageResponse($this->getSlug(),'clear.submit.success');
-            return $messageResponse;
-        }
-    }
+//    public function clear($parameters){
+//        //组内移除，并不删除
+//        $repository=$this->repository($this->getSlug());
+//        $result=$repository->clear($parameters);
+//        if($result){
+//            $messageResponse=$this->messageResponse($this->getSlug(),'clear.submit.success');
+//            return $messageResponse;
+//        }
+//    }
 }

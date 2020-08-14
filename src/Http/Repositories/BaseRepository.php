@@ -71,7 +71,7 @@ class BaseRepository implements BaseRepositoryInterface
                         break;
                 }
             }
-            if($field&&$fieldValue){
+            if($field){
                 if($algorithm=='and'){
                     if($filter=='in'){
                         $model=$model->whereIn($field,$fieldValue);
@@ -199,7 +199,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
 
-    //输入参数仍然是search格式，但是，filter变成In
+    //输入参数仍然是search格式，但是，filter变成In，支持批量删除
     public function delete($parameters){
         //批量删除
         $parameters=$this->getIndexParameter($parameters);
@@ -208,33 +208,39 @@ class BaseRepository implements BaseRepositoryInterface
         return $model->softDelete();
     }
 
-    public function destroy($parameters){
+    //输入参数不同：删除slug对应的$parameters中的ID，输入参数必须由调用者先处理好
+    //多个参数是并列关系，不支持批量删除
+    protected function destroy($parameters){
         //单一删除
-        $parameters=$this->getIndexParameter($parameters);
-
-        $model=$this->find($parameters);
-        return $model->softDelete();
-
-    }
-
-    //输入格式：field=>value，全部为并且关系，支持value为数组
-    public function remove($parameters){
-        $model=$this->model($this->getSlug());
-
+        $model=$this->model($parameters->slug);
         foreach ($parameters as $key =>$value){
             if(is_array($parameters[$key])){
                 $value=$parameters[$key];
-                $where[] = [function($query) use ($key,$value){
-                    $query->whereIn($key, $value);
-                }];
+                $model = $model::whereIn($key, $value);
             }else{
-                $where[$key]=$value;
+                $model = $model::where($key, $value);
             }
         }
-        $model = $model::where($where);
-        return $this->softDelete($model);
-
+        return $model->softDelete();
     }
+
+//    //输入格式：field=>value，全部为并且关系，支持value为数组
+//    public function remove($parameters){
+//        $model=$this->model($this->getSlug());
+//
+//        foreach ($parameters as $key =>$value){
+//            if(is_array($parameters[$key])){
+//                $value=$parameters[$key];
+//                $where[] = [function($query) use ($key,$value){
+//                    $query->whereIn($key, $value);
+//                }];
+//            }else{
+//                $where[$key]=$value;
+//            }
+//        }
+//        $model = $model::where($where);
+//        return $this->softDelete($model);
+//    }
 
 
 }
