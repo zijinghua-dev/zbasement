@@ -9,7 +9,15 @@ return [
                         'new \Zijinghua\Zbasement\Rules\JsonItem:field,value,filter,algorithm',
                     ],
                     'action'=>[
-                        'fetch','index',
+                        'fetch',
+                    ],
+                ],
+                [
+                    'rule'=>[
+                        'new \Zijinghua\Zbasement\Rules\JsonItem:field,value,filter,algorithm',
+                    ],
+                    'action'=>[
+                        'index',
                     ],
                 ],
             ],
