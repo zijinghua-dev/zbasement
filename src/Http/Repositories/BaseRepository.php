@@ -170,6 +170,28 @@ class BaseRepository implements BaseRepositoryInterface
         return $result;
     }
 
+    //updateOrCreat的第一个参数是条件，第二个参数是创建参数
+    public function updateOrCreate($data){
+        $model=$this->model($this->getSlug());
+        if(count($data)>1){
+            $result=$model->updateOrCreate($data[0],$data[1]);
+            return $result;
+        }elseif(count($data)==1){
+            if(isset($data['id'])){
+                $id=$data['id'];
+                unset($data['id']);
+                $result=$model->where('id',$id)->update($data);
+                return $result;
+            }else{
+                $result=$model->updateOrCreate($data);
+                return $result;
+            }
+
+
+
+        }
+    }
+
     public function model($slug=null){
         if(isset($slug)){
             return Zsystem::model($slug);
