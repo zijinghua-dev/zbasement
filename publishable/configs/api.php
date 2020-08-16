@@ -4,35 +4,35 @@ return [
         'host' => env('USERCENTER_HOST'),
         'api' => [
             'fetch'=>[
-                'uri' => '/api/v1/user/fetch',
+                'uri' => '/api/user/fetch',
                 'action'=>'post'
             ],
             'store'=>[
-                'uri' => '/api/v1/user/',
+                'uri' => '/api/user/',
                 'action'=>'post'
             ],
             'show'=>[
-                'uri' => '/api/v1/user/',
+                'uri' => '/api/user/',
                 'action'=>'get'
             ],
             'index'=>[
-                'uri' => '/api/v1/user/index',
+                'uri' => '/api/user/index',
                 'action'=>'post'
             ],
             'update'=>[
-                'uri' => '/api/v1/user',
+                'uri' => '/api/user',
                 'action'=>'put'
             ],
             'fields'=>[
-                'uri' => '/api/v1/user/fields',
+                'uri' => '/api/user/fields',
                 'action'=>'post'
             ],
             'search'=>[
-                'uri' => '/api/v1/user/search',
+                'uri' => '/api/user/search',
                 'action'=>'post'
             ],
             'transferkey'=>[
-                'uri' => '/api/v1/user/transferkey',
+                'uri' => '/api/user/transferkey',
                 'action'=>'post'
             ],
         ],
