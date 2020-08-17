@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Models\Traits\SoftDelete;
@@ -97,11 +98,29 @@ class BaseRepository implements BaseRepositoryInterface
         }
         return $model;
     }
+
+    public function normalFind($data)
+    {
+        $model = Zsystem::model($this->getSlug());
+        foreach ($data as $key=>$value){
+            if ($model->fieldExist($key))
+            {
+                $model->where($key,$value);
+            }
+        }
+        return $model;
+    }
+
+    //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
     public function index($data){
-        $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
 
-        $model=$this->find($parameters);
+        if(isset($data['search'])){
+            $parameters=$this->getIndexParameter($data);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($data);
+        }
 //        $sql=$model->toSql();
         if(isset($model)) {
             return $model->paginate($paginate);
