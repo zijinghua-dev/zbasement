@@ -105,7 +105,7 @@ class BaseRepository implements BaseRepositoryInterface
         foreach ($data as $key=>$value){
             if ($model->fieldExist($key))
             {
-                $model->where($key,$value);
+                $model= $model->where($key,$value);
             }
         }
         return $model;
@@ -239,11 +239,19 @@ class BaseRepository implements BaseRepositoryInterface
 
     //输入参数仍然是search格式，但是，filter变成In，支持批量删除
     public function delete($parameters){
-        //批量删除
-        $parameters=$this->getIndexParameter($parameters);
+        if(isset($parameters['search'])){
+            $parameters=$this->getIndexParameter($parameters);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($parameters);
+        }
 
-        $model=$this->find($parameters);
-        return $model->softDelete();
+        if(config('softdelete',false)){
+            $result= $model->forceDelete();
+        }
+         $result=$model->delete();
+        return $result;
+//        return $model->softDelete();
     }
 
     //输入参数不同：删除slug对应的$parameters中的ID，输入参数必须由调用者先处理好
