@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Models\Traits\SoftDelete;
@@ -98,10 +99,14 @@ class BaseRepository implements BaseRepositoryInterface
         return $model;
     }
     public function index($data){
-        $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
 
-        $model=$this->find($parameters);
+        if(isset($data['search'])){
+            $parameters=$this->getIndexParameter($data);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($data);
+        }
 //        $sql=$model->toSql();
         if(isset($model)) {
             return $model->paginate($paginate);
@@ -134,9 +139,6 @@ class BaseRepository implements BaseRepositoryInterface
     //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
-        if (isset($parameters['store'])) {
-            $parameters = $parameters['store'];
-        }
         //暂不支持批量插入
         $model=$this->model();
         //所有model都要实现fill方法，对输入参数进行过滤
@@ -226,11 +228,19 @@ class BaseRepository implements BaseRepositoryInterface
 
     //输入参数仍然是search格式，但是，filter变成In，支持批量删除
     public function delete($parameters){
-        //批量删除
-        $parameters=$this->getIndexParameter($parameters);
+        if(isset($parameters['search'])){
+            $parameters=$this->getIndexParameter($parameters);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($parameters);
+        }
 
-        $model=$this->find($parameters);
-        return $model->softDelete();
+        if(config('softdelete',false)){
+            $result= $model->forceDelete();
+        }
+         $result=$model->delete();
+        return $result;
+//        return $model->softDelete();
     }
 
     //输入参数不同：删除slug对应的$parameters中的ID，输入参数必须由调用者先处理好
