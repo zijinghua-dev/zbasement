@@ -206,10 +206,13 @@ class BaseService
     }
 
     public function update($parameters){
+        if (isset($parameters['update'])) {
+            $parameters = $parameters['update'];
+        }
         $repository=$this->repository($this->getSlug());
         $result=$repository->update($parameters);
         if(isset($result)){
-            $result=$repository->show(['uuid'=>$parameters['uuid']]);
+            $result=$repository->show(['id'=>$parameters['id']]);
         }
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';

@@ -15,17 +15,6 @@ use Illuminate\Contracts\Validation\Rule;
 class Unique implements Rule
 {
     protected $message;
-
-    protected $request;
-
-    protected $service;
-
-    protected $requireDependence;
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
 //    public function __construct($requireDependence=['username','email','mobile','wechat_id'])
 //    {
 //        $this->service = Zsystem::service('user');
@@ -55,9 +44,14 @@ class Unique implements Rule
         $service = Zsystem::service('user');
 
         $internal = getConfigValue('zbasement.fields.auth.internal');
-        $external=getConfigValue('zbasement.fields.auth.external');
-        $fields=array_merge($internal,$external);
-        $response = $service->search(['fields'=>$fields, 'values'=>[$value]]);
+        $external = getConfigValue('zbasement.fields.auth.external');
+        $fields = array_merge($internal,$external);
+        $collection = collect($value)->filter(function ($item, $key) {
+            if ($key != 'password') {
+                return $item;
+            }
+        });
+        $response = $service->search(['fields'=>$fields, 'values'=>[$collection->all()]]);
         //判断一下是否是自己，如果是自己，允许重复
         if ($response->code->status) {
             if(Auth::user()){
@@ -67,7 +61,7 @@ class Unique implements Rule
                     return true;
                 }
             }
-            $this->message = "用户".$value."已存在。";
+            $this->message = "用户".$collection->first()."已存在。";
             return false;
         }
         return true;
