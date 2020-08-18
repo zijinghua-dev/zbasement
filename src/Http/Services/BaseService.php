@@ -175,6 +175,7 @@ class BaseService
     }
 
     public function store($parameters){
+        $parameters = $parameters['store'];
         //这里没有进行参数的过滤，所有参数都传给repository了
         //应该放进队列，由队列进行写入，此时状态202
         //队列完成写入后，发送消息通知用户完成写入

@@ -48,6 +48,7 @@ return [
             'store' => [
                 [
                     'rule' => [
+                        'required',
                         'new \Zijinghua\Zbasement\Rules\User\Store',
                         'new \Zijinghua\Zbasement\Rules\Unique',
                     ],
