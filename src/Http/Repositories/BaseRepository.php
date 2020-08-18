@@ -102,13 +102,14 @@ class BaseRepository implements BaseRepositoryInterface
     public function normalFind($data)
     {
         $model = Zsystem::model($this->getSlug());
+        $builder=$model;
         foreach ($data as $key=>$value){
             if ($model->fieldExist($key))
             {
-                $model= $model->where($key,$value);
+                $builder= $builder->where($key,$value);
             }
         }
-        return $model;
+        return $builder;
     }
 
     //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
