@@ -98,6 +98,20 @@ class BaseRepository implements BaseRepositoryInterface
         }
         return $model;
     }
+
+    public function normalFind($data)
+    {
+        $model = Zsystem::model($this->getSlug());
+        foreach ($data as $key=>$value){
+            if ($model->fieldExist($key))
+            {
+                $model= $model->where($key,$value);
+            }
+        }
+        return $model;
+    }
+
+    //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
     public function index($data){
         $paginate=getConfigValue('paginate',15);
 
@@ -139,6 +153,9 @@ class BaseRepository implements BaseRepositoryInterface
     //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
+        if (isset($parameters['store'])) {
+            $parameters = $parameters['store'];
+        }
         //暂不支持批量插入
         $model=$this->model();
         //所有model都要实现fill方法，对输入参数进行过滤
@@ -162,12 +179,15 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function show($data){
         $model=$this->model();
-            $id=$data['id'];
-            return $model->where('id', $id)->first();
+        $id=$data['id'];
+        return $model->where('id', $id)->first();
     }
 
     //update,必须含有uuid
     public function update($data){
+        if (isset($data['update'])) {
+            $data = $data['update'];
+        }
         $model=$this->model();
         $id=$data['id'];
         unset($data['id']);
@@ -191,9 +211,6 @@ class BaseRepository implements BaseRepositoryInterface
                 $result=$model->updateOrCreate($data);
                 return $result;
             }
-
-
-
         }
     }
 
@@ -238,7 +255,7 @@ class BaseRepository implements BaseRepositoryInterface
         if(config('softdelete',false)){
             $result= $model->forceDelete();
         }
-         $result=$model->delete();
+        $result=$model->delete();
         return $result;
 //        return $model->softDelete();
     }

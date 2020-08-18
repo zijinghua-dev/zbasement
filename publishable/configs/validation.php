@@ -59,8 +59,8 @@ return [
             'update' => [
                 [
                     'rule' => [
+                        'required',
                         'new \Zijinghua\Zbasement\Rules\User\Update:id',
-                        'new \Zijinghua\Zbasement\Rules\Unique',
                     ],
                     'action' => [
                         'update',

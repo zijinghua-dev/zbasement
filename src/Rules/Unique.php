@@ -15,17 +15,6 @@ use Illuminate\Contracts\Validation\Rule;
 class Unique implements Rule
 {
     protected $message;
-
-    protected $request;
-
-    protected $service;
-
-    protected $requireDependence;
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
 //    public function __construct($requireDependence=['username','email','mobile','wechat_id'])
 //    {
 //        $this->service = Zsystem::service('user');

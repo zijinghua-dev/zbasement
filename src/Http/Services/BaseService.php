@@ -206,6 +206,9 @@ use Slug;
     }
 
     public function update($parameters){
+        if (isset($parameters['update'])) {
+            $parameters = $parameters['update'];
+        }
         $repository=$this->repository($this->getSlug());
         $result=$repository->update($parameters);
         if(isset($result)){
