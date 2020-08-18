@@ -27,30 +27,30 @@ class JsonItem implements Rule
 //     */
     public function __construct($field)
     {
-        $this->field=$field;
+         $this->field = $field;
     }
 
     /**
      * Determine if the validation rule passes.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
         //必须是{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algorithm":"or"}]}这个结构
-        if(emptyObjectOrArray($value)){
+        if (emptyObjectOrArray($value)) {
             return false;
         }
-        foreach ($value as $key=>$item){
-            $keys=array_keys($item);
-            if(array_diff($this->field,$keys)){
+        foreach ($value as $key => $item) {
+            $keys = array_keys($item);
+            if (array_diff($this->field, $keys)) {
                 return false;
             }
         }
-return true;
+        return true;
 
         //field和value必须有
     }
