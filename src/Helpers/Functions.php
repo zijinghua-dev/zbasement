@@ -203,4 +203,19 @@ function getRouteSlugs()
     return array_unique($slugs);
 }
 
+/**
+ * 邮箱验证
+ * @param $email
+ * @return bool
+ */
+function emailValidate($email)
+{
+    return boolval(preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email));
+}
+
+function mobileValidate($mobile)
+{
+    return boolval(preg_match("/^1[34578]\d{9}$/", $mobile));
+}
+
 
