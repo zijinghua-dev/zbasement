@@ -154,9 +154,6 @@ class BaseRepository implements BaseRepositoryInterface
     //$parameters为数组，键值对形式
     public function store($parameters){
         //这里要进行参数过滤
-        if (isset($parameters['store'])) {
-            $parameters = $parameters['store'];
-        }
         //暂不支持批量插入
         $model=$this->model();
         //所有model都要实现fill方法，对输入参数进行过滤
@@ -186,9 +183,6 @@ class BaseRepository implements BaseRepositoryInterface
 
     //update,必须含有uuid
     public function update($data){
-        if (isset($data['update'])) {
-            $data = $data['update'];
-        }
         $model=$this->model();
         $id=$data['id'];
         unset($data['id']);

@@ -143,7 +143,7 @@ if (!function_exists('emptyObjectOrArray')) {
             return empty($object);
         }
         if (is_object($object)) {
-           return emptyObject($object);
+            return emptyObject($object);
         }
     }
 }
@@ -162,15 +162,15 @@ if (!function_exists('perPage')) {
         if($number>$perPageMax){
             return $perPageMax;
         }
-            return $number;
+        return $number;
     }
 }
 
 function getSlug($request)
 {
-        $path=$request->path();
-        $index=getConfigValue('zbasement.api.slug.index');
-        $slug = explode('/', $path)[$index];
+    $path=$request->path();
+    $index=getConfigValue('zbasement.api.slug.index');
+    $slug = explode('/', $path)[$index];
 
     return $slug;
 }
@@ -201,21 +201,6 @@ function getRouteSlugs()
     }
 
     return array_unique($slugs);
-}
-
-/**
- * 邮箱验证
- * @param $email
- * @return bool
- */
-function emailValidate($email)
-{
-    return boolval(preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email));
-}
-
-function mobileValidate($mobile)
-{
-    return boolval(preg_match("/^1[34578]\d{9}$/", $mobile));
 }
 
 

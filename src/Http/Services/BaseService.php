@@ -12,7 +12,7 @@ use Zijinghua\Zbasement\Http\Traits\Slug;
 
 class BaseService
 {
-use Slug;
+    use Slug;
     //调用fetch的位置，要将参数转换成这样的格式
     //{"search":[{"field":"wechat_id","value":"123456789","filter":"=","algorithm":"or"}]}
     public function fetch($data){
@@ -28,7 +28,7 @@ use Slug;
         $result=$repository->fetch($data);
         if(isset($result)){
 //            $code='zbasement.code.'.$this->slug.'.fetch.success';
-        $resource=$this->getResource($this->getSlug(),'fetch');
+            $resource=$this->getResource($this->getSlug(),'fetch');
             $messageResponse=$this->messageResponse($this->getSlug(),'fetch.submit.success', $result,$resource);
         }else{
 //            $code='zbasement.code.'.$this->slug.'.fetch.error';
@@ -206,13 +206,10 @@ use Slug;
     }
 
     public function update($parameters){
-        if (isset($parameters['update'])) {
-            $parameters = $parameters['update'];
-        }
         $repository=$this->repository($this->getSlug());
         $result=$repository->update($parameters);
         if(isset($result)){
-            $result=$repository->show(['id'=>$parameters['id']]);
+            $result=$repository->show(['uuid'=>$parameters['uuid']]);
         }
         //如果$result为null或空，那么意味着刚刚删除掉这个数据，应该报异常
 //        $code='zbasement.code.'.$this->slug.'.show.success';
