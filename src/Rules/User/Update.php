@@ -20,6 +20,7 @@ class Update implements Rule
     public function __construct($field)
     {
         $this->field = $field;
+        $this->message = '缺少参数' . implode(',', $this->field);
     }
 
     /**
@@ -36,7 +37,6 @@ class Update implements Rule
             return false;
         }
         if (array_diff($this->field, array_keys($value))) {
-            $this->message = '缺少参数' . implode(',', $this->field);
             return false;
         }
         return true;
