@@ -391,7 +391,13 @@ return [
                 'http_code' => 201,
                 'code' => 'ZBASEMENT_CODE_DELETE_SUBMIT_SUCCESS',
                 'status' => true,
-                'message' => '已经接收到批量数据删除提交申请!'
+                'message' => '已经接收到数据删除提交申请!'
+            ],
+            'failed'=>[
+                'http_code' => 201,
+                'code' => 'ZBASEMENT_CODE_DELETE_SUBMIT_FAILED',
+                'status' => true,
+                'message' => '数据删除操作失败!'
             ],
         ],
         'load'=>[
@@ -400,13 +406,13 @@ return [
                     'http_code' => 200,
                     'code' => 'ZBASEMENT_CODE_DELETE_LOAD_RULES_SUCCESS',
                     'status' => true,
-                    'message' => '批量数据删除操作所需验证规则加载成功!'
+                    'message' => '数据删除操作所需验证规则加载成功!'
                 ],
                 'failed'=>[
                     'http_code' => 403,
                     'code' => 'ZBASEMENT_CODE_DELETE_LOAD_RULES_FAILED',
                     'status' => false,
-                    'message' => '批量数据删除操作所需验证规则加载失败!'
+                    'message' => '数据删除操作所需验证规则加载失败!'
                 ],
 
             ],
@@ -415,13 +421,13 @@ return [
                     'http_code' => 200,
                     'code' => 'ZBASEMENT_CODE_DELETE_LOAD_MESSAGES_SUCCESS',
                     'status' => true,
-                    'message' => '批量数据删除操作所需验证规则的提示信息加载成功!'
+                    'message' => '数据删除操作所需验证规则的提示信息加载成功!'
                 ],
                 'failed'=>[
                     'http_code' => 403,
                     'code' => 'ZBASEMENT_CODE_DELETE_LOAD_MESSAGES_FAILED',
                     'status' => false,
-                    'message' => '批量数据删除操作所需验证规则的提示信息加载失败!'
+                    'message' => '数据删除操作所需验证规则的提示信息加载失败!'
                 ],
 
             ],

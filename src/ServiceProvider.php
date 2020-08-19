@@ -102,27 +102,27 @@ class ServiceProvider extends BaseServiceProvider
 
 
         $loader->alias('codeMessageModel', CodeMessageModelInterface::class);
-        $this->app->singleton('codeMessageModel', function () {
+        $this->app->bind('codeMessageModel', function () {
             return new CodeMessageConfig();
         });
 
         $loader->alias('validationModel', ValidationModelInterface::class);
-        $this->app->singleton('validationModel', function () {
+        $this->app->bind('validationModel', function () {
             return new ValidationConfig();
         });
 
 
         $loader->alias('baseRepository', BaseRepositoryInterface::class);
-        $this->app->singleton('baseRepository', function () {
+        $this->app->bind('baseRepository', function () {
             return new BaseRepository();
         });
 
         $loader->alias('codeMessageRepository', CodeMessageRepositoryInterface::class);
-        $this->app->singleton('codeMessageRepository', function () {
+        $this->app->bind('codeMessageRepository', function () {
             return new CodeMessageRepository();
         });
         $loader->alias('validationRepository', ValidationRepositoryInterface::class);
-        $this->app->singleton('validationRepository', function () {
+        $this->app->bind('validationRepository', function () {
             return new ValidationRepository();
         });
 

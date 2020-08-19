@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
 use Zijinghua\Zbasement\Http\Models\Traits\SoftDelete;
@@ -97,11 +98,30 @@ class BaseRepository implements BaseRepositoryInterface
         }
         return $model;
     }
+
+    public function normalFind($data)
+    {
+        $model = Zsystem::model($this->getSlug());
+        $builder=$model;
+        foreach ($data as $key=>$value){
+            if ($model->fieldExist($key))
+            {
+                $builder= $builder->where($key,$value);
+            }
+        }
+        return $builder;
+    }
+
+    //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
     public function index($data){
-        $parameters=$this->getIndexParameter($data);
         $paginate=getConfigValue('paginate',15);
 
-        $model=$this->find($parameters);
+        if(isset($data['search'])){
+            $parameters=$this->getIndexParameter($data);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($data);
+        }
 //        $sql=$model->toSql();
         if(isset($model)) {
             return $model->paginate($paginate);
@@ -157,8 +177,8 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function show($data){
         $model=$this->model();
-            $id=$data['id'];
-            return $model->where('id', $id)->first();
+        $id=$data['id'];
+        return $model->where('id', $id)->first();
     }
 
     //update,必须含有uuid
@@ -186,9 +206,6 @@ class BaseRepository implements BaseRepositoryInterface
                 $result=$model->updateOrCreate($data);
                 return $result;
             }
-
-
-
         }
     }
 
@@ -223,11 +240,19 @@ class BaseRepository implements BaseRepositoryInterface
 
     //输入参数仍然是search格式，但是，filter变成In，支持批量删除
     public function delete($parameters){
-        //批量删除
-        $parameters=$this->getIndexParameter($parameters);
+        if(isset($parameters['search'])){
+            $parameters=$this->getIndexParameter($parameters);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($parameters);
+        }
 
-        $model=$this->find($parameters);
-        return $model->softDelete();
+        if(config('softdelete',false)){
+            $result= $model->forceDelete();
+        }
+        $result=$model->delete();
+        return $result;
+//        return $model->softDelete();
     }
 
     //输入参数不同：删除slug对应的$parameters中的ID，输入参数必须由调用者先处理好
