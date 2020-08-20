@@ -114,7 +114,12 @@ class BaseRepository implements BaseRepositoryInterface
 
     //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
     public function index($data){
-        $paginate=getConfigValue('paginate',15);
+        if(isset($data['paginate'])){
+            $paginate=$data['paginate'];
+        }else{
+            $paginate=getConfigValue('paginate',15);
+        }
+
 
         if(isset($data['search'])){
             $parameters=$this->getIndexParameter($data);
@@ -124,7 +129,10 @@ class BaseRepository implements BaseRepositoryInterface
         }
 //        $sql=$model->toSql();
         if(isset($model)) {
-            return $model->paginate($paginate);
+            if($paginate){
+                return $model->paginate($paginate);
+            }
+            return $model->get();
         }
     }
 
