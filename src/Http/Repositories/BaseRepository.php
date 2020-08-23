@@ -38,11 +38,15 @@ class BaseRepository implements BaseRepositoryInterface
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
     public function fetch($data){
-        $model=$this->find($data);
-        if(isset($model)){
+        if(isset($data['search'])){
+            $parameters=$this->getIndexParameter($data);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($data);
+        }
+        if(isset($model)) {
             return $model->first();
         }
-
     }
 
     public function find($data){
@@ -234,10 +238,12 @@ class BaseRepository implements BaseRepositoryInterface
 //        return $model->fields($fields);
 //    }
 
+//如果调用者自己不拼装查询参数，那么这个方法查询name字段
     public function key($name){
         $parameter=$name;
-        if(is_string($name)){
-            $parameter['search'][]=['field'=>'name','value'=>$name];
+        if(!is_array($name)){
+            $parameter['search'][]=['field'=>'name','value'=>$name,'filter'=>'=','algorithm'=>'or'];
+//            $parameter['search'][]=['field'=>'slug','value'=>$name,'filter'=>'=','algorithm'=>'or'];
         }
         $object=$this->fetch($parameter);
         if(isset($object)){
