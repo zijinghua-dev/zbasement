@@ -240,10 +240,12 @@ class BaseRepository implements BaseRepositoryInterface
 
 //如果调用者自己不拼装查询参数，那么这个方法查询name字段
     public function key($name){
-        $parameter=$name;
+
         if(!is_array($name)){
             $parameter['search'][]=['field'=>'name','value'=>$name,'filter'=>'=','algorithm'=>'or'];
 //            $parameter['search'][]=['field'=>'slug','value'=>$name,'filter'=>'=','algorithm'=>'or'];
+        }else{
+            $parameter=$name;
         }
         $object=$this->fetch($parameter);
         if(isset($object)){
