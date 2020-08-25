@@ -19,7 +19,7 @@ class AddMoreLoginCredentialToUserTable extends Migration
             $table->string('mobile')->unique()->nullable(true)->after('wechat_id');
             !Schema::hasColumn('users', 'email') && $table->string('email')->unique()->nullable(true)->after('mobile');
             $table->string('username')->unique()->nullable(true)->after('email');
-            $table->string('password')
+            $table->string('password')->nullable(true)
                 ->comment('使用mobile、username、email登陆时，对应的密码。其值来源于用户输入')
                 ->change();
 
