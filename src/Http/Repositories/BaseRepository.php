@@ -107,12 +107,15 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $model = Zsystem::model($this->getSlug());
         $builder=$model;
-        foreach ($data as $key=>$value){
-            if ($model->fieldExist($key))
-            {
-                $builder= $builder->where($key,$value);
+        if(isset($data)){
+            foreach ($data as $key=>$value){
+                if ($model->fieldExist($key))
+                {
+                    $builder= $builder->where($key,$value);
+                }
             }
         }
+
         return $builder;
     }
 
@@ -124,14 +127,13 @@ class BaseRepository implements BaseRepositoryInterface
             $paginate=getConfigValue('paginate',15);
         }
 
-
         if(isset($data['search'])){
             $parameters=$this->getIndexParameter($data);
             $model=$this->find($parameters);
         }else{
             $model=$this->normalFind($data);
         }
-//        $sql=$model->toSql();
+
         if(isset($model)) {
             if($paginate){
                 return $model->paginate($paginate);
