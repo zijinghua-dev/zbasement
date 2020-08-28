@@ -180,6 +180,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     //$parameters为数组，键值对形式，需要调用者处理参数，并且，一次只能一条
+    //不会重复插入
     public function save($parameters){
         //这里要进行参数过滤
         //暂不支持批量插入
