@@ -133,6 +133,9 @@ if (!function_exists('emptyObject')) {
 if (!function_exists('emptyObjectOrArray')) {
     function emptyObjectOrArray($object)
     {
+        if(!isset($object)){
+            return true;
+        }
         if(is_string($object)){
             return isEmptyOrNullString($object);
         }

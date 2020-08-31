@@ -174,6 +174,18 @@ class BaseService
         return Zsystem::repository($this->getSlug());
     }
 
+    public function repositoryById($datatypeId){
+        //查询$slug对应的repository是否存在
+        //否则返回baseRepository
+        $repository= Zsystem::repository('datatype');
+        $datatype=$repository->fetch(['id'=>$datatypeId]);
+        if(!isset($datatype)){
+            return;
+        }
+        $this->setSlug($datatype->slug);
+        return Zsystem::repository($this->getSlug());
+    }
+
     public function store($parameters){
         //这里没有进行参数的过滤，所有参数都传给repository了
         //应该放进队列，由队列进行写入，此时状态202
