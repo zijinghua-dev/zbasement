@@ -104,21 +104,12 @@ class BaseMessageResponse
     {
 //        $this->loadMessageFromCode();
 
-        if (isset($this->code->httpCode)&&(!empty($this->code->httpCode))) {
-            $response= response()->json(
-                $this->resource(),
-                $this->code->httpCode,
-                ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-                JSON_UNESCAPED_UNICODE
-            );
-        } else {
-            $response= response()->json(
-                $this->resource(),
-                200,
-                ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-                JSON_UNESCAPED_UNICODE
-            );
-        }
+        $response= response()->json(
+            $this->resource(),
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
         return $response;
     }
 

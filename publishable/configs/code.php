@@ -872,39 +872,4 @@ return [
             ],
         ],
     ],
-    'file' => [
-        'upload' => [
-            'submit'=>[
-                'success' => [
-                    'http_code' => 200,
-                    'code' => 'ZBASEMENT_CODE_FILE_UPLOAD_SUBMIT_SUCCESS',
-                    'status' => true,
-                    'message' => '文件上传成功!'
-                ],
-                'failed' => [
-                    'http_code' => 403,
-                    'code' => 'ZBASEMENT_CODE_FILE_UPLOAD_SUBMIT_FAILED',
-                    'status' => false,
-                    'message' => '文件上传失败!'
-                ],
-            ],
-        ],
-        'index' => [
-            'submit'=>[
-                'success' => [
-                    'http_code' => 200,
-                    'code' => 'ZBASEMENT_CODE_FILE_INDEX_SUBMIT_SUCCESS',
-                    'status' => true,
-                    'message' => '文件获取成功!'
-                ],
-                'failed' => [
-                    'http_code' => 403,
-                    'code' => 'ZBASEMENT_CODE_FILE_INDEX_SUBMIT_FAILED',
-                    'status' => false,
-                    'message' => '文件获取失败!'
-                ],
-            ],
-        ],
-    ]
-
 ];
