@@ -123,8 +123,11 @@ class BaseRepository implements BaseRepositoryInterface
     public function index($data){
         if(isset($data['paginate'])){
             $paginate=$data['paginate'];
+            if($paginate>getConfigValue('paginate',15)){
+                $paginate=getConfigValue('paginate',15);
+            }
         }else{
-            $paginate=getConfigValue('paginate',15);
+            $paginate=0;
         }
 
         if(isset($data['search'])){
