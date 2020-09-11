@@ -28,7 +28,7 @@ class BaseMessageResponse
 //    public $httpCode=null;
     public $message=null;
 
-    protected $token=null;
+    protected $pool=[];
     protected function getStatus()
     {
         return $this->httpCode;
@@ -39,12 +39,14 @@ class BaseMessageResponse
         return $this->message;
     }
 
-    public function set($code, $data, $resourceClass,$token=null)
+    public function set($code, $data, $resourceClass,$pool=null)
     {
         $this->code = $code;
         $this->resourceClass = $resourceClass;
         $this->data = $data;
-        $this->token=$token;
+        if(!emptyObjectOrArray($pool)){
+            $this->pool=array_merge($this->pool,$pool);
+        }
     }
 
     private function loadMessageFromCode()
@@ -87,7 +89,7 @@ class BaseMessageResponse
     {
 //        if(isset())
 //        $codeMessage=;
-        $res=new BaseResource($this->data, objectToArray($this->code),$this->resourceClass,$this->token);
+        $res=new BaseResource($this->data, objectToArray($this->code),$this->resourceClass,$this->pool);
 //        $res=new $this->resourceClass($this->data);
 //        $res=$res->response();
         $res=$res->response()->getData(true);

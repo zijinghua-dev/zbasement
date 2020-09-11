@@ -61,7 +61,7 @@ class BaseService
 //        return $response;
 //    }
 
-    public function messageResponse($slug,$action, $data = null, $resourceClass = null,$token=null) {
+    public function messageResponse($slug,$action, $data = null, $resourceClass = null,$pool=null) {
         $response=app('messageResponse');
         $messageRepository=Zsystem::repository('codeMessage');
         //拼接带slug的code，
@@ -96,7 +96,7 @@ class BaseService
             }
         }
 
-        $response->set($message,$data,$resourceClass,$token);
+        $response->set($message,$data,$resourceClass,$pool);
         return $response;
     }
 
