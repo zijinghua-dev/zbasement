@@ -18,6 +18,7 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 
     protected $messageBody=[
         'code'=>null,
+        'httpCode'=>null,
         'status'=>null,
         'message'=>null,
     ];
