@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
@@ -311,5 +312,74 @@ class BaseRepository implements BaseRepositoryInterface
 //        return $this->softDelete($model);
 //    }
 
+    public function with($function,$parameters=[]){
+        $model=$this->model($this->getSlug());
+        if(isset($parameters)) {
+            $result = $model::with([$function => function ($query) use ($parameters) {
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            }]);
+            return $result;
+        }
+//        $result=$result->get();
+//        $result= $result->wherePivot($pivotField, '=', $pivotValue);
+//        $result=$model->with($result);
+        return $model->with($function);
+//        DB::enableQueryLog();
+//        $result=$result->get();
+//        $sql=DB::getQueryLog();
+//        if(isset($pivotField)){
+//            $result= $model::with([$table=>function ( $query) use ($pivotField,$pivotValue){
+//                $query->where($pivotField, '=', $pivotValue);
+//            }]);
+//            return $result;
+//        }
+//        return $model::with($table);
+    }
 
+    public function whereHas($function,$parameters=[]){
+        $model=$this->model($this->getSlug());
+
+        if(isset($parameters)){
+            return $model::whereHas($function, function ($query) use ($parameters){
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            });
+        }
+        return $model::whereHas($function);
+    }
+
+    public function withAndHas($function, $parameters=[]){
+        $model=$this->model($this->getSlug());
+
+        if(isset($parameters)){
+            $result= $model::whereHas($function, function ($query) use ($parameters){
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+
+            });
+            $result=  $result->with([$function => function ($query) use ($parameters) {
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            }]);
+            return $result;
+        }
+        return $model::whereHas($function);
+
+    }
+    public function pivotFilter($function,$parameters=[],$type=null){
+        switch($type){
+            case 1:
+                return $this->with($function,$parameters);
+            case 2:
+                return $this->whereHas($function,$parameters);
+            default:
+                return $this->withAndHas($function,$parameters);
+        }
+
+    }
 }
