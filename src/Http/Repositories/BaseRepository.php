@@ -369,17 +369,30 @@ class BaseRepository implements BaseRepositoryInterface
             return $result;
         }
         return $model::whereHas($function);
-
     }
+
     public function pivotFilter($function,$parameters=[],$type=null){
         switch($type){
             case 1:
-                return $this->with($function,$parameters);
+                return $this->with($function,$parameters)->get();
             case 2:
-                return $this->whereHas($function,$parameters);
+                return $this->whereHas($function,$parameters)->get();
             default:
-                return $this->withAndHas($function,$parameters);
+                return $this->withAndHas($function,$parameters)->get();
+        }
+    }
+
+
+    public function relation($parameters){
+        $model=$this->model($this->getSlug());
+        $model=$model->with($parameters['function']);
+        if($parameters) {
+            foreach ($parameters['data'] as $key=>$value){
+                $model = $model->where($key, '=', $value);
+            }
         }
 
+        return $model->get();
     }
+
 }
