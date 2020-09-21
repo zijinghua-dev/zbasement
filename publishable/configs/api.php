@@ -8,11 +8,11 @@ return [
                 'action'=>'post'
             ],
             'store'=>[
-                'uri' => '/api/user/',
+                'uri' => '/api/user',
                 'action'=>'post'
             ],
             'show'=>[
-                'uri' => '/api/user/',
+                'uri' => '/api/user',
                 'action'=>'get'
             ],
             'index'=>[
