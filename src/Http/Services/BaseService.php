@@ -61,7 +61,7 @@ class BaseService
 //        return $response;
 //    }
 
-    public function messageResponse($slug,$action, $data = null, $resourceClass = null,$token=null) {
+    public function messageResponse($slug,$action, $data = null, $resourceClass = null,$pool=null) {
         $response=app('messageResponse');
         $messageRepository=Zsystem::repository('codeMessage');
         //拼接带slug的code，
@@ -96,7 +96,7 @@ class BaseService
             }
         }
 
-        $response->set($message,$data,$resourceClass,$token);
+        $response->set($message,$data,$resourceClass,$pool);
         return $response;
     }
 
@@ -171,6 +171,18 @@ class BaseService
         if(isset($slug)){
             return Zsystem::repository($slug);
         }
+        return Zsystem::repository($this->getSlug());
+    }
+
+    public function repositoryById($datatypeId){
+        //查询$slug对应的repository是否存在
+        //否则返回baseRepository
+        $repository= Zsystem::repository('datatype');
+        $datatype=$repository->fetch(['id'=>$datatypeId]);
+        if(!isset($datatype)){
+            return;
+        }
+        $this->setSlug($datatype->slug);
         return Zsystem::repository($this->getSlug());
     }
 

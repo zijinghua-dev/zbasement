@@ -5,6 +5,7 @@ namespace Zijinghua\Zbasement\Http\Repositories;
 
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Zijinghua\Zbasement\Facades\Zsystem;
@@ -38,11 +39,15 @@ class BaseRepository implements BaseRepositoryInterface
         return ['search'=>$search,'showSoftDelete'=>$showSoftDelete,'sort'=>$sort,'pageIndex'=>$pageIndex];
     }
     public function fetch($data){
-        $model=$this->find($data);
-        if(isset($model)){
+        if(isset($data['search'])){
+            $parameters=$this->getIndexParameter($data);
+            $model=$this->find($parameters);
+        }else{
+            $model=$this->normalFind($data);
+        }
+        if(isset($model)) {
             return $model->first();
         }
-
     }
 
     public function find($data){
@@ -103,18 +108,28 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $model = Zsystem::model($this->getSlug());
         $builder=$model;
-        foreach ($data as $key=>$value){
-            if ($model->fieldExist($key))
-            {
-                $builder= $builder->where($key,$value);
+        if(isset($data)){
+            foreach ($data as $key=>$value){
+                if ($model->fieldExist($key))
+                {
+                    $builder= $builder->where($key,$value);
+                }
             }
         }
+
         return $builder;
     }
 
     //index有两种参数输入方式：一个是并列输入，一个是经过search参数输入
     public function index($data){
-        $paginate=getConfigValue('paginate',15);
+        if(isset($data['paginate'])){
+            $paginate=$data['paginate'];
+            if($paginate>getConfigValue('paginate',15)){
+                $paginate=getConfigValue('paginate',15);
+            }
+        }else{
+            $paginate=0;
+        }
 
         if(isset($data['search'])){
             $parameters=$this->getIndexParameter($data);
@@ -122,9 +137,12 @@ class BaseRepository implements BaseRepositoryInterface
         }else{
             $model=$this->normalFind($data);
         }
-//        $sql=$model->toSql();
+
         if(isset($model)) {
-            return $model->paginate($paginate);
+            if($paginate){
+                return $model->paginate($paginate);
+            }
+            return $model->get();
         }
     }
 
@@ -166,6 +184,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     //$parameters为数组，键值对形式，需要调用者处理参数，并且，一次只能一条
+    //不会重复插入
     public function save($parameters){
         //这里要进行参数过滤
         //暂不支持批量插入
@@ -226,10 +245,14 @@ class BaseRepository implements BaseRepositoryInterface
 //        return $model->fields($fields);
 //    }
 
+//如果调用者自己不拼装查询参数，那么这个方法查询name字段
     public function key($name){
-        $parameter=$name;
-        if(is_string($name)){
-            $parameter['search'][]=['field'=>'name','value'=>$name];
+
+        if(!is_array($name)){
+            $parameter['search'][]=['field'=>'name','value'=>$name,'filter'=>'=','algorithm'=>'or'];
+//            $parameter['search'][]=['field'=>'slug','value'=>$name,'filter'=>'=','algorithm'=>'or'];
+        }else{
+            $parameter=$name;
         }
         $object=$this->fetch($parameter);
         if(isset($object)){
@@ -289,5 +312,87 @@ class BaseRepository implements BaseRepositoryInterface
 //        return $this->softDelete($model);
 //    }
 
+    public function with($function,$parameters=[]){
+        $model=$this->model($this->getSlug());
+        if(isset($parameters)) {
+            $result = $model::with([$function => function ($query) use ($parameters) {
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            }]);
+            return $result;
+        }
+//        $result=$result->get();
+//        $result= $result->wherePivot($pivotField, '=', $pivotValue);
+//        $result=$model->with($result);
+        return $model->with($function);
+//        DB::enableQueryLog();
+//        $result=$result->get();
+//        $sql=DB::getQueryLog();
+//        if(isset($pivotField)){
+//            $result= $model::with([$table=>function ( $query) use ($pivotField,$pivotValue){
+//                $query->where($pivotField, '=', $pivotValue);
+//            }]);
+//            return $result;
+//        }
+//        return $model::with($table);
+    }
+
+    public function whereHas($function,$parameters=[]){
+        $model=$this->model($this->getSlug());
+
+        if(isset($parameters)){
+            return $model::whereHas($function, function ($query) use ($parameters){
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            });
+        }
+        return $model::whereHas($function);
+    }
+
+    public function withAndHas($function, $parameters=[]){
+        $model=$this->model($this->getSlug());
+
+        if(isset($parameters)){
+            $result= $model::whereHas($function, function ($query) use ($parameters){
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+
+            });
+            $result=  $result->with([$function => function ($query) use ($parameters) {
+                foreach ($parameters as $key=>$value){
+                    $query->where($key, '=', $value);
+                }
+            }]);
+            return $result;
+        }
+        return $model::whereHas($function);
+    }
+
+    public function pivotFilter($function,$parameters=[],$type=null){
+        switch($type){
+            case 1:
+                return $this->with($function,$parameters)->get();
+            case 2:
+                return $this->whereHas($function,$parameters)->get();
+            default:
+                return $this->withAndHas($function,$parameters)->get();
+        }
+    }
+
+
+    public function relation($parameters){
+        $model=$this->model($this->getSlug());
+        $model=$model->with($parameters['function']);
+        if($parameters) {
+            foreach ($parameters['data'] as $key=>$value){
+                $model = $model->where($key, '=', $value);
+            }
+        }
+
+        return $model->get();
+    }
 
 }
