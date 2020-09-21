@@ -18,14 +18,16 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
 
     protected $messageBody=[
         'code'=>null,
+        'httpCode'=>null,
         'status'=>null,
         'message'=>null,
     ];
 
-    protected $token=null;
-    public function __construct($resource, $messageBody = null,$childResource=null,$token=null)
+    protected $pool=[];
+    public function __construct($resource, $messageBody = null,$childResource=null,$pool=null)
     {
-        $this->token=$token;
+        if(!emptyObjectOrArray($pool))
+        $this->pool=array_merge( $this->pool,$pool);
         $collection = new Collection();
         if (isset($resource)) {
             if ($resource instanceof LengthAwarePaginator) {
@@ -73,7 +75,7 @@ class BaseResource extends ResourceCollection implements BaseResourceInterface
      */
     public function with($request)
     {
-        return array_merge($this->messageBody,['token'=>$this->token]);
+        return array_merge($this->messageBody,$this->pool);
     }
 //    public function toArray($request)
 //    {
