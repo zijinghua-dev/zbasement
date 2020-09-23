@@ -14,7 +14,7 @@ use Zijinghua\Zbasement\Http\Models\Traits\UuidTrait;
 abstract class BaseModel extends Model
 {
 //    use UuidTrait;
-    use SoftDeletes;
+//    use SoftDeletes;
 
     protected $fillable = [
     ];
