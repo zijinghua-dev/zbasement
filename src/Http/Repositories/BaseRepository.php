@@ -317,7 +317,11 @@ class BaseRepository implements BaseRepositoryInterface
         if(isset($parameters)) {
             $result = $model::with([$function => function ($query) use ($parameters) {
                 foreach ($parameters as $key=>$value){
-                    $query->where($key, '=', $value);
+                    if(is_array($value)){
+                        $query->whereIn($key,  $value);
+                    }else{
+                        $query->where($key, '=', $value);
+                    }
                 }
             }]);
             return $result;
@@ -344,7 +348,11 @@ class BaseRepository implements BaseRepositoryInterface
         if(isset($parameters)){
             return $model::whereHas($function, function ($query) use ($parameters){
                 foreach ($parameters as $key=>$value){
-                    $query->where($key, '=', $value);
+                    if(is_array($value)){
+                        $query->whereIn($key,  $value);
+                    }else{
+                        $query->where($key, '=', $value);
+                    }
                 }
             });
         }
@@ -357,13 +365,22 @@ class BaseRepository implements BaseRepositoryInterface
         if(isset($parameters)){
             $result= $model::whereHas($function, function ($query) use ($parameters){
                 foreach ($parameters as $key=>$value){
-                    $query->where($key, '=', $value);
+                    if(is_array($value)){
+                        $query->whereIn($key,  $value);
+                    }else{
+                        $query->where($key, '=', $value);
+                    }
+
                 }
 
             });
             $result=  $result->with([$function => function ($query) use ($parameters) {
                 foreach ($parameters as $key=>$value){
-                    $query->where($key, '=', $value);
+                    if(is_array($value)){
+                        $query->whereIn($key,  $value);
+                    }else{
+                        $query->where($key, '=', $value);
+                    }
                 }
             }]);
             return $result;
@@ -388,7 +405,11 @@ class BaseRepository implements BaseRepositoryInterface
         $model=$model->with($parameters['function']);
         if($parameters) {
             foreach ($parameters['data'] as $key=>$value){
-                $model = $model->where($key, '=', $value);
+                if(is_array($value)){
+                    $model = $model->whereIn($key,  $value);
+                }else{
+                    $model = $model->where($key, '=', $value);
+                }
             }
         }
 
