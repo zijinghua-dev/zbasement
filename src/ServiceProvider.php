@@ -172,6 +172,7 @@ class ServiceProvider extends BaseServiceProvider
         );
         $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/logging.php', 'logging.channels');
         $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/api.php', 'zbasement.api');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/publishable/configs/token.php', 'zbasement.token');
     }
 
     /**
